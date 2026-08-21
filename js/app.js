@@ -167,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     init() {
       const symbols = ['💖', '🌸', '✨', '💜', '🌹', '💐'];
       const spawn = (e) => {
-        // Avoid spawning when clicking inputs or video controls
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'VIDEO') return;
 
         const x = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : null);
@@ -239,12 +238,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const journeySteps = content.journey?.steps || [
         { id: "hero", label: "Welcome", num: "01" },
         { id: "about", label: "About Rabi", num: "02" },
-        { id: "memories", label: "Memories", num: "03" },
-        { id: "souls", label: "Two Souls", num: "04" },
-        { id: "moments", label: "Moments", num: "05" },
-        { id: "birthday", label: "Birthday", num: "06" },
-        { id: "letter", label: "Letters", num: "07" },
-        { id: "surprise", label: "Surprise", num: "08" }
+        { id: "rose-garden", label: "Rose Garden", num: "03" },
+        { id: "memories", label: "Memories", num: "04" },
+        { id: "souls", label: "Two Souls", num: "05" },
+        { id: "moments", label: "The Bouquet", num: "06" },
+        { id: "eternal-rose", label: "Eternal Rose", num: "07" },
+        { id: "birthday", label: "Celebration", num: "08" },
+        { id: "letter", label: "Vintage Letter", num: "09" },
+        { id: "surprise", label: "Surprise", num: "10" }
       ];
 
       sections.forEach(sec => {
@@ -261,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (step) {
             const numEl = document.getElementById('journey-num');
             const labelEl = document.getElementById('journey-label');
-            if (numEl) numEl.textContent = `${step.num} / 08`;
+            if (numEl) numEl.textContent = `${step.num} / 10`;
             if (labelEl) labelEl.textContent = step.label;
           }
         }
@@ -295,7 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     createPetal() {
-      const colors = ['rgba(246, 214, 216, 0.75)', 'rgba(239, 195, 204, 0.75)', 'rgba(223, 163, 175, 0.7)', 'rgba(221, 212, 243, 0.65)'];
+      const colors = ['rgba(239, 83, 80, 0.7)', 'rgba(198, 40, 40, 0.75)', 'rgba(246, 214, 216, 0.75)', 'rgba(221, 212, 243, 0.65)'];
       return {
         x: Math.random() * (this.canvas?.width || window.innerWidth),
         y: Math.random() * (this.canvas?.height || 600) - 50,
@@ -336,133 +337,146 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 5. DIGITAL ENVELOPE / GIFT MODAL ──────────────────────────────────── */
-  const GiftModal = {
+  /* ─── 5. 12 RED ROSES GARDEN & PETAL SHOWER ─────────────────────────────── */
+  const RedRoseGarden = {
     init() {
-      const openBtn = document.getElementById('open-gift-btn');
-      const modal = document.getElementById('gift-modal');
-      const closeBtn = document.getElementById('gift-modal-close');
-      const startBtn = document.getElementById('start-exploring-btn');
-      const msgEl = document.getElementById('gift-modal-text');
-
-      if (msgEl && content.hero?.giftMessage) {
-        msgEl.textContent = content.hero.giftMessage;
-      }
-
-      const open = () => {
-        modal?.classList.add('active');
-        AudioManager.initContext();
-        AudioManager.playChime();
-        document.body.style.overflow = 'hidden';
-      };
-
-      const close = () => {
-        modal?.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-
-      openBtn?.addEventListener('click', open);
-      closeBtn?.addEventListener('click', close);
-      modal?.addEventListener('click', (e) => {
-        if (e.target === modal) close();
-      });
-
-      startBtn?.addEventListener('click', () => {
-        close();
-        const aboutSec = document.getElementById('about');
-        aboutSec?.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-  };
-
-  /* ─── 6. REASONS YOU'RE SPECIAL ─────────────────────────────────────────── */
-  const ReasonsSection = {
-    init() {
-      const grid = document.getElementById('reasons-grid');
+      const grid = document.getElementById('rose-garden-grid');
+      const showerBtn = document.getElementById('start-rose-shower-btn');
       if (!grid) return;
 
-      const reasons = content.reasons || [];
+      const roses = content.roseGarden?.roses || [];
       grid.innerHTML = '';
 
-      reasons.forEach(r => {
+      roses.forEach(r => {
         const card = document.createElement('div');
-        card.className = 'reason-card';
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
-        card.setAttribute('aria-label', `${r.tag}: ${r.title}`);
-
+        card.className = 'garden-rose-card';
         card.innerHTML = `
-          <div class="reason-header">
-            <span class="reason-tag">${r.tag}</span>
-            <span class="reason-icon">🌸</span>
-          </div>
-          <h3 class="reason-title">${r.title}</h3>
-          <p class="reason-revealed-text">${r.text}</p>
-          <div class="reason-front-prompt">
-            <span>${r.front || 'Tap to reveal ♡'}</span>
-            <span>→</span>
-          </div>
+          <div class="garden-rose-icon">🌹</div>
+          <h4 class="garden-rose-title">${r.title}</h4>
+          <span class="garden-rose-tag">Tap to reveal ♡</span>
+          <p class="garden-rose-text">${r.text}</p>
         `;
 
-        const reveal = () => {
-          card.classList.toggle('revealed');
+        card.addEventListener('click', () => {
+          card.classList.toggle('opened');
           AudioManager.initContext();
           AudioManager.playPop();
-        };
-
-        card.addEventListener('click', reveal);
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            reveal();
-          }
         });
 
         grid.appendChild(card);
       });
+
+      showerBtn?.addEventListener('click', () => {
+        this.launchRedRosePetalShower();
+        AudioManager.initContext();
+        AudioManager.playChime();
+      });
+    },
+
+    launchRedRosePetalShower() {
+      for (let i = 0; i < 45; i++) {
+        const petal = document.createElement('span');
+        petal.textContent = '🌹';
+        petal.style.position = 'fixed';
+        petal.style.left = `${Math.random() * 96}%`;
+        petal.style.top = `-40px`;
+        petal.style.fontSize = `${Math.random() * 16 + 22}px`;
+        petal.style.pointerEvents = 'none';
+        petal.style.zIndex = '9999';
+        petal.style.setProperty('--drift', `${(Math.random() - 0.5) * 120}px`);
+        petal.style.setProperty('--rot', `${Math.random() * 360}deg`);
+        petal.style.animation = `redRosePetalFall ${Math.random() * 2 + 3.5}s ease-in-out forwards`;
+        document.body.appendChild(petal);
+
+        setTimeout(() => petal.remove(), 6000);
+      }
     }
   };
 
-  /* ─── 7. MEMORY GALLERY & LIGHTBOX & MEMORY BLOOM ───────────────────────── */
-  const MemoryGallery = {
+  /* ─── 6. THE ENCHANTED ETERNAL RED ROSE (CRYSTAL CLOCHE) ─────────────────── */
+  const EternalRoseCloche = {
+    init() {
+      const dome = document.getElementById('cloche-glass-dome');
+      const messageBox = document.getElementById('eternal-rose-message-box');
+
+      dome?.addEventListener('click', () => {
+        dome.classList.add('petal-fallen');
+        AudioManager.initContext();
+        AudioManager.playChime();
+
+        setTimeout(() => {
+          messageBox?.classList.add('active');
+        }, 1200);
+      });
+    }
+  };
+
+  /* ─── 7. VINTAGE ROSE WAX-SEALED ROYAL PARCHMENT ─────────────────────────── */
+  const VintageParchment = {
+    init() {
+      const seal = document.getElementById('embossed-rose-wax-seal');
+      const ribbon = document.getElementById('crimson-silk-ribbon');
+      const parchment = document.getElementById('parchment-scroll-paper');
+      const cover = document.getElementById('parchment-cover-box');
+
+      seal?.addEventListener('click', () => {
+        AudioManager.initContext();
+        AudioManager.playChime();
+        seal.style.animation = 'waxSealCrack 0.5s ease forwards';
+        ribbon.style.animation = 'ribbonSlideOff 0.6s ease forwards';
+
+        setTimeout(() => {
+          cover.style.display = 'none';
+          parchment?.classList.add('open');
+        }, 500);
+      });
+    }
+  };
+
+  /* ─── 8. POLAROID MEMORY WALL & LIGHTBOX ─────────────────────────────────── */
+  const PolaroidGallery = {
     currentIndex: 0,
     items: [],
 
     init() {
-      const grid = document.getElementById('gallery-grid');
+      const grid = document.getElementById('polaroid-gallery-grid');
       if (!grid) return;
 
       this.items = content.memories || [];
       grid.innerHTML = '';
 
       this.items.forEach((m, idx) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.setAttribute('tabindex', '0');
-        item.setAttribute('role', 'button');
-        item.setAttribute('aria-label', `View memory: ${m.title}`);
+        const card = document.createElement('div');
+        const tiltClass = idx % 2 === 0 ? 'tilt-left' : 'tilt-right';
+        card.className = `polaroid-card ${tiltClass}`;
 
-        item.innerHTML = `
-          <div class="gallery-thumb-wrapper">
-            <img src="${m.image}" alt="${m.alt || m.title}" class="gallery-thumb" loading="lazy">
-            <div class="gallery-overlay">
-              <span class="gallery-overlay-text">${m.title} ♡</span>
-            </div>
+        card.innerHTML = `
+          <div class="polaroid-tape-pin">📌</div>
+          <div class="polaroid-img-wrapper">
+            <img src="${m.image}" alt="${m.title}" class="polaroid-img" loading="lazy">
           </div>
-          <div class="gallery-item-caption">
-            <p>${m.caption}</p>
+          <div class="polaroid-caption-area">
+            <div class="polaroid-title">${m.title} ♡</div>
+            <div class="polaroid-date">${m.date || '06 September'} • ${m.caption}</div>
           </div>
         `;
 
-        const img = item.querySelector('.gallery-thumb');
+        const img = card.querySelector('.polaroid-img');
         img.onerror = () => {
-          if (m.localImage) {
-            img.src = m.localImage;
-          }
+          if (m.localImage) img.src = m.localImage;
         };
 
-        item.addEventListener('click', () => this.openLightbox(idx));
-        grid.appendChild(item);
+        card.addEventListener('click', () => {
+          card.classList.add('developing');
+          AudioManager.initContext();
+          AudioManager.playPop();
+          setTimeout(() => {
+            card.classList.remove('developing');
+            this.openLightbox(idx);
+          }, 600);
+        });
+
+        grid.appendChild(card);
       });
 
       this.initLightbox();
@@ -482,18 +496,11 @@ document.addEventListener('DOMContentLoaded', () => {
       modal?.addEventListener('click', (e) => {
         if (e.target === modal) this.closeLightbox();
       });
-
-      document.addEventListener('keydown', (e) => {
-        if (!modal?.classList.contains('active')) return;
-        if (e.key === 'Escape') this.closeLightbox();
-        if (e.key === 'ArrowLeft') this.prev();
-        if (e.key === 'ArrowRight') this.next();
-      });
     },
 
     openLightbox(idx) {
       this.currentIndex = idx;
-      this.renderLightboxContent();
+      this.renderLightbox();
       const modal = document.getElementById('gallery-lightbox');
       modal?.classList.add('active');
       document.body.style.overflow = 'hidden';
@@ -507,15 +514,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     prev() {
       this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
-      this.renderLightboxContent();
+      this.renderLightbox();
     },
 
     next() {
       this.currentIndex = (this.currentIndex + 1) % this.items.length;
-      this.renderLightboxContent();
+      this.renderLightbox();
     },
 
-    renderLightboxContent() {
+    renderLightbox() {
       const item = this.items[this.currentIndex];
       if (!item) return;
 
@@ -525,7 +532,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (title) title.textContent = `${item.title} (${this.currentIndex + 1} / ${this.items.length})`;
       if (caption) caption.textContent = item.caption;
-
       if (img) {
         img.src = item.image;
         img.alt = item.title;
@@ -545,7 +551,46 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 8. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ─────────────── */
+  /* ─── 9. FLOATING CRIMSON SKY LANTERNS ───────────────────────────────────── */
+  const SkyLanterns = {
+    init() {
+      const stage = document.getElementById('sky-lanterns-night-stage');
+      const toast = document.getElementById('lantern-wish-toast');
+      if (!stage) return;
+
+      const wishes = content.skyLanterns?.wishes || [
+        "🏮 May all your prayers come true in the sweetest way! ✨",
+        "🏮 Wishing you endless peace, joy, and laughter! 💖",
+        "🏮 May every path you take be filled with fresh red roses! 🌹"
+      ];
+
+      setInterval(() => {
+        const lantern = document.createElement('div');
+        lantern.className = 'floating-sky-lantern';
+        lantern.textContent = '🏮';
+        lantern.style.left = `${Math.random() * 85 + 5}%`;
+        lantern.style.bottom = `-20px`;
+        lantern.style.setProperty('--speed', `${Math.random() * 2 + 5}s`);
+        lantern.style.setProperty('--drift', `${(Math.random() - 0.5) * 60}px`);
+
+        lantern.addEventListener('click', () => {
+          AudioManager.initContext();
+          AudioManager.playChime();
+          if (toast) {
+            toast.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), 3500);
+          }
+          lantern.remove();
+        });
+
+        stage.appendChild(lantern);
+        setTimeout(() => lantern.remove(), 7000);
+      }, 1400);
+    }
+  };
+
+  /* ─── 10. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ────────────── */
   const TwoSoulsGame = {
     canvas: null,
     ctx: null,
@@ -555,7 +600,6 @@ document.addEventListener('DOMContentLoaded', () => {
     merged: false,
     stars: [],
     supernovaParticles: [],
-    fallingSurprises: [],
     surpriseInterval: null,
     caughtCount: 0,
     targetSurprises: 6,
@@ -572,7 +616,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.resize();
       window.addEventListener('resize', () => this.resize(), { passive: true });
 
-      // Init star background
       for (let i = 0; i < 60; i++) {
         this.stars.push({
           x: Math.random() * this.canvas.width,
@@ -688,19 +731,17 @@ document.addEventListener('DOMContentLoaded', () => {
       this.orb2Pos = { x: midX, y: midY };
       this.updateOrbDOM();
 
-      // Trigger Supernova Particles
       this.createSupernova(midX, midY);
 
       document.getElementById('souls-merged-banner')?.classList.add('active');
       AudioManager.playChime();
 
-      // Start Falling Cosmic Surprises Game
       setTimeout(() => this.startSurprisesGame(), 600);
     },
 
     createSupernova(cx, cy) {
-      const colors = ['#E040FB', '#EF5350', '#FFD54F', '#FFF9F5', '#EFC3CC'];
-      for (let i = 0; i < 70; i++) {
+      const colors = ['#EF5350', '#C62828', '#E040FB', '#FFD54F', '#FFF9F5'];
+      for (let i = 0; i < 80; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 6 + 2;
         this.supernovaParticles.push({
@@ -735,7 +776,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const surprise = surprisesList[Math.floor(Math.random() * surprisesList.length)];
         const item = document.createElement('div');
         item.className = 'falling-surprise-item';
-        item.textContent = surprise.icon || '🌸';
+        item.textContent = surprise.icon || '🌹';
         item.style.left = `${Math.random() * 80 + 10}%`;
         item.style.top = '-20px';
         item.style.setProperty('--speed', `${Math.random() * 1.5 + 3.5}s`);
@@ -768,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const text = document.getElementById('surprise-popup-text');
       const img = document.getElementById('surprise-popup-img');
 
-      if (icon) icon.textContent = surprise.icon || '🌸';
+      if (icon) icon.textContent = surprise.icon || '🌹';
       if (title) title.textContent = surprise.title || 'Special Surprise';
       if (text) text.textContent = surprise.text || '';
 
@@ -788,7 +829,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!this.ctx || !this.canvas) return;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Render cosmic background stars
       this.stars.forEach(s => {
         this.ctx.beginPath();
         this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
@@ -796,7 +836,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ctx.fill();
       });
 
-      // Render magnetic stardust connection
       if (!this.merged && this.orb1Pos && this.orb2Pos) {
         this.ctx.beginPath();
         this.ctx.moveTo(this.orb1Pos.x, this.orb1Pos.y);
@@ -811,7 +850,6 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ctx.setLineDash([]);
       }
 
-      // Render Supernova Particles
       for (let i = this.supernovaParticles.length - 1; i >= 0; i--) {
         const p = this.supernovaParticles[i];
         p.x += p.vx;
@@ -838,161 +876,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 9. VIDEO MEMORIES ─────────────────────────────────────────────────── */
-  const VideoMemories = {
-    init() {
-      const grid = document.getElementById('videos-grid');
-      const modal = document.getElementById('video-modal');
-      const closeBtn = document.getElementById('video-modal-close');
-      const videoEl = document.getElementById('modal-video-player');
-
-      if (!grid) return;
-      const videos = content.videos || [];
-      grid.innerHTML = '';
-
-      videos.forEach(v => {
-        const card = document.createElement('div');
-        card.className = 'video-card';
-        card.innerHTML = `
-          <div class="video-poster-wrapper" role="button" tabindex="0" aria-label="Play video: ${v.title}">
-            <img src="${v.poster}" alt="${v.title}" class="video-poster-img" loading="lazy">
-            <div class="video-play-overlay">
-              <div class="play-circle">▶</div>
-            </div>
-          </div>
-          <div class="video-details">
-            <h3 class="video-card-title">${v.title}</h3>
-            <p class="video-card-caption">${v.caption}</p>
-          </div>
-        `;
-
-        const play = () => {
-          if (videoEl) {
-            videoEl.src = v.video;
-            videoEl.play().catch(() => {});
-          }
-          modal?.classList.add('active');
-          document.body.style.overflow = 'hidden';
-        };
-
-        card.querySelector('.video-poster-wrapper')?.addEventListener('click', play);
-        grid.appendChild(card);
-      });
-
-      const closeModal = () => {
-        if (videoEl) {
-          videoEl.pause();
-          videoEl.src = '';
-        }
-        modal?.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-
-      closeBtn?.addEventListener('click', closeModal);
-      modal?.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-    }
-  };
-
-  /* ─── 10. THE BOUQUET SECTION ───────────────────────────────────────────── */
-  const BouquetSection = {
-    init() {
-      const pinsContainer = document.getElementById('bouquet-flower-pins');
-      const messageBox = document.getElementById('bouquet-message-text');
-      const mainImg = document.querySelector('.bouquet-main-img');
-      if (!pinsContainer || !messageBox) return;
-
-      if (mainImg && content.bouquet?.mainImage) {
-        mainImg.src = content.bouquet.mainImage;
-      }
-
-      const messages = content.bouquet?.flowerMessages || [];
-      pinsContainer.innerHTML = '';
-
-      messages.forEach((item, i) => {
-        const btn = document.createElement('button');
-        btn.className = `flower-pin-btn ${i === 0 ? 'active' : ''}`;
-        btn.innerHTML = `
-          <span class="flower-pin-icon">🌸</span>
-          <span class="flower-pin-name">${item.flower}</span>
-        `;
-
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.flower-pin-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          messageBox.style.opacity = '0';
-          setTimeout(() => {
-            messageBox.textContent = item.message;
-            messageBox.style.opacity = '1';
-          }, 200);
-          AudioManager.initContext();
-          AudioManager.playPop();
-        });
-
-        pinsContainer.appendChild(btn);
-      });
-
-      if (messages.length > 0) {
-        messageBox.textContent = messages[0].message;
-      }
-    }
-  };
-
-  /* ─── 11. BIRTHDAY CAKE & CELEBRATION ───────────────────────────────────── */
-  const BirthdayCelebration = {
-    candlesLit: 3,
-
-    init() {
-      const candles = document.querySelectorAll('.candle-interactive');
-      const banner = document.getElementById('cake-blowout-banner');
-      const songBtn = document.getElementById('play-birthday-song-btn');
-
-      candles.forEach(candle => {
-        candle.addEventListener('click', () => {
-          if (!candle.classList.contains('blown')) {
-            candle.classList.add('blown');
-            this.candlesLit--;
-            AudioManager.initContext();
-            AudioManager.playPop();
-
-            if (this.candlesLit <= 0) {
-              banner?.classList.add('active');
-              AudioManager.playChime();
-              this.launchConfetti();
-            }
-          }
-        });
-      });
-
-      songBtn?.addEventListener('click', () => {
-        AudioManager.playSpecialAudio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
-      });
-    },
-
-    launchConfetti() {
-      const container = document.querySelector('.cake-stage');
-      if (!container) return;
-
-      const emojis = ['🌸', '✨', '💐', '💜', '🎂', '🌹'];
-      for (let i = 0; i < 28; i++) {
-        const conf = document.createElement('span');
-        conf.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-        conf.style.position = 'absolute';
-        conf.style.left = `${Math.random() * 90 + 5}%`;
-        conf.style.top = `${Math.random() * 60}%`;
-        conf.style.fontSize = `${Math.random() * 14 + 18}px`;
-        conf.style.pointerEvents = 'none';
-        conf.style.animation = `confettiFall ${Math.random() * 1.5 + 1.5}s ease-out forwards`;
-        conf.style.setProperty('--rot', `${Math.random() * 720}deg`);
-        container.appendChild(conf);
-
-        setTimeout(() => conf.remove(), 3000);
-      }
-    }
-  };
-
-  /* ─── 12. ADVANCED MINI GAMES: DYNAMIC BOUQUET WEAVER & SEED-TO-ROSE ────── */
+  /* ─── 11. MINI GAMES: ADVANCED BOUQUET WEAVER & SEED-TO-ROSE ─────────────── */
   const MiniGames = {
     init() {
       this.initFlowerGame();
@@ -1000,7 +884,6 @@ document.addEventListener('DOMContentLoaded', () => {
       this.initTrustNoGame();
     },
 
-    /* 1. Dynamic Animated Bouquet Weaver */
     initFlowerGame() {
       const area = document.getElementById('flower-game-canvas');
       const startBtn = document.getElementById('start-flower-game-btn');
@@ -1017,11 +900,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (scoreEl) scoreEl.textContent = `0 / ${target}`;
         resultBox?.classList.remove('active');
         if (vaseStack) vaseStack.innerHTML = '';
-        startBtn.textContent = 'Restart Game 🌸';
+        startBtn.textContent = 'Restart Game 🌹';
         clearInterval(interval);
         area?.querySelectorAll('.falling-flower-item').forEach(e => e.remove());
 
-        const flowerPool = ['🌸', '🌺', '🌷', '🌹', '💐', '💜', '🌼', '🌻', '🥀', '🌿'];
+        const flowerPool = ['🌹', '🌸', '🌷', '🌹', '💐', '💜', '🌺', '🌹', '🥀', '🌿'];
 
         interval = setInterval(() => {
           if (score >= target) return;
@@ -1039,7 +922,6 @@ document.addEventListener('DOMContentLoaded', () => {
             AudioManager.playPop();
             if (scoreEl) scoreEl.textContent = `${score} / ${target}`;
 
-            // Add flower dynamically to the bouquet vase with bounce
             if (vaseStack) {
               const collected = document.createElement('span');
               collected.className = 'basket-collected-flower';
@@ -1054,8 +936,8 @@ document.addEventListener('DOMContentLoaded', () => {
               clearInterval(interval);
               if (resultBox) {
                 resultBox.innerHTML = `
-                  <strong>💐 Gorgeous Bouquet Assembled! ✨</strong><br>
-                  Rabi &amp; Husnain's handcrafted 10-flower bouquet is complete! May your year bloom with endless joy and love. 🌸💜
+                  <strong>💐 Gorgeous Red Rose Bouquet Assembled! ✨</strong><br>
+                  Rabi &amp; Husnain's handcrafted 10-flower bouquet is complete! May your year bloom with endless joy and love. 🌹💜
                 `;
                 resultBox.classList.add('active');
               }
@@ -1069,7 +951,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
 
-    /* 2. Seed-to-Blooming Magic Rose */
     initGiftFinderGame() {
       const boxes = document.querySelectorAll('.gift-box-item');
       const resultBox = document.getElementById('gift-finder-result');
@@ -1088,7 +969,6 @@ document.addEventListener('DOMContentLoaded', () => {
             box.style.borderColor = 'var(--burgundy)';
             box.style.background = 'var(--grad-blush)';
 
-            // Trigger Seed-to-Blooming Rose Animation
             if (roseStage) {
               roseStage.classList.add('active');
               setTimeout(() => {
@@ -1118,7 +998,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
 
-    /* 3. Trust Issues No Button */
     initTrustNoGame() {
       const noBtn = document.getElementById('trust-no-btn');
       const yesBtn = document.getElementById('trust-yes-btn');
@@ -1155,112 +1034,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 13. INTERACTIVE LOVE LETTERS & ENVELOPES ──────────────────────────── */
-  const InteractiveLetters = {
-    currentIdx: 0,
-    envelopes: [],
-
-    init() {
-      this.envelopes = content.letter?.envelopes || [];
-      const prevBtn = document.getElementById('envelope-prev-btn');
-      const nextBtn = document.getElementById('envelope-next-btn');
-      const slideBtn = document.getElementById('envelope-slide-btn');
-      const closePaperBtn = document.getElementById('letter-paper-close-btn');
-
-      this.renderEnvelope();
-
-      prevBtn?.addEventListener('click', () => {
-        this.currentIdx = (this.currentIdx - 1 + this.envelopes.length) % this.envelopes.length;
-        this.renderEnvelope();
-        AudioManager.initContext();
-        AudioManager.playPop();
-      });
-
-      nextBtn?.addEventListener('click', () => {
-        this.currentIdx = (this.currentIdx + 1) % this.envelopes.length;
-        this.renderEnvelope();
-        AudioManager.initContext();
-        AudioManager.playPop();
-      });
-
-      slideBtn?.addEventListener('click', () => {
-        const paper = document.getElementById('letter-paper-card');
-        paper?.classList.add('open');
-        slideBtn.style.display = 'none';
-        AudioManager.initContext();
-        AudioManager.playChime();
-      });
-
-      closePaperBtn?.addEventListener('click', () => {
-        const paper = document.getElementById('letter-paper-card');
-        paper?.classList.remove('open');
-        if (slideBtn) slideBtn.style.display = 'inline-flex';
-        AudioManager.initContext();
-        AudioManager.playPop();
-      });
-    },
-
-    renderEnvelope() {
-      const data = this.envelopes[this.currentIdx];
-      if (!data) return;
-
-      const badge = document.getElementById('envelope-count-badge');
-      const envTitle = document.getElementById('envelope-preview-title');
-      const dateEl = document.getElementById('letter-date');
-      const salutationEl = document.getElementById('letter-salutation');
-      const bodyEl = document.getElementById('letter-paragraphs');
-      const closingEl = document.getElementById('letter-closing');
-      const sigEl = document.getElementById('letter-signature');
-      const paper = document.getElementById('letter-paper-card');
-      const slideBtn = document.getElementById('envelope-slide-btn');
-
-      if (badge) badge.textContent = `Envelope ${this.currentIdx + 1} of ${this.envelopes.length}`;
-      if (envTitle) envTitle.textContent = `Letter: ${data.title} 💌`;
-
-      if (dateEl) dateEl.textContent = data.date;
-      if (salutationEl) salutationEl.textContent = data.salutation;
-      if (closingEl) closingEl.textContent = data.closing;
-      if (sigEl) sigEl.textContent = data.signature;
-
-      if (bodyEl && data.paragraphs) {
-        bodyEl.innerHTML = '';
-        data.paragraphs.forEach(p => {
-          const pEl = document.createElement('p');
-          pEl.className = 'letter-paragraph';
-          pEl.textContent = p;
-          bodyEl.appendChild(pEl);
-        });
-      }
-
-      paper?.classList.remove('open');
-      if (slideBtn) slideBtn.style.display = 'inline-flex';
-    }
-  };
-
-  /* ─── 14. MAKE A WISH INTERACTION ───────────────────────────────────────── */
-  const MakeAWish = {
-    init() {
-      const trigger = document.getElementById('wish-trigger');
-      const card = document.getElementById('wish-revealed-card');
-      const text = document.getElementById('wish-revealed-text');
-
-      if (text && content.wish?.message) {
-        text.textContent = content.wish.message;
-      }
-
-      trigger?.addEventListener('click', () => {
-        AudioManager.initContext();
-        AudioManager.playChime();
-        trigger.style.transform = 'scale(1.2) rotate(15deg)';
-        setTimeout(() => {
-          trigger.style.transform = 'scale(1)';
-          card?.classList.add('active');
-        }, 300);
-      });
-    }
-  };
-
-  /* ─── 15. POPULATE DYNAMIC CONTENT ──────────────────────────────────────── */
+  /* ─── 12. POPULATE & INITIALIZE ALL MODULES ──────────────────────────────── */
   const ContentPopulator = {
     populate() {
       // Hero
@@ -1302,24 +1076,91 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
+      // Bouquet Section
+      const mainImg = document.querySelector('.bouquet-main-img');
+      const pinsContainer = document.getElementById('bouquet-flower-pins');
+      const messageBox = document.getElementById('bouquet-message-text');
+
+      if (mainImg && content.bouquet?.mainImage) mainImg.src = content.bouquet.mainImage;
+      if (pinsContainer && messageBox) {
+        const messages = content.bouquet?.flowerMessages || [];
+        pinsContainer.innerHTML = '';
+        messages.forEach((item, i) => {
+          const btn = document.createElement('button');
+          btn.className = `flower-pin-btn ${i === 0 ? 'active' : ''}`;
+          btn.innerHTML = `
+            <span class="flower-pin-icon">🌸</span>
+            <span class="flower-pin-name">${item.flower}</span>
+          `;
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.flower-pin-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            messageBox.style.opacity = '0';
+            setTimeout(() => {
+              messageBox.textContent = item.message;
+              messageBox.style.opacity = '1';
+            }, 200);
+            AudioManager.initContext();
+            AudioManager.playPop();
+          });
+          pinsContainer.appendChild(btn);
+        });
+        if (messages.length > 0) messageBox.textContent = messages[0].message;
+      }
+
       // Final Surprise
       const surpriseQuote = document.getElementById('final-quote-text');
       const finalPhoto = document.querySelector('.final-photo-frame img');
       const replayBtn = document.getElementById('replay-btn');
 
-      if (finalPhoto && content.surprise?.finalPhoto) {
-        finalPhoto.src = content.surprise.finalPhoto;
-      }
-      if (surpriseQuote && content.surprise?.finalLine) {
-        surpriseQuote.textContent = `“${content.surprise.finalLine}”`;
-      }
-      if (replayBtn && content.surprise?.replayBtn) {
-        replayBtn.textContent = content.surprise.replayBtn;
-      }
+      if (finalPhoto && content.surprise?.finalPhoto) finalPhoto.src = content.surprise.finalPhoto;
+      if (surpriseQuote && content.surprise?.finalLine) surpriseQuote.textContent = `“${content.surprise.finalLine}”`;
       replayBtn?.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         AudioManager.initContext();
         AudioManager.playChime();
+      });
+
+      // Birthday Candles
+      let candlesLit = 3;
+      document.querySelectorAll('.candle-interactive').forEach(candle => {
+        candle.addEventListener('click', () => {
+          if (!candle.classList.contains('blown')) {
+            candle.classList.add('blown');
+            candlesLit--;
+            AudioManager.initContext();
+            AudioManager.playPop();
+            if (candlesLit <= 0) {
+              document.getElementById('cake-blowout-banner')?.classList.add('active');
+              AudioManager.playChime();
+            }
+          }
+        });
+      });
+
+      document.getElementById('play-birthday-song-btn')?.addEventListener('click', () => {
+        AudioManager.playSpecialAudio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
+      });
+
+      // Make a wish
+      document.getElementById('wish-trigger')?.addEventListener('click', () => {
+        AudioManager.initContext();
+        AudioManager.playChime();
+        document.getElementById('wish-revealed-card')?.classList.add('active');
+      });
+
+      // Digital Envelope Gift Modal
+      document.getElementById('open-gift-btn')?.addEventListener('click', () => {
+        document.getElementById('gift-modal')?.classList.add('active');
+        AudioManager.initContext();
+        AudioManager.playChime();
+      });
+      document.getElementById('gift-modal-close')?.addEventListener('click', () => {
+        document.getElementById('gift-modal')?.classList.remove('active');
+      });
+      document.getElementById('start-exploring-btn')?.addEventListener('click', () => {
+        document.getElementById('gift-modal')?.classList.remove('active');
+        document.getElementById('rose-garden')?.scrollIntoView({ behavior: 'smooth' });
       });
     }
   };
@@ -1329,15 +1170,12 @@ document.addEventListener('DOMContentLoaded', () => {
   TouchHeartSparks.init();
   Navigation.init();
   HeroPetals.init();
-  GiftModal.init();
-  ReasonsSection.init();
-  MemoryGallery.init();
+  RedRoseGarden.init();
+  EternalRoseCloche.init();
+  VintageParchment.init();
+  PolaroidGallery.init();
+  SkyLanterns.init();
   TwoSoulsGame.init();
-  VideoMemories.init();
-  BouquetSection.init();
-  BirthdayCelebration.init();
   MiniGames.init();
-  InteractiveLetters.init();
-  MakeAWish.init();
   AudioManager.init();
 });

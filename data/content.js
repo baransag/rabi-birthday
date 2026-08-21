@@ -14,7 +14,7 @@ const CONTENT = {
       monthName: "September"
     },
     favoriteColor: "Soft Lavender & Purple",
-    favoriteFlower: "Blush Roses & Red Roses"
+    favoriteFlower: "Velvety Red Roses & Blush Roses 🌹"
   },
 
   journey: {
@@ -22,12 +22,14 @@ const CONTENT = {
     steps: [
       { id: "hero", label: "Welcome", num: "01" },
       { id: "about", label: "About Rabi", num: "02" },
-      { id: "memories", label: "Memories", num: "03" },
-      { id: "souls", label: "Two Souls", num: "04" },
-      { id: "moments", label: "Moments", num: "05" },
-      { id: "birthday", label: "Birthday", num: "06" },
-      { id: "letter", label: "Letters", num: "07" },
-      { id: "surprise", label: "Surprise", num: "08" }
+      { id: "rose-garden", label: "Rose Garden", num: "03" },
+      { id: "memories", label: "Memories", num: "04" },
+      { id: "souls", label: "Two Souls", num: "05" },
+      { id: "moments", label: "The Bouquet", num: "06" },
+      { id: "eternal-rose", label: "Eternal Rose", num: "07" },
+      { id: "birthday", label: "Celebration", num: "08" },
+      { id: "letter", label: "Vintage Letter", num: "09" },
+      { id: "surprise", label: "Surprise", num: "10" }
     ]
   },
 
@@ -44,7 +46,7 @@ I wanted to give you something different this year.
 So instead of just sending you a wish…
 I made you a little place on the internet that belongs only to you. ♡
 
-Every flower, every memory, and every little detail here was crafted to remind you of how appreciated and special you are.
+Every red rose, every memory, and every little detail here was crafted to remind you of how deeply appreciated and special you are.
 
 Happy Birthday, Rabiya. ✨
 — Husnain 💜`
@@ -54,7 +56,7 @@ Happy Birthday, Rabiya. ✨
     tag: "A Little About Her",
     title: "The Girl Who Brings Light Everywhere",
     subtitle: "Warmth, grace, and an effortless way of making people smile.",
-    description: "Some people have a quiet magic about them. Rabi is thoughtful, deeply caring, and brings a gentle warmth that makes any ordinary day feel special. She loves sweet conversations, beautiful flower bouquets, soft colors, and making everyone around her feel valued.",
+    description: "Some people have a quiet magic about them. Rabi is thoughtful, deeply caring, and brings a gentle warmth that makes any ordinary day feel special. She loves sweet conversations, beautiful red rose bouquets, soft colors, and making everyone around her feel valued.",
     quote: "“You don't just exist in the world; you make it a softer, brighter, and kinder place.”",
     photo1: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
     photo1Local: "assets/images/about/about-01.jpg",
@@ -65,9 +67,41 @@ Happy Birthday, Rabiya. ✨
       { label: "Lovingly Called", value: "Rabi ♡" },
       { label: "Special Day", value: "06 September" },
       { label: "Favorite Colors", value: "Lavender, Lilac & Purple 💜" },
-      { label: "Favorite Flowers", value: "Blush Roses & Red Roses 🌹" },
+      { label: "Favorite Flowers", value: "Velvet Red Roses & Blush Roses 🌹" },
       { label: "Superpower", value: "Turning ordinary days into memories" }
     ]
+  },
+
+  /* ─── 1. THE 12 RED ROSES GARDEN ────────────────────────────────────────── */
+  roseGarden: {
+    tag: "A Special Garden For Rabi",
+    title: "The 12 Red Roses of Appreciation 🌹",
+    subtitle: "Tap each blooming red rose to unveil a little message written just for you.",
+    showerButton: "Start Red Rose Petal Shower 🌹✨",
+    roses: [
+      { id: 1, title: "Rose 01: Your Radiant Smile", text: "Your smile is genuinely the most heartwarming thing in this world." },
+      { id: 2, title: "Rose 02: Your Caring Soul", text: "The selfless way you listen and care about others is so rare." },
+      { id: 3, title: "Rose 03: Sweet Voice", text: "Hearing you talk makes any stressful day feel calm and easy." },
+      { id: 4, title: "Rose 04: The Shared Laughs", text: "Every inside joke and little laugh we share is a memory I treasure." },
+      { id: 5, title: "Rose 05: Unapologetic Authenticity", text: "You never pretend to be anyone else. You are genuinely, beautifully you." },
+      { id: 6, title: "Rose 06: Your Pure Heart", text: "A heart that holds so much kindness, patience, and warmth." },
+      { id: 7, title: "Rose 07: Effortless Elegance", text: "Graceful in your words, gentle in your actions, and stunning in every way." },
+      { id: 8, title: "Rose 08: Comforting Energy", text: "Just knowing you are there makes everything feel safe and peaceful." },
+      { id: 9, title: "Rose 09: Your Thoughtful Check-ins", text: "The little moments you ask how someone is doing mean more than you know." },
+      { id: 10, title: "Rose 10: Beautiful Inside & Out", text: "As radiant as the prettiest red rose in full bloom." },
+      { id: 11, title: "Rose 11: A True Blessing", text: "Having you in my life is one of the sweetest blessings from the universe." },
+      { id: 12, title: "Rose 12: Forever Special", text: "Today, tomorrow, and in every lifetime — you will always be cherished. 🌹" }
+    ]
+  },
+
+  /* ─── 2. THE ENCHANTED ETERNAL RED ROSE (CRYSTAL CLOCHE) ─────────────────── */
+  eternalRose: {
+    tag: "Enchanted Keepsake",
+    title: "Husnain’s Eternal Red Rose 🌹✨",
+    subtitle: "Protected inside crystal glass — a bloom that never fades.",
+    prompt: "Tap the crystal dome to release its magic stardust…",
+    message: "“Real flowers fade in seven days, but this red rose will bloom forever on this website made especially for you.” ♡",
+    senderNote: "— Handcrafted with love by Husnain 💜"
   },
 
   reasons: [
@@ -122,6 +156,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-01.jpg",
       title: "Sweet Beginning",
       caption: "The start of so many beautiful conversations and shared laughs.",
+      date: "A Cherished Afternoon",
       alt: "Memory photo 1 of Rabi"
     },
     {
@@ -130,6 +165,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-02.jpg",
       title: "Pure Smiles",
       caption: "A day filled with genuine happiness and that radiant smile.",
+      date: "Golden Hour Glow",
       alt: "Memory photo 2 of Rabi"
     },
     {
@@ -138,6 +174,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-03.jpg",
       title: "Candid Grace",
       caption: "One of my absolute favorite candid moments.",
+      date: "Soft Breeze & Smiles",
       alt: "Memory photo 3 of Rabi"
     },
     {
@@ -146,6 +183,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-04.jpg",
       title: "Peaceful Days",
       caption: "The kind of peaceful, soft afternoon you wish could last forever.",
+      date: "Quiet Magic",
       alt: "Memory photo 4 of Rabi"
     },
     {
@@ -154,6 +192,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-05.jpg",
       title: "Effortless Radiance",
       caption: "Just you being your effortless, graceful, and stunning self.",
+      date: "Pure Elegance",
       alt: "Memory photo 5 of Rabi"
     },
     {
@@ -162,6 +201,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-06.jpg",
       title: "Unforgettable Laughs",
       caption: "A moment that will always bring an instant smile whenever I look at it.",
+      date: "Endless Giggles",
       alt: "Memory photo 6 of Rabi"
     },
     {
@@ -170,6 +210,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-07.jpg",
       title: "Soft Golden Hour",
       caption: "That gentle glow and quiet charm that is so uniquely yours.",
+      date: "Sunset Warmth",
       alt: "Memory photo 7 of Rabi"
     },
     {
@@ -178,6 +219,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-08.jpg",
       title: "Special Days",
       caption: "A sweet reminder of how lucky I am to celebrate you today.",
+      date: "06 September",
       alt: "Memory photo 8 of Rabi"
     },
     {
@@ -186,6 +228,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-09.jpg",
       title: "Cherished Moments",
       caption: "One of the softest, warmest memories we've ever shared.",
+      date: "Always Special",
       alt: "Memory photo 9 of Rabi"
     },
     {
@@ -194,6 +237,7 @@ Happy Birthday, Rabiya. ✨
       localImage: "assets/images/memories/memory-10.jpg",
       title: "Always In My Heart",
       caption: "A moment to keep close to the heart forever.",
+      date: "Forever & Always",
       alt: "Memory photo 10 of Rabi"
     }
   ],
@@ -204,7 +248,6 @@ Happy Birthday, Rabiya. ✨
     outro: "And there are still so many more memories waiting to happen. ♡"
   },
 
-  /* ─── TWO SOULS INTERACTIVE GALAXY & SURPRISE CATCHER GAME ─────────────── */
   souls: {
     tag: "Interactive Cosmic Experience",
     title: "Two Souls. One Universe. ✨",
@@ -218,8 +261,8 @@ Happy Birthday, Rabiya. ✨
     surprises: [
       {
         type: "wish",
-        icon: "🌸",
-        title: "A Heartfelt Wish ✨",
+        icon: "🌹",
+        title: "A Crimson Rose Wish ✨",
         text: "May every quiet dream in your heart bloom into something breathtaking this year. Happy Birthday Rabiya! 💖"
       },
       {
@@ -336,25 +379,25 @@ Happy Birthday, Rabiya. ✨
     flowerMessages: [
       {
         id: 1,
-        flower: "Blush Rose",
+        flower: "Velvet Red Rose 🌹",
+        color: "#B94B61",
+        message: "A symbol of deep care, admiration, and how much you truly mean to Husnain. 🌹"
+      },
+      {
+        id: 2,
+        flower: "Blush Pink Rose 🌸",
         color: "#F6D6D8",
         message: "To the gentlest soul I know — may your days always bloom with calm, beauty, and kindness. 🌸"
       },
       {
-        id: 2,
-        flower: "Red Rose",
-        color: "#B94B61",
-        message: "A symbol of deep care, admiration, and how much you truly mean to Husnain and everyone around you. 🌹"
-      },
-      {
         id: 3,
-        flower: "Lavender Blossom",
+        flower: "Lavender Blossom 💜",
         color: "#DDD4F3",
         message: "For your soothing presence and the comforting peace you bring into every conversation. 💜"
       },
       {
         id: 4,
-        flower: "White Lily",
+        flower: "White Lily 🤍",
         color: "#FFFCFA",
         message: "Pure, elegant, and timeless — just like the genuine grace in your heart. 🤍"
       }
@@ -369,19 +412,31 @@ Happy Birthday, Rabiya. ✨
     blownMessage: "May every single wish you made today come true in the sweetest way. Happy Birthday, Rabiya! 💖🎉"
   },
 
+  /* ─── 5. FLOATING CRIMSON SKY LANTERNS & WISHES ──────────────────────────── */
+  skyLanterns: {
+    tag: "Midnight Sky Wishes",
+    title: "Floating Crimson Sky Lanterns 🏮✨",
+    subtitle: "Tap the glowing lanterns as they rise into the night sky to release birthday wishes for Rabi!",
+    wishes: [
+      "🏮 Wish 01: May this year bring you infinite reasons to laugh out loud!",
+      "🏮 Wish 02: May your heart always be at peace and surrounded by genuine love.",
+      "🏮 Wish 03: May all your secret prayers be answered in the most beautiful way.",
+      "🏮 Wish 04: May your journey ahead be lined with soft red roses and open skies.",
+      "🏮 Wish 05: May you always know how deeply appreciated you are by Husnain. ♡"
+    ]
+  },
+
   games: {
     flowerGame: {
       tag: "Mini Game 01",
-      title: "Catch the Falling Flowers 🌸",
-      subtitle: "Collect 10 soft blooms to weave a custom birthday bouquet for Rabi!",
-      counterLabel: "Flowers collected for Rabi",
-      target: 10,
-      completionMessage: "Your bouquet is complete 💐✨ May your year be as colorful, soft, and fragrant as these flowers."
+      title: "Weave Rabi's Red Rose Bouquet 🌸🌹",
+      subtitle: "Tap the blooms as they fall — watch them assemble into a gorgeous vase below!",
+      target: 10
     },
     giftGame: {
       tag: "Mini Game 02",
-      title: "Find Rabi's Surprise Gift 🎁",
-      subtitle: "One of these pastel gift boxes holds a hidden birthday note. Pick one!",
+      title: "Bloom the Secret Rose 🌹",
+      subtitle: "One of these boxes plants a magical seed that sprouts and blooms into an eternal rose!",
       wrongMessage: "Almost… try another one ♡",
       giftMessage: "Of course you found it! Good things have a way of finding you. ♡ You deserve all the sweetest surprises in life."
     },
@@ -400,6 +455,23 @@ Happy Birthday, Rabiya. ✨
       ],
       yesResponse: "Yay! Promise sealed forever! You deserve all the happiness in the universe, Rabi! 🎉💜"
     }
+  },
+
+  /* ─── 3. VINTAGE ROSE WAX-SEALED ROYAL PARCHMENT LETTER ──────────────────── */
+  vintageParchment: {
+    tag: "Royal Vintage Letter",
+    title: "A Rose Wax-Sealed Letter for Rabi 📜🌹",
+    subtitle: "Tied with crimson silk ribbon. Tap the wax seal to break it open and unroll the letter!",
+    date: "06 September • Written with Deep Care",
+    salutation: "Dearest Rabiya (Rabi ♡),",
+    paragraphs: [
+      "Agar duniya ke saare red roses ek jagah jama kar diye jayein, tab bhi wo tumhari ek smile ki khubsurti aur masoomiyat ka muqabla nahi kar sakte.",
+      "Tumhari aawaz mein ek ajeeb sa sukoon hai, aur tumhari baaton mein ek aisi narmi jo har udaas din ko roshan kar deti hai. Tum sirf ek insan nahi ho, tum ek ehsaas ho jo sab kuch behtar bana deta hai.",
+      "Aaj tumhari birthday par main chahta hoon ke tumhein hamesha khushiyan milein, tumhare hontoun par hamesha ye pyari muskurahat qayam rahe, aur tumhari zindagi ka har din red roses ki tarah mehakta rahe.",
+      "Happy Birthday, my favorite person in the entire universe. 🌹✨"
+    ],
+    closing: "Hamesha tumhara khair-khwah aur dost,",
+    signature: "Husnain ♡"
   },
 
   letter: {
