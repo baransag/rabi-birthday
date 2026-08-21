@@ -52,6 +52,62 @@
   to   { transform: rotate(360deg); }
 }
 
+/* ─── STAR MAP & CONSTELLATIONS ──────────────────────────────────────────── */
+@keyframes starPulseGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 12px #FFD54F) drop-shadow(0 0 24px #CF9892);
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 24px #FFD54F) drop-shadow(0 0 45px #E040FB);
+    transform: scale(1.25);
+  }
+}
+
+@keyframes constellLinePulse {
+  0%, 100% { opacity: 0.35; stroke-width: 1.5; }
+  50% { opacity: 0.85; stroke-width: 2.5; }
+}
+
+/* ─── VIP COUPONS STAMP ─────────────────────────────────────────────────── */
+@keyframes couponStampPop {
+  0% {
+    transform: scale(3) rotate(-15deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(0.9) rotate(-12deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(-12deg);
+    opacity: 1;
+  }
+}
+
+/* ─── BOTTLE CAPSULE & OCEAN SWAY ────────────────────────────────────────── */
+@keyframes bottleOceanSway {
+  0%, 100% {
+    transform: translateY(0) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(5deg);
+  }
+}
+
+@keyframes scrollUnroll {
+  0% {
+    max-height: 0;
+    opacity: 0;
+    transform: scaleY(0.3);
+  }
+  100% {
+    max-height: 800px;
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
 /* ─── CRYSTAL CLOCHE ETERNAL ROSE ANIMATIONS ─────────────────────────────── */
 @keyframes clocheGlassGlint {
   0%, 100% {

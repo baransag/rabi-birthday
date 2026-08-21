@@ -33,7 +33,10 @@
           <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#memories" class="nav-link">Memories</a></li>
           <li><a href="#souls" class="nav-link">Two Souls</a></li>
+          <li><a href="#star-map" class="nav-link">Star Map</a></li>
           <li><a href="#moments" class="nav-link">Moments</a></li>
+          <li><a href="#vip-coupons" class="nav-link">Coupons</a></li>
+          <li><a href="#open-when" class="nav-link">Mood Notes</a></li>
           <li><a href="#birthday" class="nav-link">Birthday</a></li>
           <li><a href="#letter" class="nav-link">Letters</a></li>
           <li><a href="#surprise" class="nav-link">Surprise</a></li>
@@ -63,7 +66,11 @@
       <li><a href="#about" class="drawer-link">About Rabi</a></li>
       <li><a href="#memories" class="drawer-link">Memories &amp; Bloom 🌸</a></li>
       <li><a href="#souls" class="drawer-link">Two Souls Universe ✨</a></li>
+      <li><a href="#star-map" class="drawer-link">Star Map (06 Sept) 🌌</a></li>
       <li><a href="#moments" class="drawer-link">Moments &amp; Eternal Rose 🥀</a></li>
+      <li><a href="#vip-coupons" class="drawer-link">VIP Golden Coupons 🎟️</a></li>
+      <li><a href="#open-when" class="drawer-link">“Open When...” Notes 💌</a></li>
+      <li><a href="#bottle-capsule" class="drawer-link">Message in Bottle 🍾</a></li>
       <li><a href="#birthday" class="drawer-link">Birthday &amp; Games 🎂</a></li>
       <li><a href="#letter" class="drawer-link">Interactive Letters 💌</a></li>
       <li><a href="#surprise" class="drawer-link">Final Surprise ♡</a></li>
@@ -78,7 +85,7 @@
   <!-- ─── JOURNEY PROGRESS INDICATOR ─────────────────────────────────────── -->
   <aside id="journey-indicator" class="journey-indicator-pill" aria-label="Your Birthday Journey Progress">
     <span class="journey-icon">🌸</span>
-    <span id="journey-num" class="journey-num">01 / 08</span>
+    <span id="journey-num" class="journey-num">01 / 12</span>
     <span class="journey-divider">•</span>
     <span id="journey-label" class="journey-label">Welcome</span>
   </aside>
@@ -96,7 +103,7 @@
             Happy Birthday, Rabi <span>Rabiya ♡</span>
           </h1>
           <p id="hero-subtitle" class="hero-subtitle">
-            Today is all about celebrating someone truly special. A digital gift box filled with flowers, memories, and appreciation.
+            Today is all about celebrating someone truly special. A digital gift box filled with flowers, memories, stars, and appreciation.
           </p>
           <div class="hero-actions">
             <button id="open-gift-btn" class="btn btn-primary">
@@ -134,7 +141,7 @@
       </div>
     </section>
 
-    <!-- ─── DIGITAL ENVELOPE / GIFT MODAL ─────────────────────────────────── -->
+    <!-- ─── DIGITAL GIFT MODAL ────────────────────────────────────────────── -->
     <div id="gift-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-label="A Special Birthday Message">
       <div class="gift-modal-card">
         <button id="gift-modal-close" class="modal-close-btn" aria-label="Close gift message">&times;</button>
@@ -338,6 +345,45 @@
       </button>
     </div>
 
+    <!-- ─── NEW FEATURE 1: 🌌 RABI'S BIRTHDAY STAR MAP (06 SEPT) ───────────── -->
+    <section id="star-map" class="section-padding star-map-section">
+      <div class="container">
+        <div class="section-header" style="color: #FFFFFF;">
+          <span class="section-tag" style="background: rgba(207, 152, 146, 0.2); color: #FFF; border-color: rgba(207, 152, 146, 0.5);">
+            Celestial Keepsake
+          </span>
+          <h2 class="section-title" style="color: #FFFFFF;">Rabi’s Birthday Star Map (06 Sept Sky) 🌌⭐</h2>
+          <p class="section-subtitle" style="color: var(--dusty-peach);">
+            The exact night sky on 06 September. Tap Rabi’s Star below to reveal its cosmic certificate!
+          </p>
+        </div>
+
+        <div class="star-map-canvas-container">
+          <canvas id="star-map-canvas" class="star-map-canvas"></canvas>
+          <div id="rabi-birthday-star" class="rabi-birthday-star-interactive" role="button" aria-label="Tap Rabi's Star">⭐</div>
+          <div class="rabi-star-label">✨ Rabi’s Birthday Star (Tap Me) ✨</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Star Certificate Modal -->
+    <div id="star-certificate-modal" class="star-certificate-modal" role="dialog" aria-modal="true">
+      <div style="font-size: 3rem; margin-bottom: 8px;">⭐📜</div>
+      <h3 style="font-family: var(--font-serif); font-size: 1.6rem; color: var(--burgundy); margin-bottom: 12px;">
+        OFFICIAL COSMIC CERTIFICATE ⭐✨
+      </h3>
+      <p style="font-family: var(--font-editorial); font-size: 1.25rem; color: var(--text-dark); line-height: 1.85; margin-bottom: 16px;">
+        This certifies that out of all 100 billion stars in the galaxy…<br>
+        <strong style="color: var(--soft-peri); font-size: 1.15em;">“Rabi’s Birthday Star”</strong> shines brightest for Rabiya on 06 September.
+      </p>
+      <p style="font-size: 0.95rem; color: var(--dusty-peach); font-weight: 600; margin-bottom: 24px;">
+        Registered with endless love by Husnain 💜
+      </p>
+      <button id="star-certificate-close" class="btn btn-primary" style="width: 100%;">
+        Keep Star Shining ✨
+      </button>
+    </div>
+
     <!-- ─── 5. MOMENTS (THE BOUQUET & ETERNAL ROSE CLOCHE) ─────────────────── -->
     <section id="moments" class="section-padding bouquet-section">
       <div class="container">
@@ -407,7 +453,69 @@
       </div>
     </section>
 
-    <!-- ─── 6. BIRTHDAY CELEBRATION (+ ADVANCED MINI GAMES) ───────────────── -->
+    <!-- ─── NEW FEATURE 2: 🎟️ HUSNAIN'S VIP BIRTHDAY COUPONS ──────────────── -->
+    <section id="vip-coupons" class="section-padding vip-coupons-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Exclusive Golden Vouchers</span>
+          <h2 class="section-title">Husnain’s VIP Birthday Coupons 🎟️✨</h2>
+          <p class="section-subtitle">Tap any coupon to redeem it — stamped exclusively for Rabiya!</p>
+        </div>
+
+        <div id="vip-coupons-grid" class="vip-coupons-grid">
+          <!-- Dynamically populated from data/content.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── NEW FEATURE 3: 💌 "OPEN WHEN..." MOOD NOTES ────────────────────── -->
+    <section id="open-when" class="section-padding">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Personal Comfort Notes</span>
+          <h2 class="section-title">“Open When...” Mood Envelopes 💌</h2>
+          <p class="section-subtitle">Whatever you're feeling today, tap an envelope for a sweet note from Husnain.</p>
+        </div>
+
+        <div id="open-when-grid" class="open-when-grid">
+          <!-- Dynamically populated from data/content.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Mood Note Modal -->
+    <div id="mood-note-modal" class="mood-note-modal" role="dialog" aria-modal="true">
+      <div style="font-size: 2.8rem; margin-bottom: 10px;">💌</div>
+      <h3 id="mood-note-title" style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--burgundy); margin-bottom: 12px;">Comfort Note</h3>
+      <p id="mood-note-text" style="font-family: var(--font-editorial); font-size: 1.25rem; color: var(--text-dark); line-height: 1.8; margin-bottom: 24px;"></p>
+      <button id="mood-note-close" class="btn btn-primary" style="width: 100%;">
+        Keep Note Safe 💖
+      </button>
+    </div>
+
+    <!-- ─── NEW FEATURE 4: 🍾 MESSAGE IN A BOTTLE CAPSULE ─────────────────── -->
+    <section id="bottle-capsule" class="section-padding">
+      <div class="container">
+        <div class="bottle-capsule-stage">
+          <span class="section-tag">Ocean Secret Scroll</span>
+          <h2 class="section-title">Message In A Bottle 🍾🌊</h2>
+          <p class="section-subtitle" style="margin-bottom: 28px;">
+            A glass bottle floating across the ocean. Tap the bottle to pop the cork and unroll the scroll!
+          </p>
+
+          <div id="floating-glass-bottle" class="floating-glass-bottle" role="button" aria-label="Tap bottle to open scroll">
+            🍾
+          </div>
+
+          <div id="bottle-scroll-unrolled" class="bottle-scroll-unrolled">
+            <div style="font-size: 2.2rem; text-align: center; margin-bottom: 12px;">📜✨</div>
+            <div id="bottle-scroll-text" class="bottle-scroll-text"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 6. BIRTHDAY CELEBRATION (+ MINI GAMES) ────────────────────────── -->
     <section id="birthday" class="section-padding birthday-section">
       <div class="container">
         <div class="section-header">

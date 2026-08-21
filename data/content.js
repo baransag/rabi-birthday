@@ -13,7 +13,7 @@ const CONTENT = {
       month: 9,
       monthName: "September"
     },
-    favoriteColor: "Soft Lavender & Purple",
+    favoriteColor: "Soft Lavender & Dusty Rose",
     favoriteFlower: "Velvety Red Roses & Blush Roses 🌹"
   },
 
@@ -24,16 +24,20 @@ const CONTENT = {
       { id: "about", label: "About Rabi", num: "02" },
       { id: "memories", label: "Memories", num: "03" },
       { id: "souls", label: "Two Souls", num: "04" },
-      { id: "moments", label: "The Bouquet", num: "05" },
-      { id: "birthday", label: "Birthday", num: "06" },
-      { id: "letter", label: "Love Letters", num: "07" },
-      { id: "surprise", label: "Surprise", num: "08" }
+      { id: "star-map", label: "Star Map", num: "05" },
+      { id: "moments", label: "The Bouquet", num: "06" },
+      { id: "vip-coupons", label: "VIP Coupons", num: "07" },
+      { id: "open-when", label: "Mood Notes", num: "08" },
+      { id: "bottle-capsule", label: "Bottle Capsule", num: "09" },
+      { id: "birthday", label: "Birthday", num: "10" },
+      { id: "letter", label: "Love Letters", num: "11" },
+      { id: "surprise", label: "Surprise", num: "12" }
     ]
   },
 
   hero: {
     title: "Happy Birthday, Rabi ♡",
-    subtitle: "Today is all about celebrating someone truly special. A digital gift box filled with flowers, memories, and appreciation.",
+    subtitle: "Today is all about celebrating someone truly special. A digital gift box filled with flowers, memories, stars, and appreciation.",
     primaryBtn: "Slide to Open Gift 💌",
     secondaryBtn: "Explore Our Memories 🌸",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
@@ -44,7 +48,7 @@ I wanted to give you something different this year.
 So instead of just sending you a wish…
 I made you a little place on the internet that belongs only to you. ♡
 
-Every flower, every memory, and every little detail here was crafted to remind you of how deeply appreciated and special you are.
+Every flower, every memory, every star in the sky, and every little detail here was crafted to remind you of how deeply appreciated and special you are.
 
 Happy Birthday, Rabiya. ✨
 — Husnain 💜`
@@ -64,7 +68,7 @@ Happy Birthday, Rabiya. ✨
       { label: "Full Name", value: "Rabiya" },
       { label: "Lovingly Called", value: "Rabi ♡" },
       { label: "Special Day", value: "06 September" },
-      { label: "Favorite Colors", value: "Lavender, Lilac & Purple 💜" },
+      { label: "Favorite Colors", value: "Lavender, Peri & Peach 💜" },
       { label: "Favorite Flowers", value: "Velvet Red Roses & Blush Roses 🌹" },
       { label: "Superpower", value: "Turning ordinary days into memories" }
     ]
@@ -187,24 +191,6 @@ Happy Birthday, Rabiya. ✨
       caption: "A sweet reminder of how lucky I am to celebrate you today.",
       date: "06 September",
       alt: "Memory photo 8 of Rabi"
-    },
-    {
-      id: 9,
-      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=80",
-      localImage: "assets/images/memories/memory-09.jpg",
-      title: "Cherished Moments",
-      caption: "One of the softest, warmest memories we've ever shared.",
-      date: "Always Special",
-      alt: "Memory photo 9 of Rabi"
-    },
-    {
-      id: 10,
-      image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80",
-      localImage: "assets/images/memories/memory-10.jpg",
-      title: "Always In My Heart",
-      caption: "A moment to keep close to the heart forever.",
-      date: "Forever & Always",
-      alt: "Memory photo 10 of Rabi"
     }
   ],
 
@@ -297,16 +283,21 @@ Happy Birthday, Rabiya. ✨
         title: "The Eternal Flower 🌹",
         text: "Some flowers fade in a week, but the bouquet Husnain coded for you stays forever.",
         img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=400&q=80"
-      },
-      {
-        type: "funny",
-        icon: "✨",
-        title: "Cosmic Truth 💫",
-        text: "10/10 stars in the galaxy agree: Rabi is the most special girl in the universe! 💖"
       }
     ],
     completionTitle: "Galaxy Surprises Collected! 💐✨",
     completionMessage: "You caught all of Husnain's cosmic surprises! May your birthday and your entire year be as magical as this universe. 💜🌹"
+  },
+
+  /* ─── NEW FEATURE 1: 🌌 RABI'S BIRTHDAY STAR MAP (06 SEPTEMBER) ────────── */
+  starMap: {
+    tag: "Celestial Keepsake",
+    title: "Rabi’s Birthday Star Map (06 Sept Sky) 🌌⭐",
+    subtitle: "The exact night sky on 06 September. Tap Rabi’s Star to reveal its golden cosmic certificate!",
+    certificateTitle: "OFFICIAL COSMIC CERTIFICATE ⭐✨",
+    certificateLine1: "This certifies that out of all 100 billion stars in the galaxy...",
+    certificateLine2: "“Rabi’s Birthday Star” shines brightest for Rabiya on 06 September.",
+    certificateSender: "Registered with endless love by Husnain 💜"
   },
 
   bouquet: {
@@ -350,6 +341,101 @@ Happy Birthday, Rabiya. ✨
     subtitle: "Protected inside crystal glass — tap the dome to release its magic stardust.",
     message: "“Real flowers fade in seven days, but this red rose will bloom forever on this website made especially for you.” ♡",
     senderNote: "— Handcrafted with love by Husnain 💜"
+  },
+
+  /* ─── NEW FEATURE 2: 🎟️ HUSNAIN'S VIP BIRTHDAY COUPONS ─────────────────── */
+  vipCoupons: {
+    tag: "Exclusive Golden Vouchers",
+    title: "Husnain’s VIP Birthday Coupons 🎟️✨",
+    subtitle: "Tap any coupon to redeem it — stamped exclusively for Rabiya!",
+    coupons: [
+      {
+        id: 1,
+        icon: "☕",
+        title: "Late-Night Coffee / Treat",
+        desc: "One late-night coffee or favorite dessert of your choice — on Husnain!",
+        badge: "Valid Anytime 🎟️"
+      },
+      {
+        id: 2,
+        icon: "👑",
+        title: "Win Any Argument Instantly",
+        desc: "Play this coupon whenever we disagree to win instantly. No questions asked!",
+        badge: "24/7 Immunity 🛡️"
+      },
+      {
+        id: 3,
+        icon: "🎧",
+        title: "Husnain Listens Interrupt-Free",
+        desc: "Husnain will sit, listen, and pay 100% attention to anything you want to vent about.",
+        badge: "VIP Attention 💜"
+      },
+      {
+        id: 4,
+        icon: "🤗",
+        title: "Unlimited Hugs & Sweet Words",
+        desc: "Redeemable for infinite warm hugs, wholesome care, and sweet compliments.",
+        badge: "No Expiry Date 🌸"
+      },
+      {
+        id: 5,
+        icon: "🎬",
+        title: "Pick Favorite Movie / Outing",
+        desc: "You get full control to pick whatever movie, plan, or outing we do next!",
+        badge: "Rabi's Choice ✨"
+      }
+    ]
+  },
+
+  /* ─── NEW FEATURE 3: 💌 "OPEN WHEN..." MOOD NOTES ─────────────────────── */
+  openWhen: {
+    tag: "Personal Comfort Notes",
+    title: "“Open When...” Mood Envelopes 💌",
+    subtitle: "Whatever you're feeling today, tap an envelope for a sweet note from Husnain.",
+    notes: [
+      {
+        id: 1,
+        mood: "Open when you need a big smile 😊",
+        icon: "💖",
+        title: "A Gentle Reminder",
+        text: "Whenever you feel down, remember that your smile brightens Husnain's entire world. You are so genuinely loved, appreciated, and cherished. Keep smiling, Rabiya! ✨"
+      },
+      {
+        id: 2,
+        mood: "Open on a quiet or rainy day 🌧️",
+        icon: "☕",
+        title: "Cozy Warmth",
+        text: "Pour yourself a warm cup of coffee or tea, wrap up in a blanket, and take a deep breath. You are doing amazing, and everything will always turn out beautifully."
+      },
+      {
+        id: 3,
+        mood: "Open late at night when you miss Husnain 🌙",
+        icon: "💜",
+        title: "Under The Same Stars",
+        text: "No matter how far apart or busy days get, we are looking at the exact same moon and stars. Husnain is always just a message away. ♡"
+      },
+      {
+        id: 4,
+        mood: "Open when you need confidence ✨",
+        icon: "👑",
+        title: "You Are Extraordinary",
+        text: "Never doubt how smart, capable, and graceful you are. You have a heart of gold and a quiet strength that inspires everyone around you."
+      }
+    ]
+  },
+
+  /* ─── NEW FEATURE 4: 🍾 MESSAGE IN A BOTTLE / CAPSULE ──────────────────── */
+  messageInBottle: {
+    tag: "Ocean Secret Scroll",
+    title: "Message In A Bottle 🍾🌊",
+    subtitle: "A glass bottle floating across the ocean. Tap the cork to pop it open and unroll the scroll!",
+    scrollText: `“Even if oceans separated us, this bottle would find its way to you. 
+You are a rare, beautiful soul who brings peace to everyone around you. 
+
+May your birthday be filled with endless smiles, laughter, and calm.
+Happy Birthday, Rabiya. ♡”
+
+— Unrolled from the Ocean Scroll by Husnain 💜`
   },
 
   birthday: {

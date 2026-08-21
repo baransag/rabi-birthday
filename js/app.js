@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ─── 2. INTERACTIVE TOUCH / CLICK HEART SPARKS ─────────────────────────── */
   const TouchHeartSparks = {
     init() {
-      const symbols = ['💖', '🌸', '✨', '💜', '🌹', '💐'];
+      const symbols = ['💖', '🌸', '✨', '💜', '🌹', '💐', '⭐'];
       const spawn = (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'VIDEO') return;
 
@@ -221,10 +221,14 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "about", label: "About Rabi", num: "02" },
         { id: "memories", label: "Memories", num: "03" },
         { id: "souls", label: "Two Souls", num: "04" },
-        { id: "moments", label: "The Bouquet", num: "05" },
-        { id: "birthday", label: "Birthday", num: "06" },
-        { id: "letter", label: "Love Letters", num: "07" },
-        { id: "surprise", label: "Surprise", num: "08" }
+        { id: "star-map", label: "Star Map", num: "05" },
+        { id: "moments", label: "The Bouquet", num: "06" },
+        { id: "vip-coupons", label: "VIP Coupons", num: "07" },
+        { id: "open-when", label: "Mood Notes", num: "08" },
+        { id: "bottle-capsule", label: "Bottle Capsule", num: "09" },
+        { id: "birthday", label: "Birthday", num: "10" },
+        { id: "letter", label: "Love Letters", num: "11" },
+        { id: "surprise", label: "Surprise", num: "12" }
       ];
 
       sections.forEach(sec => {
@@ -241,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (step) {
             const numEl = document.getElementById('journey-num');
             const labelEl = document.getElementById('journey-label');
-            if (numEl) numEl.textContent = `${step.num} / 08`;
+            if (numEl) numEl.textContent = `${step.num} / ${journeySteps.length}`;
             if (labelEl) labelEl.textContent = step.label;
           }
         }
@@ -262,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.resize();
       window.addEventListener('resize', () => this.resize(), { passive: true });
 
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 22; i++) {
         this.petals.push(this.createPetal());
       }
       this.loop();
@@ -275,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     createPetal() {
-      const colors = ['rgba(239, 83, 80, 0.7)', 'rgba(198, 40, 40, 0.75)', 'rgba(246, 214, 216, 0.75)', 'rgba(221, 212, 243, 0.65)'];
+      const colors = ['rgba(207, 152, 146, 0.75)', 'rgba(105, 104, 166, 0.65)', 'rgba(246, 214, 216, 0.75)', 'rgba(221, 212, 243, 0.65)'];
       return {
         x: Math.random() * (this.canvas?.width || window.innerWidth),
         y: Math.random() * (this.canvas?.height || 600) - 50,
@@ -313,6 +317,173 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       requestAnimationFrame(() => this.loop());
+    }
+  };
+
+  /* ─── NEW FEATURE 1: 🌌 RABI'S BIRTHDAY STAR MAP ────────────────────────── */
+  const StarMap = {
+    canvas: null,
+    ctx: null,
+    stars: [],
+
+    init() {
+      this.canvas = document.getElementById('star-map-canvas');
+      const interactiveStar = document.getElementById('rabi-birthday-star');
+      const modal = document.getElementById('star-certificate-modal');
+      const closeBtn = document.getElementById('star-certificate-close');
+
+      if (!this.canvas) return;
+      this.ctx = this.canvas.getContext('2d');
+      this.resize();
+      window.addEventListener('resize', () => this.resize(), { passive: true });
+
+      for (let i = 0; i < 90; i++) {
+        this.stars.push({
+          x: Math.random() * (this.canvas.width || 700),
+          y: Math.random() * (this.canvas.height || 380),
+          size: Math.random() * 2 + 0.6,
+          alpha: Math.random() * 0.8 + 0.2,
+          speed: (Math.random() - 0.5) * 0.015
+        });
+      }
+
+      interactiveStar?.addEventListener('click', () => {
+        modal?.classList.add('active');
+        AudioManager.initContext();
+        AudioManager.playChime();
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        modal?.classList.remove('active');
+        AudioManager.playPop();
+      });
+
+      this.render();
+    },
+
+    resize() {
+      if (!this.canvas) return;
+      this.canvas.width = this.canvas.offsetWidth;
+      this.canvas.height = this.canvas.offsetHeight;
+    },
+
+    render() {
+      if (!this.ctx || !this.canvas) return;
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      this.stars.forEach(s => {
+        s.alpha += s.speed;
+        if (s.alpha > 0.95 || s.alpha < 0.2) s.speed = -s.speed;
+
+        this.ctx.beginPath();
+        this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        this.ctx.fill();
+      });
+
+      // Draw subtle constellation line to Rabi's Star
+      const cx = this.canvas.width * 0.54;
+      const cy = this.canvas.height * 0.42;
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(cx - 100, cy - 60);
+      this.ctx.lineTo(cx, cy);
+      this.ctx.lineTo(cx + 90, cy - 40);
+      this.ctx.lineTo(cx + 120, cy + 70);
+      this.ctx.strokeStyle = 'rgba(207, 152, 146, 0.45)';
+      this.ctx.lineWidth = 1.5;
+      this.ctx.setLineDash([4, 4]);
+      this.ctx.stroke();
+      this.ctx.setLineDash([]);
+
+      requestAnimationFrame(() => this.render());
+    }
+  };
+
+  /* ─── NEW FEATURE 2: 🎟️ VIP COUPONS ─────────────────────────────────────── */
+  const VIPCoupons = {
+    init() {
+      const grid = document.getElementById('vip-coupons-grid');
+      if (!grid || !content.vipCoupons?.coupons) return;
+
+      grid.innerHTML = '';
+      content.vipCoupons.coupons.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'vip-coupon-card';
+        card.innerHTML = `
+          <div class="vip-coupon-icon">${c.icon}</div>
+          <h4 class="vip-coupon-title">${c.title}</h4>
+          <p class="vip-coupon-desc">${c.desc}</p>
+          <button class="coupon-redeem-btn">${c.badge || 'REDEEM COUPON 🎟️'}</button>
+          <div class="coupon-claimed-stamp">CLAIMED BY RABIYA ♡</div>
+        `;
+
+        const btn = card.querySelector('.coupon-redeem-btn');
+        btn.addEventListener('click', () => {
+          card.classList.add('claimed');
+          AudioManager.initContext();
+          AudioManager.playChime();
+        });
+
+        grid.appendChild(card);
+      });
+    }
+  };
+
+  /* ─── NEW FEATURE 3: 💌 OPEN WHEN MOOD NOTES ────────────────────────────── */
+  const OpenWhenNotes = {
+    init() {
+      const grid = document.getElementById('open-when-grid');
+      const modal = document.getElementById('mood-note-modal');
+      const titleEl = document.getElementById('mood-note-title');
+      const textEl = document.getElementById('mood-note-text');
+      const closeBtn = document.getElementById('mood-note-close');
+
+      if (!grid || !content.openWhen?.notes) return;
+
+      grid.innerHTML = '';
+      content.openWhen.notes.forEach(n => {
+        const card = document.createElement('div');
+        card.className = 'mood-envelope-card';
+        card.innerHTML = `
+          <div class="mood-envelope-icon">${n.icon}</div>
+          <h4 class="mood-envelope-title">${n.mood}</h4>
+        `;
+
+        card.addEventListener('click', () => {
+          if (titleEl) titleEl.textContent = n.title;
+          if (textEl) textEl.textContent = n.text;
+          modal?.classList.add('active');
+          AudioManager.initContext();
+          AudioManager.playChime();
+        });
+
+        grid.appendChild(card);
+      });
+
+      closeBtn?.addEventListener('click', () => {
+        modal?.classList.remove('active');
+        AudioManager.playPop();
+      });
+    }
+  };
+
+  /* ─── NEW FEATURE 4: 🍾 MESSAGE IN A BOTTLE CAPSULE ─────────────────────── */
+  const MessageInBottle = {
+    init() {
+      const bottle = document.getElementById('floating-glass-bottle');
+      const scrollCard = document.getElementById('bottle-scroll-unrolled');
+      const scrollText = document.getElementById('bottle-scroll-text');
+
+      if (scrollText && content.messageInBottle?.scrollText) {
+        scrollText.textContent = content.messageInBottle.scrollText;
+      }
+
+      bottle?.addEventListener('click', () => {
+        scrollCard?.classList.toggle('open');
+        AudioManager.initContext();
+        AudioManager.playChime();
+      });
     }
   };
 
@@ -626,7 +797,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     createSupernova(cx, cy) {
-      const colors = ['#EF5350', '#C62828', '#E040FB', '#FFD54F', '#FFF9F5'];
+      const colors = ['#CF9892', '#6968A6', '#E040FB', '#FFD54F', '#FFF9F5'];
       for (let i = 0; i < 80; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = Math.random() * 6 + 2;
@@ -727,8 +898,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ctx.moveTo(this.orb1Pos.x, this.orb1Pos.y);
         this.ctx.lineTo(this.orb2Pos.x, this.orb2Pos.y);
         const grad = this.ctx.createLinearGradient(this.orb1Pos.x, this.orb1Pos.y, this.orb2Pos.x, this.orb2Pos.y);
-        grad.addColorStop(0, 'rgba(224, 64, 251, 0.5)');
-        grad.addColorStop(1, 'rgba(239, 83, 80, 0.5)');
+        grad.addColorStop(0, 'rgba(207, 152, 146, 0.7)');
+        grad.addColorStop(1, 'rgba(105, 104, 166, 0.7)');
         this.ctx.strokeStyle = grad;
         this.ctx.lineWidth = 2.5;
         this.ctx.setLineDash([5, 6]);
@@ -1168,9 +1339,13 @@ document.addEventListener('DOMContentLoaded', () => {
   TouchHeartSparks.init();
   Navigation.init();
   HeroPetals.init();
+  StarMap.init();
   Gallery.init();
   TwoSoulsGame.init();
   EternalRoseCloche.init();
+  VIPCoupons.init();
+  OpenWhenNotes.init();
+  MessageInBottle.init();
   MiniGames.init();
   LetterCarousel.init();
   AudioManager.init();
