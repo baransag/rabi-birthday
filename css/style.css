@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    RABI — THE BEAUTIFUL BIRTHDAY GIFT
-   css/style.css — Soft Pastel Luxury & Red Rose Signature Design System
+   css/style.css — Soft Pastel Luxury Design System
    ═══════════════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;600;700&display=swap');
@@ -17,17 +17,15 @@
   --peach: #F8DDC8;
   --champagne: #EAD9C8;
 
-  /* Red Rose Luxury Accents */
+  /* Accent Tones */
   --crimson-rose: #C62828;
   --rose-red: #B94B61;
   --burgundy: #7D3042;
-  --deep-velvet: #4A121A;
-  --gold-accent: #E5A93C;
-
   --text-dark: #3D3033;
   --text-muted: #7A686C;
   --text-light: #9E8B8F;
 
+  /* Gradients */
   --grad-hero: linear-gradient(135deg, #FFF9F5 0%, #FFF3F4 45%, #F4EEFB 100%);
   --grad-card: linear-gradient(145deg, #FFFFFF 0%, #FFF8F8 100%);
   --grad-accent: linear-gradient(135deg, #DFA3AF 0%, #B94B61 100%);
@@ -35,17 +33,19 @@
   --grad-lavender: linear-gradient(135deg, #EEE9FA 0%, #DDD4F3 100%);
   --grad-blush: linear-gradient(135deg, #FFF0F2 0%, #F6D6D8 100%);
 
+  /* Shadows */
   --shadow-sm: 0 4px 12px rgba(125, 48, 66, 0.05);
   --shadow-md: 0 8px 24px rgba(125, 48, 66, 0.08);
   --shadow-lg: 0 16px 40px rgba(125, 48, 66, 0.12);
-  --shadow-rose: 0 12px 32px rgba(198, 40, 40, 0.22);
   --shadow-hover: 0 20px 48px rgba(125, 48, 66, 0.16);
 
+  /* Typography */
   --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
   --font-editorial: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-script: 'Caveat', cursive, 'Brush Script MT', sans-serif;
 
+  /* Radii & Transitions */
   --radius-sm: 10px;
   --radius-md: 18px;
   --radius-lg: 28px;
@@ -134,12 +134,6 @@ h1, h2, h3, h4 {
   border: 1px solid rgba(223, 163, 175, 0.3);
 }
 
-.section-tag.rose-tag {
-  background: rgba(239, 83, 80, 0.12);
-  color: var(--crimson-rose);
-  border-color: rgba(239, 83, 80, 0.3);
-}
-
 .section-header {
   text-align: center;
   max-width: 680px;
@@ -190,18 +184,6 @@ h1, h2, h3, h4 {
 .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-md);
-}
-
-.btn-rose {
-  background: var(--grad-rose);
-  color: #FFFFFF;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 22px rgba(198, 40, 40, 0.3);
-}
-
-.btn-rose:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 0 14px 32px rgba(198, 40, 40, 0.4);
 }
 
 .btn-secondary {
@@ -257,7 +239,7 @@ h1, h2, h3, h4 {
 }
 
 .nav-logo span {
-  color: var(--crimson-rose);
+  color: var(--rose-red);
   font-size: 1.1em;
 }
 
@@ -454,7 +436,7 @@ h1, h2, h3, h4 {
   color: var(--text-muted);
 }
 
-/* ─── HERO SECTION ───────────────────────────────────────────────────────── */
+/* ─── 1. HERO SECTION ────────────────────────────────────────────────────── */
 .hero-section {
   position: relative;
   padding: 60px 0 100px;
@@ -490,7 +472,7 @@ h1, h2, h3, h4 {
   gap: 8px;
   background: #FFFFFF;
   border: 1px solid var(--blush);
-  color: var(--crimson-rose);
+  color: var(--rose-red);
   padding: 8px 20px;
   border-radius: var(--radius-pill);
   font-size: 0.9rem;
@@ -692,7 +674,7 @@ h1, h2, h3, h4 {
   color: var(--burgundy);
 }
 
-/* ─── ABOUT RABI (+ EDITORIAL DUAL SPREAD) ────────────────────────────────── */
+/* ─── 2. ABOUT RABI (+ REASONS CARDS) ────────────────────────────────────── */
 .about-editorial-grid {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
@@ -794,7 +776,7 @@ h1, h2, h3, h4 {
   color: var(--burgundy);
 }
 
-/* ─── REASONS CARDS ──────────────────────────────────────────────────────── */
+/* Reasons Cards */
 .reasons-subheading-box {
   text-align: center;
   margin: 60px 0 36px;
@@ -845,107 +827,7 @@ h1, h2, h3, h4 {
   line-height: 1.7;
 }
 
-/* ─── 1. THE RED ROSES APPRECIATION GARDEN ────────────────────────────────── */
-.rose-garden-section {
-  background: linear-gradient(180deg, rgba(255, 240, 242, 0.5) 0%, #FFF8F9 100%);
-  position: relative;
-}
-
-.rose-garden-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-top: 36px;
-}
-
-.garden-rose-card {
-  background: var(--warm-white);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  border: 2px solid rgba(239, 83, 80, 0.2);
-  box-shadow: var(--shadow-sm);
-  text-align: center;
-  cursor: pointer;
-  position: relative;
-  transition: all var(--trans-normal);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.garden-rose-card:hover {
-  transform: translateY(-6px);
-  border-color: var(--crimson-rose);
-  box-shadow: var(--shadow-rose);
-}
-
-.garden-rose-icon {
-  font-size: 2.8rem;
-  margin-bottom: 12px;
-  transition: transform var(--trans-fast);
-  filter: drop-shadow(0 4px 10px rgba(198, 40, 40, 0.2));
-}
-
-.garden-rose-card:hover .garden-rose-icon {
-  transform: scale(1.2) rotate(10deg);
-}
-
-.garden-rose-title {
-  font-family: var(--font-serif);
-  font-size: 1.25rem;
-  color: var(--burgundy);
-  margin-bottom: 8px;
-}
-
-.garden-rose-tag {
-  font-size: 0.85rem;
-  color: var(--crimson-rose);
-  font-weight: 600;
-}
-
-.garden-rose-text {
-  font-family: var(--font-editorial);
-  font-size: 1.2rem;
-  color: var(--text-dark);
-  line-height: 1.6;
-  margin-top: 10px;
-  display: none;
-}
-
-.garden-rose-card.opened {
-  background: var(--grad-blush);
-  border-color: var(--crimson-rose);
-}
-
-.garden-rose-card.opened .garden-rose-text {
-  display: block;
-  animation: fadeIn 0.4s ease forwards;
-}
-
-.garden-rose-card.opened .garden-rose-tag {
-  display: none;
-}
-
-/* ─── 2. MEMORY GALLERY & POLAROIDS ──────────────────────────────────────── */
-.fairy-lights-string {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 24px;
-  padding: 0 20px;
-}
-
-.fairy-light-bulb {
-  width: 14px;
-  height: 20px;
-  background: radial-gradient(circle, #FFF9C4 0%, #FFD54F 100%);
-  border-radius: 50% 50% 30% 30%;
-  animation: fairyLightFlicker 2.5s infinite;
-}
-
-.fairy-light-bulb:nth-child(2n) { animation-delay: 0.7s; }
-.fairy-light-bulb:nth-child(3n) { animation-delay: 1.4s; }
-
+/* ─── 3. MEMORIES GALLERY (+ BLOOM & VIDEOS) ─────────────────────────────── */
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -1072,6 +954,86 @@ h1, h2, h3, h4 {
   animation: fadeIn 0.8s ease forwards;
 }
 
+/* Video Album */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.video-card {
+  background: var(--warm-white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--blush);
+  cursor: pointer;
+  transition: all var(--trans-normal);
+}
+
+.video-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.video-poster-wrapper {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+
+.video-poster-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.88;
+  transition: transform var(--trans-slow);
+}
+
+.video-card:hover .video-poster-img {
+  transform: scale(1.05);
+}
+
+.video-play-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--burgundy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transition: transform var(--trans-fast);
+}
+
+.video-card:hover .video-play-badge {
+  transform: translate(-50%, -50%) scale(1.15);
+}
+
+.video-info-box {
+  padding: 16px 20px;
+}
+
+.video-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--burgundy);
+  margin-bottom: 4px;
+}
+
+.video-caption {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
 /* Lightbox Modal */
 .lightbox-modal {
   position: fixed;
@@ -1155,7 +1117,49 @@ h1, h2, h3, h4 {
 .lightbox-prev { left: 16px; }
 .lightbox-next { right: 16px; }
 
-/* ─── 3. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER ───────────────────── */
+/* Video Player Modal */
+.video-player-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(12px);
+  z-index: 2500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--trans-normal);
+}
+
+.video-player-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-player-container {
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.video-player-container video {
+  width: 100%;
+  display: block;
+}
+
+.video-modal-close {
+  position: absolute;
+  top: -44px;
+  right: 0;
+  color: #FFFFFF;
+  font-size: 2rem;
+}
+
+/* ─── 4. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER ───────────────────── */
 .souls-section {
   background: radial-gradient(circle at center, #1B0F24 0%, #0D0712 100%);
   color: #FFFFFF;
@@ -1309,7 +1313,7 @@ h1, h2, h3, h4 {
 .surprise-popup-img { width: 100%; height: 180px; object-fit: cover; border-radius: var(--radius-md); margin: 12px 0; }
 .surprise-popup-text { font-family: var(--font-editorial); font-size: 1.2rem; color: var(--text-dark); line-height: 1.6; }
 
-/* ─── 4. BOUQUET & ETERNAL ROSE ──────────────────────────────────────────── */
+/* ─── 5. MOMENTS (THE BOUQUET & ETERNAL ROSE CLOCHE) ─────────────────────── */
 .bouquet-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1374,18 +1378,18 @@ h1, h2, h3, h4 {
   background: linear-gradient(145deg, #2D141E 0%, #15080E 100%);
   color: #FFFFFF;
   border-radius: var(--radius-lg);
-  padding: 32px 24px;
+  padding: 36px 28px;
   text-align: center;
   box-shadow: var(--shadow-lg);
   border: 1px solid rgba(239, 83, 80, 0.4);
-  margin-top: 40px;
+  margin-top: 48px;
 }
 
 .cloche-glass-dome {
-  width: 180px;
-  height: 240px;
+  width: 190px;
+  height: 250px;
   margin: 0 auto;
-  border-radius: 90px 90px 14px 14px;
+  border-radius: 95px 95px 14px 14px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(8px);
   border: 2px solid rgba(255, 255, 255, 0.35);
@@ -1401,14 +1405,14 @@ h1, h2, h3, h4 {
 }
 
 .cloche-base-stand {
-  width: 220px;
+  width: 230px;
   height: 18px;
   background: linear-gradient(180deg, #EAD9C8 0%, #B8977E 100%);
   border-radius: 10px;
   margin: -8px auto 0;
 }
 
-.enchanted-rose-icon { font-size: 4rem; animation: eternalRosePulse 3s infinite; }
+.enchanted-rose-icon { font-size: 4.2rem; animation: eternalRosePulse 3s infinite; }
 .single-falling-petal { position: absolute; font-size: 1.5rem; display: none; }
 .cloche-glass-dome.petal-fallen .single-falling-petal { display: block; animation: singlePetalFallInsideCloche 2.8s ease forwards; }
 
@@ -1423,7 +1427,7 @@ h1, h2, h3, h4 {
 
 .eternal-rose-message-box.active { display: block; animation: scaleIn 0.5s ease forwards; }
 
-/* ─── 5. BIRTHDAY CAKE & MINI GAMES ──────────────────────────────────────── */
+/* ─── 6. BIRTHDAY CAKE & MINI GAMES ──────────────────────────────────────── */
 .cake-stage {
   text-align: center;
   margin: 40px auto 0;
@@ -1731,49 +1735,7 @@ h1, h2, h3, h4 {
   transition: transform 0.2s ease;
 }
 
-/* Floating Sky Lanterns */
-.sky-lanterns-night-stage {
-  background: radial-gradient(circle at center, #1F0D16 0%, #0D0408 100%);
-  padding: 40px 20px;
-  border-radius: var(--radius-lg);
-  margin-top: 48px;
-  position: relative;
-  min-height: 320px;
-  overflow: hidden;
-  text-align: center;
-  border: 1px solid rgba(239, 83, 80, 0.3);
-}
-
-.floating-sky-lantern {
-  position: absolute;
-  font-size: 2.6rem;
-  cursor: pointer;
-  user-select: none;
-  animation: lanternFloatRise var(--speed, 5s) linear forwards, lanternGlowPulse 2s infinite;
-  z-index: 20;
-}
-
-.lantern-wish-toast {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--crimson-rose);
-  padding: 12px 20px;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-editorial);
-  font-size: 1.15rem;
-  color: #FFFFFF;
-  display: none;
-  width: 90%;
-  max-width: 500px;
-}
-
-.lantern-wish-toast.active { display: block; animation: scaleIn 0.4s ease forwards; }
-
-/* ─── 6. INTERACTIVE LOVE LETTERS & ENVELOPES ────────────────────────────── */
+/* ─── 7. INTERACTIVE LOVE LETTERS & ENVELOPES ────────────────────────────── */
 .envelopes-carousel-header {
   display: flex;
   align-items: center;
@@ -1874,20 +1836,19 @@ h1, h2, h3, h4 {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: radial-gradient(circle, #D32F2F 0%, #7D1822 100%);
-  border: 2px solid #E57373;
+  background: var(--grad-accent);
   color: #FFF;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
-  box-shadow: 0 4px 12px rgba(125, 24, 34, 0.5);
+  box-shadow: 0 4px 12px rgba(185, 75, 97, 0.4);
 }
 
 .letter-date {
   text-align: right;
   font-family: var(--font-serif);
-  color: var(--crimson-rose);
+  color: var(--rose-red);
   font-size: 0.95rem;
   margin-bottom: 16px;
 }
@@ -1917,7 +1878,7 @@ h1, h2, h3, h4 {
 .letter-signature {
   font-family: var(--font-script);
   font-size: 2rem;
-  color: var(--crimson-rose);
+  color: var(--rose-red);
   font-weight: 700;
   margin-top: 4px;
 }
@@ -1955,7 +1916,7 @@ h1, h2, h3, h4 {
 .wish-revealed-card.active { display: block; animation: scaleIn 0.5s ease forwards; }
 .wish-revealed-text { font-family: var(--font-editorial); font-size: 1.35rem; font-style: italic; color: var(--burgundy); }
 
-/* ─── 7. FINAL SURPRISE ─────────────────────────────────────────────────── */
+/* ─── 8. FINAL SURPRISE ─────────────────────────────────────────────────── */
 .surprise-section { text-align: center; }
 .final-photo-frame {
   width: min(440px, 92vw);
@@ -1980,9 +1941,9 @@ h1, h2, h3, h4 {
   text-align: center;
 }
 
-.footer-heart { color: var(--crimson-rose); display: inline-block; animation: softFloat 2s infinite; }
+.footer-heart { color: var(--rose-red); display: inline-block; animation: softFloat 2s infinite; }
 
-/* ─── RESPONSIVE ─────────────────────────────────────────────────────────── */
+/* ─── RESPONSIVE BREAKPOINTS ─────────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
   .hero-content { margin: 0 auto; }

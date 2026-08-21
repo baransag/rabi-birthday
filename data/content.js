@@ -22,19 +22,18 @@ const CONTENT = {
     steps: [
       { id: "hero", label: "Welcome", num: "01" },
       { id: "about", label: "About Rabi", num: "02" },
-      { id: "rose-garden", label: "Rose Garden", num: "03" },
-      { id: "memories", label: "Memories", num: "04" },
-      { id: "souls", label: "Two Souls", num: "05" },
-      { id: "moments", label: "The Bouquet", num: "06" },
-      { id: "birthday", label: "Birthday", num: "07" },
-      { id: "letter", label: "Love Letters", num: "08" },
-      { id: "surprise", label: "Surprise", num: "09" }
+      { id: "memories", label: "Memories", num: "03" },
+      { id: "souls", label: "Two Souls", num: "04" },
+      { id: "moments", label: "The Bouquet", num: "05" },
+      { id: "birthday", label: "Birthday", num: "06" },
+      { id: "letter", label: "Love Letters", num: "07" },
+      { id: "surprise", label: "Surprise", num: "08" }
     ]
   },
 
   hero: {
     title: "Happy Birthday, Rabi ♡",
-    subtitle: "Today is all about celebrating someone truly special.",
+    subtitle: "Today is all about celebrating someone truly special. A digital gift box filled with flowers, memories, and appreciation.",
     primaryBtn: "Slide to Open Gift 💌",
     secondaryBtn: "Explore Our Memories 🌸",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
@@ -45,7 +44,7 @@ I wanted to give you something different this year.
 So instead of just sending you a wish…
 I made you a little place on the internet that belongs only to you. ♡
 
-Every velvety red rose, every memory, and every little detail here was crafted to remind you of how deeply appreciated and special you are.
+Every flower, every memory, and every little detail here was crafted to remind you of how deeply appreciated and special you are.
 
 Happy Birthday, Rabiya. ✨
 — Husnain 💜`
@@ -55,7 +54,7 @@ Happy Birthday, Rabiya. ✨
     tag: "A Little About Her",
     title: "The Girl Who Brings Light Everywhere",
     subtitle: "Warmth, grace, and an effortless way of making people smile.",
-    description: "Some people have a quiet magic about them. Rabi is thoughtful, deeply caring, and brings a gentle warmth that makes any ordinary day feel special. She loves sweet conversations, beautiful red rose bouquets, soft colors, and making everyone around her feel valued.",
+    description: "Some people have a quiet magic about them. Rabi is thoughtful, deeply caring, and brings a gentle warmth that makes any ordinary day feel special. She loves sweet conversations, beautiful flower bouquets, soft colors, and making everyone around her feel valued.",
     quote: "“You don't just exist in the world; you make it a softer, brighter, and kinder place.”",
     photo1: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80",
     photo1Local: "assets/images/about/about-01.jpg",
@@ -68,21 +67,6 @@ Happy Birthday, Rabiya. ✨
       { label: "Favorite Colors", value: "Lavender, Lilac & Purple 💜" },
       { label: "Favorite Flowers", value: "Velvet Red Roses & Blush Roses 🌹" },
       { label: "Superpower", value: "Turning ordinary days into memories" }
-    ]
-  },
-
-  roseGarden: {
-    tag: "A Special Garden For Rabi",
-    title: "The Red Roses of Appreciation 🌹",
-    subtitle: "Tap each blooming red rose to unveil a little message written just for you.",
-    showerButton: "Start Red Rose Petal Shower 🌹✨",
-    roses: [
-      { id: 1, title: "Your Radiant Smile 🌹", text: "Your smile is genuinely the most heartwarming thing in this world." },
-      { id: 2, title: "Your Caring Soul 🌹", text: "The selfless way you listen and care about others is so rare." },
-      { id: 3, title: "Sweet Voice & Peace 🌹", text: "Hearing you talk makes any stressful day feel calm and easy." },
-      { id: 4, title: "Shared Laughs 🌹", text: "Every inside joke and little laugh we share is a memory I treasure." },
-      { id: 5, title: "Pure Heart & Kindness 🌹", text: "A heart that holds so much kindness, patience, and warmth." },
-      { id: 6, title: "Forever Special 🌹", text: "Today, tomorrow, and always — you will always be cherished by Husnain. ♡" }
     ]
   },
 
@@ -203,6 +187,24 @@ Happy Birthday, Rabiya. ✨
       caption: "A sweet reminder of how lucky I am to celebrate you today.",
       date: "06 September",
       alt: "Memory photo 8 of Rabi"
+    },
+    {
+      id: 9,
+      image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=600&q=80",
+      localImage: "assets/images/memories/memory-09.jpg",
+      title: "Cherished Moments",
+      caption: "One of the softest, warmest memories we've ever shared.",
+      date: "Always Special",
+      alt: "Memory photo 9 of Rabi"
+    },
+    {
+      id: 10,
+      image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=600&q=80",
+      localImage: "assets/images/memories/memory-10.jpg",
+      title: "Always In My Heart",
+      caption: "A moment to keep close to the heart forever.",
+      date: "Forever & Always",
+      alt: "Memory photo 10 of Rabi"
     }
   ],
 
@@ -212,6 +214,41 @@ Happy Birthday, Rabiya. ✨
     outro: "And there are still so many more memories waiting to happen. ♡"
   },
 
+  videos: [
+    {
+      id: 1,
+      video: "assets/videos/video-01.mp4",
+      poster: "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80",
+      localPoster: "assets/images/memories/memory-01.jpg",
+      title: "A Sweet Memory",
+      caption: "Little clips that hold big smiles."
+    },
+    {
+      id: 2,
+      video: "assets/videos/video-02.mp4",
+      poster: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=600&q=80",
+      localPoster: "assets/images/memories/memory-02.jpg",
+      title: "Pure Joy",
+      caption: "Moments of unfiltered happiness and soft giggles."
+    },
+    {
+      id: 3,
+      video: "assets/videos/video-03.mp4",
+      poster: "https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?auto=format&fit=crop&w=600&q=80",
+      localPoster: "assets/images/memories/memory-03.jpg",
+      title: "Candid Moments",
+      caption: "Just living in the moment and enjoying the day."
+    },
+    {
+      id: 4,
+      video: "assets/videos/video-04.mp4",
+      poster: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=600&q=80",
+      localPoster: "assets/images/memories/memory-04.jpg",
+      title: "Laughter in Motion",
+      caption: "The kind of laughter that brightens an entire room."
+    }
+  ],
+
   souls: {
     tag: "Interactive Cosmic Experience",
     title: "Two Souls. One Universe. ✨",
@@ -220,7 +257,7 @@ Happy Birthday, Rabiya. ✨
     label2: "RABI 🌹",
     mergedTitle: "When Husnain & Rabi Connect ♡",
     mergedText: "“Out of 8 billion people in this universe, finding you was the most beautiful thing that ever happened.” ✨",
-    gameInstruction: "Catch the falling cosmic red roses & gifts to unlock Husnain's secret wishes and cute surprises for Rabi!",
+    gameInstruction: "Catch the falling cosmic flowers & gifts to unlock Husnain's secret wishes and cute surprises for Rabi!",
     targetSurprises: 6,
     surprises: [
       {
@@ -323,23 +360,10 @@ Happy Birthday, Rabiya. ✨
     blownMessage: "May every single wish you made today come true in the sweetest way. Happy Birthday, Rabiya! 💖🎉"
   },
 
-  skyLanterns: {
-    tag: "Midnight Sky Wishes",
-    title: "Floating Crimson Sky Lanterns 🏮✨",
-    subtitle: "Tap the glowing lanterns as they rise into the night sky to release birthday wishes for Rabi!",
-    wishes: [
-      "🏮 Wish 01: May this year bring you infinite reasons to laugh out loud!",
-      "🏮 Wish 02: May your heart always be at peace and surrounded by genuine love.",
-      "🏮 Wish 03: May all your secret prayers be answered in the most beautiful way.",
-      "🏮 Wish 04: May your journey ahead be lined with soft red roses and open skies.",
-      "🏮 Wish 05: May you always know how deeply appreciated you are by Husnain. ♡"
-    ]
-  },
-
   games: {
     flowerGame: {
       tag: "Mini Game 01",
-      title: "Weave Rabi's Red Rose Bouquet 🌹",
+      title: "Weave Rabi's Bouquet 🌸",
       subtitle: "Tap the blooms as they fall — watch them assemble into a gorgeous vase below!",
       target: 10
     },
@@ -379,7 +403,7 @@ Happy Birthday, Rabiya. ✨
         salutation: "Dear Rabi,",
         paragraphs: [
           "Happy Birthday. I wanted to create something genuinely personal for you this year — something that wouldn't just disappear after today, but remain as a gentle reminder of how appreciated you are.",
-          "Agar duniya ke saare red roses ek jagah jama kar diye jayein, tab bhi wo tumhari ek smile ki khubsurti aur masoomiyat ka muqabla nahi kar sakte.",
+          "You have this rare and effortless ability to make everyone around you feel valued. Your kindness isn't loud or demanding; it is gentle, constant, and incredibly comforting.",
           "Thank you for being someone so wonderful to talk to, for the shared laughs, the sweet check-ins, and for simply being the radiant, thoughtful person that you are."
         ],
         closing: "With all my warmest wishes and deepest care,",
@@ -405,11 +429,11 @@ Happy Birthday, Rabiya. ✨
         salutation: "Sweet Rabi,",
         paragraphs: [
           "May every door you hope to open swing wide for you this year.",
-          "May your paths be surrounded by soft red roses, warm friendships, wonderful adventures, and dreams coming true one by one.",
+          "May your paths be surrounded by soft flowers, warm friendships, wonderful adventures, and dreams coming true one by one.",
           "Never stop smiling, because your smile is genuinely one of the most beautiful things in this world."
         ],
         closing: "Forever rooting for you,",
-        signature: "Happy Birthday, Rabi! 🌹 — Husnain"
+        signature: "Happy Birthday, Rabi! 🌸 — Husnain"
       }
     ]
   },
@@ -423,12 +447,12 @@ Happy Birthday, Rabiya. ✨
 
   surprise: {
     tag: "Forever With You",
-    title: "For Rabi ♡ 🌹",
+    title: "For Rabi ♡",
     subtitle: "I hope this little place made you smile today.",
     finalPhoto: "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80",
     localFinalPhoto: "assets/images/special/final-photo.jpg",
     finalLine: "Some gifts get old. This one will always be here.",
-    replayBtn: "Experience It Again 🌹✨"
+    replayBtn: "Experience It Again 🌸"
   },
 
   audio: {

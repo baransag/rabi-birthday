@@ -219,13 +219,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const journeySteps = content.journey?.steps || [
         { id: "hero", label: "Welcome", num: "01" },
         { id: "about", label: "About Rabi", num: "02" },
-        { id: "rose-garden", label: "Rose Garden", num: "03" },
-        { id: "memories", label: "Memories", num: "04" },
-        { id: "souls", label: "Two Souls", num: "05" },
-        { id: "moments", label: "The Bouquet", num: "06" },
-        { id: "birthday", label: "Celebration", num: "07" },
-        { id: "letter", label: "Love Letters", num: "08" },
-        { id: "surprise", label: "Surprise", num: "09" }
+        { id: "memories", label: "Memories", num: "03" },
+        { id: "souls", label: "Two Souls", num: "04" },
+        { id: "moments", label: "The Bouquet", num: "05" },
+        { id: "birthday", label: "Birthday", num: "06" },
+        { id: "letter", label: "Love Letters", num: "07" },
+        { id: "surprise", label: "Surprise", num: "08" }
       ];
 
       sections.forEach(sec => {
@@ -242,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (step) {
             const numEl = document.getElementById('journey-num');
             const labelEl = document.getElementById('journey-label');
-            if (numEl) numEl.textContent = `${step.num} / 09`;
+            if (numEl) numEl.textContent = `${step.num} / 08`;
             if (labelEl) labelEl.textContent = step.label;
           }
         }
@@ -317,63 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 5. RED ROSES APPRECIATION GARDEN ──────────────────────────────────── */
-  const RedRoseGarden = {
-    init() {
-      const grid = document.getElementById('rose-garden-grid');
-      const showerBtn = document.getElementById('start-rose-shower-btn');
-      if (!grid) return;
-
-      const roses = content.roseGarden?.roses || [];
-      grid.innerHTML = '';
-
-      roses.forEach(r => {
-        const card = document.createElement('div');
-        card.className = 'garden-rose-card';
-        card.innerHTML = `
-          <div class="garden-rose-icon">🌹</div>
-          <h4 class="garden-rose-title">${r.title}</h4>
-          <span class="garden-rose-tag">Tap to reveal ♡</span>
-          <p class="garden-rose-text">${r.text}</p>
-        `;
-
-        card.addEventListener('click', () => {
-          card.classList.toggle('opened');
-          AudioManager.initContext();
-          AudioManager.playPop();
-        });
-
-        grid.appendChild(card);
-      });
-
-      showerBtn?.addEventListener('click', () => {
-        this.launchRedRosePetalShower();
-        AudioManager.initContext();
-        AudioManager.playChime();
-      });
-    },
-
-    launchRedRosePetalShower() {
-      for (let i = 0; i < 40; i++) {
-        const petal = document.createElement('span');
-        petal.textContent = '🌹';
-        petal.style.position = 'fixed';
-        petal.style.left = `${Math.random() * 95}%`;
-        petal.style.top = `-40px`;
-        petal.style.fontSize = `${Math.random() * 16 + 22}px`;
-        petal.style.pointerEvents = 'none';
-        petal.style.zIndex = '9999';
-        petal.style.setProperty('--drift', `${(Math.random() - 0.5) * 120}px`);
-        petal.style.setProperty('--rot', `${Math.random() * 360}deg`);
-        petal.style.animation = `redRosePetalFall ${Math.random() * 2 + 3.5}s ease-in-out forwards`;
-        document.body.appendChild(petal);
-
-        setTimeout(() => petal.remove(), 6000);
-      }
-    }
-  };
-
-  /* ─── 6. MEMORY GALLERY & LIGHTBOX ──────────────────────────────────────── */
+  /* ─── 5. MEMORY GALLERY & LIGHTBOX ──────────────────────────────────────── */
   const Gallery = {
     currentIndex: 0,
     items: [],
@@ -412,6 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       this.initLightbox();
       this.initMemoryBloom();
+      this.initVideos();
     },
 
     initLightbox() {
@@ -479,10 +423,59 @@ document.addEventListener('DOMContentLoaded', () => {
         bloomStage?.classList.add('bloomed');
         bloomBtn.style.display = 'none';
       });
+    },
+
+    initVideos() {
+      const vGrid = document.getElementById('videos-grid');
+      const vModal = document.getElementById('video-modal');
+      const vPlayer = document.getElementById('modal-video-player');
+      const vClose = document.getElementById('video-modal-close');
+
+      if (!vGrid || !content.videos) return;
+      vGrid.innerHTML = '';
+
+      content.videos.forEach(v => {
+        const card = document.createElement('div');
+        card.className = 'video-card';
+        card.innerHTML = `
+          <div class="video-poster-wrapper">
+            <img src="${v.poster}" alt="${v.title}" class="video-poster-img" loading="lazy">
+            <div class="video-play-badge">▶</div>
+          </div>
+          <div class="video-info-box">
+            <h4 class="video-title">${v.title}</h4>
+            <div class="video-caption">${v.caption}</div>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          if (vPlayer && vModal) {
+            vPlayer.src = v.video;
+            vModal.classList.add('active');
+            vPlayer.play().catch(() => {});
+            AudioManager.initContext();
+          }
+        });
+
+        vGrid.appendChild(card);
+      });
+
+      const closeVideo = () => {
+        if (vPlayer && vModal) {
+          vPlayer.pause();
+          vPlayer.src = '';
+          vModal.classList.remove('active');
+        }
+      };
+
+      vClose?.addEventListener('click', closeVideo);
+      vModal?.addEventListener('click', (e) => {
+        if (e.target === vModal) closeVideo();
+      });
     }
   };
 
-  /* ─── 7. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER ──────────────────── */
+  /* ─── 6. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER ──────────────────── */
   const TwoSoulsGame = {
     canvas: null,
     ctx: null,
@@ -669,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const surprise = surprisesList[Math.floor(Math.random() * surprisesList.length)];
         const item = document.createElement('div');
         item.className = 'falling-surprise-item';
-        item.textContent = surprise.icon || '🌹';
+        item.textContent = surprise.icon || '🌸';
         item.style.left = `${Math.random() * 80 + 10}%`;
         item.style.top = '-20px';
         item.style.setProperty('--speed', `${Math.random() * 1.5 + 3.5}s`);
@@ -702,7 +695,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const text = document.getElementById('surprise-popup-text');
       const img = document.getElementById('surprise-popup-img');
 
-      if (icon) icon.textContent = surprise.icon || '🌹';
+      if (icon) icon.textContent = surprise.icon || '🌸';
       if (title) title.textContent = surprise.title || 'Special Surprise';
       if (text) text.textContent = surprise.text || '';
 
@@ -769,7 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 8. ETERNAL ROSE IN GLASS CLOCHE ───────────────────────────────────── */
+  /* ─── 7. ETERNAL ROSE IN CRYSTAL CLOCHE ─────────────────────────────────── */
   const EternalRoseCloche = {
     init() {
       const dome = document.getElementById('cloche-glass-dome');
@@ -787,46 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 9. FLOATING SKY LANTERNS ──────────────────────────────────────────── */
-  const SkyLanterns = {
-    init() {
-      const stage = document.getElementById('sky-lanterns-night-stage');
-      const toast = document.getElementById('lantern-wish-toast');
-      if (!stage) return;
-
-      const wishes = content.skyLanterns?.wishes || [
-        "🏮 May all your prayers come true in the sweetest way! ✨",
-        "🏮 Wishing you endless peace, joy, and laughter! 💖",
-        "🏮 May every path you take be filled with fresh red roses! 🌹"
-      ];
-
-      setInterval(() => {
-        const lantern = document.createElement('div');
-        lantern.className = 'floating-sky-lantern';
-        lantern.textContent = '🏮';
-        lantern.style.left = `${Math.random() * 85 + 5}%`;
-        lantern.style.bottom = `-20px`;
-        lantern.style.setProperty('--speed', `${Math.random() * 2 + 5}s`);
-        lantern.style.setProperty('--drift', `${(Math.random() - 0.5) * 60}px`);
-
-        lantern.addEventListener('click', () => {
-          AudioManager.initContext();
-          AudioManager.playChime();
-          if (toast) {
-            toast.textContent = wishes[Math.floor(Math.random() * wishes.length)];
-            toast.classList.add('active');
-            setTimeout(() => toast.classList.remove('active'), 3500);
-          }
-          lantern.remove();
-        });
-
-        stage.appendChild(lantern);
-        setTimeout(() => lantern.remove(), 7000);
-      }, 1500);
-    }
-  };
-
-  /* ─── 10. MINI GAMES ────────────────────────────────────────────────────── */
+  /* ─── 8. MINI GAMES ────────────────────────────────────────────────────── */
   const MiniGames = {
     init() {
       this.initFlowerGame();
@@ -850,7 +804,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (scoreEl) scoreEl.textContent = `0 / ${target}`;
         resultBox?.classList.remove('active');
         if (vaseStack) vaseStack.innerHTML = '';
-        startBtn.textContent = 'Restart Game 🌹';
+        startBtn.textContent = 'Restart Game 🌸';
         clearInterval(interval);
         area?.querySelectorAll('.falling-flower-item').forEach(e => e.remove());
 
@@ -886,8 +840,8 @@ document.addEventListener('DOMContentLoaded', () => {
               clearInterval(interval);
               if (resultBox) {
                 resultBox.innerHTML = `
-                  <strong>💐 Gorgeous Red Rose Bouquet Assembled! ✨</strong><br>
-                  Rabi &amp; Husnain's handcrafted 10-flower bouquet is complete! May your year bloom with endless joy and love. 🌹💜
+                  <strong>💐 Gorgeous Bouquet Assembled! ✨</strong><br>
+                  Rabi &amp; Husnain's handcrafted 10-flower bouquet is complete! May your year bloom with endless joy and love. 🌸💜
                 `;
                 resultBox.classList.add('active');
               }
@@ -984,7 +938,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 11. INTERACTIVE LOVE LETTERS & ENVELOPES CAROUSEL ─────────────────── */
+  /* ─── 9. INTERACTIVE LOVE LETTERS & ENVELOPES CAROUSEL ──────────────────── */
   const LetterCarousel = {
     currentEnvelopeIndex: 0,
     envelopes: [],
@@ -1059,7 +1013,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 12. POPULATE CONTENT ──────────────────────────────────────────────── */
+  /* ─── 10. POPULATE CONTENT ──────────────────────────────────────────────── */
   const ContentPopulator = {
     populate() {
       // Hero
@@ -1214,12 +1168,10 @@ document.addEventListener('DOMContentLoaded', () => {
   TouchHeartSparks.init();
   Navigation.init();
   HeroPetals.init();
-  RedRoseGarden.init();
   Gallery.init();
   TwoSoulsGame.init();
   EternalRoseCloche.init();
   MiniGames.init();
-  SkyLanterns.init();
   LetterCarousel.init();
   AudioManager.init();
 });
