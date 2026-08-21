@@ -43,7 +43,7 @@
       <!-- Nav Actions (Music + Mobile Hamburger) -->
       <div class="nav-actions">
         <button id="nav-audio-btn" class="audio-btn" aria-label="Toggle background music">
-          <span>♫</span> Play Music
+          <span class="vinyl-disc-icon">♫</span> Play Music
         </button>
         <button id="hamburger-btn" class="hamburger" aria-label="Open Mobile Menu">
           <span></span>
@@ -70,7 +70,7 @@
     </ul>
     <div style="margin-top: auto;">
       <button id="drawer-audio-btn" class="audio-btn" style="width: 100%; justify-content: center;">
-        <span>♫</span> Play Music
+        <span class="vinyl-disc-icon">♫</span> Play Music
       </button>
     </div>
   </aside>
@@ -380,7 +380,7 @@
       </div>
     </section>
 
-    <!-- ─── 6. BIRTHDAY CELEBRATION (+ MINI GAMES) ────────────────────────── -->
+    <!-- ─── 6. BIRTHDAY CELEBRATION (+ ADVANCED MINI GAMES) ───────────────── -->
     <section id="birthday" class="section-padding birthday-section">
       <div class="container">
         <div class="section-header">
@@ -433,38 +433,43 @@
         <!-- Mini Games Subsection -->
         <div class="games-subheading-box">
           <span class="section-tag">Playful Moments</span>
-          <h3 style="font-size: 2rem; margin-bottom: 8px;">Sweet Mini Games</h3>
-          <p style="color: var(--text-muted);">A couple of gentle little games made just to bring a smile.</p>
+          <h3 style="font-size: 2rem; margin-bottom: 8px;">Sweet Interactive Games</h3>
+          <p style="color: var(--text-muted);">Games crafted to assemble bouquets and bloom magic roses for Rabi.</p>
         </div>
 
         <div class="games-grid">
-          <!-- Game 1: Catch Flowers -->
+          <!-- Game 1: Catch Flowers & Dynamic Bouquet Assembly -->
           <div class="game-card">
             <span class="section-tag">Mini Game 01</span>
-            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Catch the Falling Flowers 🌸</h4>
+            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Weave Rabi's Bouquet 🌸</h4>
             <p style="font-size: 0.92rem; color: var(--text-muted);">
-              Tap the floating blooms to weave a custom bouquet for Rabi!
+              Tap the blooms as they fall — watch them assemble into a gorgeous vase below!
             </p>
 
             <div class="flower-game-canvas-wrapper" id="flower-game-canvas">
               <div id="flower-game-score" class="game-score-badge">0 / 10</div>
-              <div style="position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); font-size: 0.85rem; color: var(--text-muted);">
-                Tap flowers as they fall!
+
+              <!-- Real-time Animated Bouquet Basket / Vase -->
+              <div class="dynamic-bouquet-vase" id="dynamic-bouquet-vase">
+                <div class="dynamic-bouquet-flowers-stack" id="dynamic-bouquet-flowers-stack">
+                  <!-- Caught blooms appear here in real time! -->
+                </div>
+                <div class="basket-ribbon">🎀</div>
               </div>
             </div>
 
             <div id="flower-game-result" class="game-result-box"></div>
             <button id="start-flower-game-btn" class="btn btn-primary" style="margin-top: 14px;">
-              Start Flower Game 🌸
+              Start Bouquet Weaving 🌸
             </button>
           </div>
 
-          <!-- Game 2: Find the Gift -->
+          <!-- Game 2: Seed-to-Blooming Magic Rose -->
           <div class="game-card">
             <span class="section-tag">Mini Game 02</span>
-            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Find Rabi's Surprise Gift 🎁</h4>
+            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Bloom the Secret Rose 🌹</h4>
             <p style="font-size: 0.92rem; color: var(--text-muted);">
-              One of these pastel gift boxes holds a secret birthday note. Pick one!
+              One of these boxes plants a magical seed that sprouts and blooms into an eternal rose!
             </p>
 
             <div class="gift-finder-boxes">
@@ -484,6 +489,20 @@
                 <span class="gift-box-icon">🎁</span>
                 <span style="font-size: 0.85rem; font-weight: 600; color: var(--burgundy);">Box 4</span>
               </div>
+            </div>
+
+            <!-- Seed to Blooming Magic Rose Stage -->
+            <div id="rose-blooming-stage" class="rose-blooming-stage">
+              <div class="blooming-rose-head">🌹</div>
+              <div class="growing-stem">
+                <span class="stem-leaf-left">🍃</span>
+                <span class="stem-leaf-right">🌿</span>
+              </div>
+              <div class="seed-element">🌱</div>
+              <p id="blooming-rose-quote" class="blooming-rose-quote">
+                “Just like this rose, your presence bloomed in my life and made everything softer, brighter, and beautiful. ♡”<br>
+                <strong style="color: var(--rose-red); font-size: 0.9em;">— Husnain 💜</strong>
+              </p>
             </div>
 
             <div id="gift-finder-result" class="game-result-box"></div>

@@ -60,13 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (playing) {
         navBtn?.classList.add('playing');
         drawerBtn?.classList.add('playing');
-        if (navBtn) navBtn.innerHTML = '<span>❚❚</span> Pause Music';
-        if (drawerBtn) drawerBtn.innerHTML = '<span>❚❚</span> Pause Music';
+        if (navBtn) navBtn.innerHTML = '<span class="vinyl-disc-icon">💿</span> Pause Music';
+        if (drawerBtn) drawerBtn.innerHTML = '<span class="vinyl-disc-icon">💿</span> Pause Music';
       } else {
         navBtn?.classList.remove('playing');
         drawerBtn?.classList.remove('playing');
-        if (navBtn) navBtn.innerHTML = '<span>♫</span> Play Music';
-        if (drawerBtn) drawerBtn.innerHTML = '<span>♫</span> Play Music';
+        if (navBtn) navBtn.innerHTML = '<span class="vinyl-disc-icon">♫</span> Play Music';
+        if (drawerBtn) drawerBtn.innerHTML = '<span class="vinyl-disc-icon">♫</span> Play Music';
       }
     },
 
@@ -162,7 +162,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 2. NAVIGATION & JOURNEY INDICATOR ─────────────────────────────────── */
+  /* ─── 2. INTERACTIVE TOUCH / CLICK HEART SPARKS ─────────────────────────── */
+  const TouchHeartSparks = {
+    init() {
+      const symbols = ['💖', '🌸', '✨', '💜', '🌹', '💐'];
+      const spawn = (e) => {
+        // Avoid spawning when clicking inputs or video controls
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'VIDEO') return;
+
+        const x = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : null);
+        const y = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : null);
+        if (!x || !y) return;
+
+        const p = document.createElement('span');
+        p.className = 'click-heart-particle';
+        p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        p.style.left = `${x}px`;
+        p.style.top = `${y}px`;
+        p.style.setProperty('--drift-x', `${(Math.random() - 0.5) * 40}px`);
+        p.style.setProperty('--rot', `${(Math.random() - 0.5) * 45}deg`);
+        document.body.appendChild(p);
+
+        setTimeout(() => p.remove(), 900);
+      };
+
+      window.addEventListener('click', spawn, { passive: true });
+    }
+  };
+
+  /* ─── 3. NAVIGATION & JOURNEY INDICATOR ─────────────────────────────────── */
   const Navigation = {
     init() {
       const navbar = document.querySelector('.navbar');
@@ -241,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 3. HERO PETALS CANVAS ─────────────────────────────────────────────── */
+  /* ─── 4. HERO PETALS CANVAS ─────────────────────────────────────────────── */
   const HeroPetals = {
     canvas: null,
     ctx: null,
@@ -308,7 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 4. DIGITAL ENVELOPE / GIFT MODAL ──────────────────────────────────── */
+  /* ─── 5. DIGITAL ENVELOPE / GIFT MODAL ──────────────────────────────────── */
   const GiftModal = {
     init() {
       const openBtn = document.getElementById('open-gift-btn');
@@ -347,7 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 5. REASONS YOU'RE SPECIAL ─────────────────────────────────────────── */
+  /* ─── 6. REASONS YOU'RE SPECIAL ─────────────────────────────────────────── */
   const ReasonsSection = {
     init() {
       const grid = document.getElementById('reasons-grid');
@@ -395,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 6. MEMORY GALLERY & LIGHTBOX & MEMORY BLOOM ───────────────────────── */
+  /* ─── 7. MEMORY GALLERY & LIGHTBOX & MEMORY BLOOM ───────────────────────── */
   const MemoryGallery = {
     currentIndex: 0,
     items: [],
@@ -517,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 7. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ─────────────── */
+  /* ─── 8. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ─────────────── */
   const TwoSoulsGame = {
     canvas: null,
     ctx: null,
@@ -810,7 +838,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 8. VIDEO MEMORIES ─────────────────────────────────────────────────── */
+  /* ─── 9. VIDEO MEMORIES ─────────────────────────────────────────────────── */
   const VideoMemories = {
     init() {
       const grid = document.getElementById('videos-grid');
@@ -867,7 +895,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 9. THE BOUQUET SECTION ────────────────────────────────────────────── */
+  /* ─── 10. THE BOUQUET SECTION ───────────────────────────────────────────── */
   const BouquetSection = {
     init() {
       const pinsContainer = document.getElementById('bouquet-flower-pins');
@@ -911,7 +939,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 10. BIRTHDAY CAKE & CELEBRATION ───────────────────────────────────── */
+  /* ─── 11. BIRTHDAY CAKE & CELEBRATION ───────────────────────────────────── */
   const BirthdayCelebration = {
     candlesLit: 3,
 
@@ -964,7 +992,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 11. MINI GAMES ────────────────────────────────────────────────────── */
+  /* ─── 12. ADVANCED MINI GAMES: DYNAMIC BOUQUET WEAVER & SEED-TO-ROSE ────── */
   const MiniGames = {
     init() {
       this.initFlowerGame();
@@ -972,31 +1000,37 @@ document.addEventListener('DOMContentLoaded', () => {
       this.initTrustNoGame();
     },
 
+    /* 1. Dynamic Animated Bouquet Weaver */
     initFlowerGame() {
       const area = document.getElementById('flower-game-canvas');
       const startBtn = document.getElementById('start-flower-game-btn');
       const scoreEl = document.getElementById('flower-game-score');
       const resultBox = document.getElementById('flower-game-result');
+      const vaseStack = document.getElementById('dynamic-bouquet-flowers-stack');
+
       let score = 0;
-      let target = content.games?.flowerGame?.target || 10;
+      const target = content.games?.flowerGame?.target || 10;
       let interval = null;
 
       startBtn?.addEventListener('click', () => {
         score = 0;
         if (scoreEl) scoreEl.textContent = `0 / ${target}`;
         resultBox?.classList.remove('active');
+        if (vaseStack) vaseStack.innerHTML = '';
         startBtn.textContent = 'Restart Game 🌸';
         clearInterval(interval);
         area?.querySelectorAll('.falling-flower-item').forEach(e => e.remove());
 
+        const flowerPool = ['🌸', '🌺', '🌷', '🌹', '💐', '💜', '🌼', '🌻', '🥀', '🌿'];
+
         interval = setInterval(() => {
           if (score >= target) return;
-          const flowers = ['🌸', '🌺', '🌷', '🌹', '💐', '💜'];
+          const flowerEmoji = flowerPool[score % flowerPool.length];
           const el = document.createElement('div');
           el.className = 'falling-flower-item';
-          el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
-          el.style.left = `${Math.random() * 85 + 5}%`;
-          el.style.setProperty('--speed', `${Math.random() * 2 + 2.5}s`);
+          el.textContent = flowerEmoji;
+          el.style.left = `${Math.random() * 80 + 10}%`;
+          el.style.setProperty('--speed', `${Math.random() * 1.5 + 3.2}s`);
           el.style.setProperty('--sway', `${(Math.random() - 0.5) * 50}px`);
 
           el.addEventListener('click', () => {
@@ -1004,12 +1038,25 @@ document.addEventListener('DOMContentLoaded', () => {
             AudioManager.initContext();
             AudioManager.playPop();
             if (scoreEl) scoreEl.textContent = `${score} / ${target}`;
+
+            // Add flower dynamically to the bouquet vase with bounce
+            if (vaseStack) {
+              const collected = document.createElement('span');
+              collected.className = 'basket-collected-flower';
+              collected.textContent = flowerEmoji;
+              collected.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg)`;
+              vaseStack.appendChild(collected);
+            }
+
             el.remove();
 
             if (score >= target) {
               clearInterval(interval);
               if (resultBox) {
-                resultBox.textContent = content.games?.flowerGame?.completionMessage || 'Your bouquet is complete 💐✨';
+                resultBox.innerHTML = `
+                  <strong>💐 Gorgeous Bouquet Assembled! ✨</strong><br>
+                  Rabi &amp; Husnain's handcrafted 10-flower bouquet is complete! May your year bloom with endless joy and love. 🌸💜
+                `;
                 resultBox.classList.add('active');
               }
               AudioManager.playChime();
@@ -1017,14 +1064,17 @@ document.addEventListener('DOMContentLoaded', () => {
           });
 
           area?.appendChild(el);
-          setTimeout(() => el.remove(), 4500);
-        }, 700);
+          setTimeout(() => el.remove(), 4800);
+        }, 750);
       });
     },
 
+    /* 2. Seed-to-Blooming Magic Rose */
     initGiftFinderGame() {
       const boxes = document.querySelectorAll('.gift-box-item');
       const resultBox = document.getElementById('gift-finder-result');
+      const roseStage = document.getElementById('rose-blooming-stage');
+      const roseQuote = document.getElementById('blooming-rose-quote');
       const winningIndex = Math.floor(Math.random() * boxes.length);
 
       boxes.forEach((box, idx) => {
@@ -1037,8 +1087,17 @@ document.addEventListener('DOMContentLoaded', () => {
             if (icon) icon.textContent = '🎉';
             box.style.borderColor = 'var(--burgundy)';
             box.style.background = 'var(--grad-blush)';
+
+            // Trigger Seed-to-Blooming Rose Animation
+            if (roseStage) {
+              roseStage.classList.add('active');
+              setTimeout(() => {
+                if (roseQuote) roseQuote.classList.add('revealed');
+              }, 2200);
+            }
+
             if (resultBox) {
-              resultBox.textContent = content.games?.giftGame?.giftMessage || 'You found it! ♡';
+              resultBox.textContent = content.games?.giftGame?.giftMessage || 'Of course you found it! Good things have a way of finding you. ♡';
               resultBox.classList.add('active');
             }
           } else {
@@ -1059,6 +1118,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
 
+    /* 3. Trust Issues No Button */
     initTrustNoGame() {
       const noBtn = document.getElementById('trust-no-btn');
       const yesBtn = document.getElementById('trust-yes-btn');
@@ -1095,7 +1155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 12. INTERACTIVE LOVE LETTERS & ENVELOPES ──────────────────────────── */
+  /* ─── 13. INTERACTIVE LOVE LETTERS & ENVELOPES ──────────────────────────── */
   const InteractiveLetters = {
     currentIdx: 0,
     envelopes: [],
@@ -1177,7 +1237,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 13. MAKE A WISH INTERACTION ───────────────────────────────────────── */
+  /* ─── 14. MAKE A WISH INTERACTION ───────────────────────────────────────── */
   const MakeAWish = {
     init() {
       const trigger = document.getElementById('wish-trigger');
@@ -1200,7 +1260,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 14. POPULATE DYNAMIC CONTENT ──────────────────────────────────────── */
+  /* ─── 15. POPULATE DYNAMIC CONTENT ──────────────────────────────────────── */
   const ContentPopulator = {
     populate() {
       // Hero
@@ -1266,6 +1326,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ─── INITIALIZE ALL MODULES ────────────────────────────────────────────── */
   ContentPopulator.populate();
+  TouchHeartSparks.init();
   Navigation.init();
   HeroPetals.init();
   GiftModal.init();
