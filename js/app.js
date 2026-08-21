@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "souls", label: "Two Souls", num: "04" },
         { id: "moments", label: "Moments", num: "05" },
         { id: "birthday", label: "Birthday", num: "06" },
-        { id: "letter", label: "Letter", num: "07" },
+        { id: "letter", label: "Letters", num: "07" },
         { id: "surprise", label: "Surprise", num: "08" }
       ];
 
@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 6. MEMORY GALLERY, LIGHTBOX & MEMORY BLOOM ────────────────────────── */
+  /* ─── 6. MEMORY GALLERY & LIGHTBOX & MEMORY BLOOM ───────────────────────── */
   const MemoryGallery = {
     currentIndex: 0,
     items: [],
@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 7. TWO SOULS DRAG-TO-MERGE INTERACTIVE CANVAS ─────────────────────── */
+  /* ─── 7. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ─────────────── */
   const TwoSoulsGame = {
     canvas: null,
     ctx: null,
@@ -526,12 +526,18 @@ document.addEventListener('DOMContentLoaded', () => {
     isDragging: null,
     merged: false,
     stars: [],
+    supernovaParticles: [],
+    fallingSurprises: [],
+    surpriseInterval: null,
+    caughtCount: 0,
+    targetSurprises: 6,
 
     init() {
       this.canvas = document.getElementById('souls-canvas');
       this.orb1 = document.getElementById('soul-orb-1');
       this.orb2 = document.getElementById('soul-orb-2');
       const mergeResetBtn = document.getElementById('souls-reset-btn');
+      const popupCloseBtn = document.getElementById('surprise-popup-close');
 
       if (!this.canvas || !this.orb1 || !this.orb2) return;
       this.ctx = this.canvas.getContext('2d');
@@ -554,9 +560,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
       mergeResetBtn?.addEventListener('click', () => {
         this.merged = false;
+        this.caughtCount = 0;
+        clearInterval(this.surpriseInterval);
         document.getElementById('souls-merged-banner')?.classList.remove('active');
+        document.getElementById('souls-score-badge').style.display = 'none';
+        document.querySelectorAll('.falling-surprise-item').forEach(e => e.remove());
         this.resetOrbs();
         AudioManager.playChime();
+      });
+
+      popupCloseBtn?.addEventListener('click', () => {
+        document.getElementById('surprise-popup-card')?.classList.remove('active');
+        AudioManager.playPop();
       });
 
       this.render();
@@ -601,8 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-        const x = Math.max(30, Math.min(this.canvas.width - 30, clientX - rect.left));
-        const y = Math.max(30, Math.min(this.canvas.height - 30, clientY - rect.top));
+        const x = Math.max(40, Math.min(this.canvas.width - 40, clientX - rect.left));
+        const y = Math.max(40, Math.min(this.canvas.height - 40, clientY - rect.top));
 
         if (this.isDragging === 1) this.orb1Pos = { x, y };
         if (this.isDragging === 2) this.orb2Pos = { x, y };
@@ -631,25 +646,121 @@ document.addEventListener('DOMContentLoaded', () => {
       const dy = this.orb1Pos.y - this.orb2Pos.y;
       const dist = Math.hypot(dx, dy);
 
-      if (dist < 60) {
-        this.merged = true;
-        const midX = (this.orb1Pos.x + this.orb2Pos.x) / 2;
-        const midY = (this.orb1Pos.y + this.orb2Pos.y) / 2;
-
-        this.orb1Pos = { x: midX, y: midY };
-        this.orb2Pos = { x: midX, y: midY };
-        this.updateOrbDOM();
-
-        document.getElementById('souls-merged-banner')?.classList.add('active');
-        AudioManager.playChime();
+      if (dist < 65) {
+        this.triggerMerge();
       }
+    },
+
+    triggerMerge() {
+      this.merged = true;
+      const midX = (this.orb1Pos.x + this.orb2Pos.x) / 2;
+      const midY = (this.orb1Pos.y + this.orb2Pos.y) / 2;
+
+      this.orb1Pos = { x: midX, y: midY };
+      this.orb2Pos = { x: midX, y: midY };
+      this.updateOrbDOM();
+
+      // Trigger Supernova Particles
+      this.createSupernova(midX, midY);
+
+      document.getElementById('souls-merged-banner')?.classList.add('active');
+      AudioManager.playChime();
+
+      // Start Falling Cosmic Surprises Game
+      setTimeout(() => this.startSurprisesGame(), 600);
+    },
+
+    createSupernova(cx, cy) {
+      const colors = ['#E040FB', '#EF5350', '#FFD54F', '#FFF9F5', '#EFC3CC'];
+      for (let i = 0; i < 70; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        this.supernovaParticles.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() * 4 + 2,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          decay: Math.random() * 0.02 + 0.015
+        });
+      }
+    },
+
+    startSurprisesGame() {
+      const wrapper = document.querySelector('.souls-canvas-wrapper');
+      const scoreBadge = document.getElementById('souls-score-badge');
+      if (!wrapper || !scoreBadge) return;
+
+      this.caughtCount = 0;
+      this.targetSurprises = content.souls?.targetSurprises || 6;
+      scoreBadge.style.display = 'block';
+      scoreBadge.textContent = `Surprises Caught: 0 / ${this.targetSurprises}`;
+
+      clearInterval(this.surpriseInterval);
+      const surprisesList = content.souls?.surprises || [];
+
+      this.surpriseInterval = setInterval(() => {
+        if (!this.merged || this.caughtCount >= this.targetSurprises) return;
+
+        const surprise = surprisesList[Math.floor(Math.random() * surprisesList.length)];
+        const item = document.createElement('div');
+        item.className = 'falling-surprise-item';
+        item.textContent = surprise.icon || '🌸';
+        item.style.left = `${Math.random() * 80 + 10}%`;
+        item.style.top = '-20px';
+        item.style.setProperty('--speed', `${Math.random() * 1.5 + 3.5}s`);
+
+        item.addEventListener('click', () => {
+          this.caughtCount++;
+          scoreBadge.textContent = `Surprises Caught: ${this.caughtCount} / ${this.targetSurprises}`;
+          AudioManager.playChime();
+          this.showSurprisePopup(surprise);
+          item.remove();
+
+          if (this.caughtCount >= this.targetSurprises) {
+            clearInterval(this.surpriseInterval);
+            const titleEl = document.querySelector('.souls-merged-title');
+            const textEl = document.querySelector('.souls-merged-text');
+            if (titleEl) titleEl.textContent = content.souls?.completionTitle || 'Galaxy Surprises Collected! 💐✨';
+            if (textEl) textEl.textContent = content.souls?.completionMessage || 'You caught all of Husnain\'s surprises! 💜🌹';
+          }
+        });
+
+        wrapper.appendChild(item);
+        setTimeout(() => item.remove(), 4200);
+      }, 900);
+    },
+
+    showSurprisePopup(surprise) {
+      const card = document.getElementById('surprise-popup-card');
+      const icon = document.getElementById('surprise-popup-icon');
+      const title = document.getElementById('surprise-popup-title');
+      const text = document.getElementById('surprise-popup-text');
+      const img = document.getElementById('surprise-popup-img');
+
+      if (icon) icon.textContent = surprise.icon || '🌸';
+      if (title) title.textContent = surprise.title || 'Special Surprise';
+      if (text) text.textContent = surprise.text || '';
+
+      if (img) {
+        if (surprise.img) {
+          img.src = surprise.img;
+          img.style.display = 'block';
+        } else {
+          img.style.display = 'none';
+        }
+      }
+
+      card?.classList.add('active');
     },
 
     render() {
       if (!this.ctx || !this.canvas) return;
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // Render cosmic stars
+      // Render cosmic background stars
       this.stars.forEach(s => {
         this.ctx.beginPath();
         this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
@@ -657,19 +768,42 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ctx.fill();
       });
 
-      // Render magnetic stardust connection between souls
+      // Render magnetic stardust connection
       if (!this.merged && this.orb1Pos && this.orb2Pos) {
         this.ctx.beginPath();
         this.ctx.moveTo(this.orb1Pos.x, this.orb1Pos.y);
         this.ctx.lineTo(this.orb2Pos.x, this.orb2Pos.y);
         const grad = this.ctx.createLinearGradient(this.orb1Pos.x, this.orb1Pos.y, this.orb2Pos.x, this.orb2Pos.y);
-        grad.addColorStop(0, 'rgba(224, 64, 251, 0.4)');
-        grad.addColorStop(1, 'rgba(239, 83, 80, 0.4)');
+        grad.addColorStop(0, 'rgba(224, 64, 251, 0.5)');
+        grad.addColorStop(1, 'rgba(239, 83, 80, 0.5)');
         this.ctx.strokeStyle = grad;
-        this.ctx.lineWidth = 2;
-        this.ctx.setLineDash([4, 6]);
+        this.ctx.lineWidth = 2.5;
+        this.ctx.setLineDash([5, 6]);
         this.ctx.stroke();
         this.ctx.setLineDash([]);
+      }
+
+      // Render Supernova Particles
+      for (let i = this.supernovaParticles.length - 1; i >= 0; i--) {
+        const p = this.supernovaParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          this.supernovaParticles.splice(i, 1);
+          continue;
+        }
+
+        this.ctx.save();
+        this.ctx.globalAlpha = p.alpha;
+        this.ctx.beginPath();
+        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        this.ctx.fillStyle = p.color;
+        this.ctx.shadowColor = p.color;
+        this.ctx.shadowBlur = 10;
+        this.ctx.fill();
+        this.ctx.restore();
       }
 
       requestAnimationFrame(() => this.render());
@@ -830,7 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 11. MINI GAMES (FLOWERS, GIFTS & TRUST-NO BUTTON) ─────────────────── */
+  /* ─── 11. MINI GAMES ────────────────────────────────────────────────────── */
   const MiniGames = {
     init() {
       this.initFlowerGame();
@@ -961,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 12. INTERACTIVE LOVE LETTERS & ENVELOPES WITH ARROWS ──────────────── */
+  /* ─── 12. INTERACTIVE LOVE LETTERS & ENVELOPES ──────────────────────────── */
   const InteractiveLetters = {
     currentIdx: 0,
     envelopes: [],

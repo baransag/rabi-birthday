@@ -126,7 +126,7 @@
               <span>💐</span>
               <div>
                 <div>Made with love</div>
-                <div style="font-size: 0.8rem; color: var(--text-muted);">Especially for Rabi</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">From Husnain for Rabi 💜</div>
               </div>
             </div>
           </div>
@@ -145,6 +145,7 @@
           I wanted to give you something different this year.
           So instead of just sending you a wish…
           I made you a little place on the internet that belongs only to you. ♡
+          — Husnain 💜
         </div>
         <button id="start-exploring-btn" class="btn btn-primary" style="width: 100%;">
           Start Exploring 🌸
@@ -291,37 +292,52 @@
       </div>
     </div>
 
-    <!-- ─── 4. TWO SOULS DRAG-TO-MERGE INTERACTIVE CANVAS ──────────────────── -->
+    <!-- ─── 4. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ──────────── -->
     <section id="souls" class="section-padding souls-section">
       <div class="container">
         <div class="section-header" style="color: #FFFFFF;">
           <span class="section-tag" style="background: rgba(224, 64, 251, 0.2); color: var(--blush); border-color: rgba(224, 64, 251, 0.4);">
-            Romantic Interactive Canvas
+            Interactive Cosmic Experience
           </span>
           <h2 class="section-title" style="color: #FFFFFF;">Two Souls. One Universe. ✨</h2>
           <p class="section-subtitle" style="color: var(--blush);">
-            Drag the two glowing souls together across the cosmos to unite them.
+            Drag <strong>Husnain 💜</strong> and <strong>Rabi 🌹</strong> together to trigger the Galaxy Supernova!
           </p>
         </div>
 
         <div class="souls-canvas-wrapper">
           <canvas id="souls-canvas" class="souls-canvas"></canvas>
-          <div id="soul-orb-1" class="soul-orb soul-orb-1">YOU 💜</div>
+          <div id="soul-orb-1" class="soul-orb soul-orb-1">HUSNAIN 💜</div>
           <div id="soul-orb-2" class="soul-orb soul-orb-2">RABI 🌹</div>
-          <div class="souls-drag-hint">✦ Drag the souls together ✦</div>
+          <div class="souls-drag-hint">✦ Drag Husnain &amp; Rabi together ✦</div>
+          <div id="souls-score-badge" class="souls-score-badge">Surprises Caught: 0 / 6</div>
         </div>
 
         <div id="souls-merged-banner" class="souls-merged-banner">
-          <h3 class="souls-merged-title">When Two Souls Connect ♡</h3>
+          <h3 class="souls-merged-title">When Husnain &amp; Rabi Connect ♡</h3>
           <p class="souls-merged-text">
             “Out of 8 billion people in this universe, finding you was the most beautiful thing that ever happened.” ✨
           </p>
+          <p style="font-size: 0.95rem; color: var(--blush); margin-top: 8px;">
+            🌸 Catch the falling cosmic flowers &amp; gifts above to unlock Husnain's secret wishes &amp; cute surprises!
+          </p>
           <button id="souls-reset-btn" class="btn btn-secondary" style="margin-top: 18px;">
-            Merge Again ✨
+            Merge &amp; Catch Again ✨
           </button>
         </div>
       </div>
     </section>
+
+    <!-- Surprise Detail Popup Card -->
+    <div id="surprise-popup-card" class="surprise-popup-card" role="dialog" aria-modal="true">
+      <div id="surprise-popup-icon" class="surprise-popup-icon">🌸</div>
+      <h3 id="surprise-popup-title" class="surprise-popup-title">A Heartfelt Wish</h3>
+      <img id="surprise-popup-img" src="" alt="Surprise Memory" class="surprise-popup-img" style="display: none;">
+      <p id="surprise-popup-text" class="surprise-popup-text"></p>
+      <button id="surprise-popup-close" class="btn btn-primary" style="padding: 10px 24px; min-height: 40px; margin-top: 8px;">
+        Got it! 💖
+      </button>
+    </div>
 
     <!-- ─── 5. MOMENTS (THE BOUQUET) ──────────────────────────────────────── -->
     <section id="moments" class="section-padding bouquet-section">
@@ -536,7 +552,7 @@
             </div>
 
             <p id="letter-closing" class="letter-closing">With all my warmest wishes and deepest care,</p>
-            <div id="letter-signature" class="letter-signature">Always, for you ♡</div>
+            <div id="letter-signature" class="letter-signature">Always, Husnain ♡</div>
 
             <div style="text-align: center; margin-top: 32px;">
               <button id="letter-paper-close-btn" class="btn btn-secondary">
@@ -599,7 +615,7 @@
   <footer class="footer">
     <div class="container">
       <p>
-        Made with soft roses, lavender hues, and love for <strong style="color: var(--burgundy);">Rabi</strong> <span class="footer-heart">♡</span>
+        Made with soft roses, lavender hues, and love for <strong style="color: var(--burgundy);">Rabi</strong> from <strong style="color: var(--burgundy);">Husnain</strong> <span class="footer-heart">♡</span>
       </p>
       <p style="font-size: 0.85rem; margin-top: 6px; color: var(--text-light);">
         06 September • Happy Birthday, Rabiya

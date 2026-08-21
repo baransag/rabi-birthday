@@ -7,6 +7,7 @@ const CONTENT = {
   person: {
     name: "Rabiya",
     nickname: "Rabi",
+    sender: "Husnain",
     birthday: {
       day: 6,
       month: 9,
@@ -25,7 +26,7 @@ const CONTENT = {
       { id: "souls", label: "Two Souls", num: "04" },
       { id: "moments", label: "Moments", num: "05" },
       { id: "birthday", label: "Birthday", num: "06" },
-      { id: "letter", label: "Letter", num: "07" },
+      { id: "letter", label: "Letters", num: "07" },
       { id: "surprise", label: "Surprise", num: "08" }
     ]
   },
@@ -45,7 +46,8 @@ I made you a little place on the internet that belongs only to you. ♡
 
 Every flower, every memory, and every little detail here was crafted to remind you of how appreciated and special you are.
 
-Happy Birthday, Rabiya. ✨`
+Happy Birthday, Rabiya. ✨
+— Husnain 💜`
   },
 
   about: {
@@ -202,14 +204,65 @@ Happy Birthday, Rabiya. ✨`
     outro: "And there are still so many more memories waiting to happen. ♡"
   },
 
+  /* ─── TWO SOULS INTERACTIVE GALAXY & SURPRISE CATCHER GAME ─────────────── */
   souls: {
-    tag: "Interactive Romantic Canvas",
+    tag: "Interactive Cosmic Experience",
     title: "Two Souls. One Universe. ✨",
-    subtitle: "Drag the two glowing souls together across the cosmos to unite them.",
-    label1: "YOU 💜",
+    subtitle: "Drag Husnain 💜 and Rabi 🌹 together to trigger the Galaxy Supernova!",
+    label1: "HUSNAIN 💜",
     label2: "RABI 🌹",
-    mergedTitle: "When Two Souls Connect ♡",
-    mergedText: "“Out of 8 billion people in this universe, finding you was the most beautiful thing that ever happened.” ✨"
+    mergedTitle: "When Husnain & Rabi Connect ♡",
+    mergedText: "“Out of 8 billion people in this universe, finding you was the most beautiful thing that ever happened.” ✨",
+    gameInstruction: "Catch the falling cosmic flowers & gifts to unlock Husnain's secret wishes and cute surprises for Rabi!",
+    targetSurprises: 6,
+    surprises: [
+      {
+        type: "wish",
+        icon: "🌸",
+        title: "A Heartfelt Wish ✨",
+        text: "May every quiet dream in your heart bloom into something breathtaking this year. Happy Birthday Rabiya! 💖"
+      },
+      {
+        type: "photo",
+        icon: "📸",
+        title: "Secret Memory 🌹",
+        text: "That radiant smile of yours that Husnain loves so much!",
+        img: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        type: "funny",
+        icon: "🙈",
+        title: "Cute Fact 😜",
+        text: "Warning: Unprecedented levels of cuteness and sweetness detected in Rabi! Certified 100% irreplaceable. 💜"
+      },
+      {
+        type: "wish",
+        icon: "⭐",
+        title: "Husnain's Promise 💌",
+        text: "I promise to always celebrate you, root for your happiness, and remind you how extraordinary you are. ♡"
+      },
+      {
+        type: "funny",
+        icon: "🍰",
+        title: "Cake Protocol 🎂",
+        text: "Rule #1: Rabi gets the biggest slice of birthday cake today without sharing! 😂✨"
+      },
+      {
+        type: "photo",
+        icon: "💐",
+        title: "The Eternal Flower 🌹",
+        text: "Some flowers fade in a week, but the bouquet Husnain coded for you stays forever.",
+        img: "https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        type: "funny",
+        icon: "✨",
+        title: "Cosmic Truth 💫",
+        text: "10/10 stars in the galaxy agree: Rabi is the most special girl in the universe! 💖"
+      }
+    ],
+    completionTitle: "Galaxy Surprises Collected! 💐✨",
+    completionMessage: "You caught all of Husnain's cosmic surprises! May your birthday and your entire year be as magical as this universe. 💜🌹"
   },
 
   videos: [
@@ -291,7 +344,7 @@ Happy Birthday, Rabiya. ✨`
         id: 2,
         flower: "Red Rose",
         color: "#B94B61",
-        message: "A symbol of deep care, admiration, and how much you truly mean to the people around you. 🌹"
+        message: "A symbol of deep care, admiration, and how much you truly mean to Husnain and everyone around you. 🌹"
       },
       {
         id: 3,
@@ -365,7 +418,7 @@ Happy Birthday, Rabiya. ✨`
           "Thank you for being someone so wonderful to talk to, for the shared laughs, the sweet check-ins, and for simply being the radiant, thoughtful person that you are."
         ],
         closing: "With all my warmest wishes and deepest care,",
-        signature: "Always, for you ♡"
+        signature: "Always, Husnain ♡"
       },
       {
         id: 2,
@@ -378,7 +431,7 @@ Happy Birthday, Rabiya. ✨`
           "May this new year of your life bring you the exact same peace and kindness that you give so freely to others."
         ],
         closing: "Wishing you infinite happiness,",
-        signature: "From someone who admires you ♡"
+        signature: "Husnain ♡"
       },
       {
         id: 3,
@@ -391,7 +444,7 @@ Happy Birthday, Rabiya. ✨`
           "Never stop smiling, because your smile is genuinely one of the most beautiful things in this world."
         ],
         closing: "Forever rooting for you,",
-        signature: "Happy Birthday, Rabi! 🌸"
+        signature: "Happy Birthday, Rabi! 🌸 — Husnain"
       }
     ]
   },

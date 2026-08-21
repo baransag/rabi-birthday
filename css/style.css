@@ -3,12 +3,9 @@
    css/style.css — Soft Pastel Luxury Design System & Component Styles
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ─── GOOGLE FONTS IMPORT ────────────────────────────────────────────────── */
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;600;700&display=swap');
 
-/* ─── DESIGN TOKENS (SOFT PASTEL LUXURY PALETTE) ─────────────────────────── */
 :root {
-  /* Soft Pastel Luxury Colors */
   --cream: #FFF9F5;
   --warm-white: #FFFCFA;
   --blush: #F6D6D8;
@@ -21,14 +18,12 @@
   --baby-blue: #DCEAF2;
   --sage: #DDE6DA;
 
-  /* Accent & Contrast Colors */
   --burgundy: #7D3042;
   --rose-red: #B94B61;
   --text-dark: #3D3033;
   --text-muted: #7A686C;
   --text-light: #9E8B8F;
 
-  /* Gradients */
   --grad-hero: linear-gradient(135deg, #FFF9F5 0%, #FFF3F4 45%, #F4EEFB 100%);
   --grad-card: linear-gradient(145deg, #FFFFFF 0%, #FFF8F8 100%);
   --grad-accent: linear-gradient(135deg, #DFA3AF 0%, #B94B61 100%);
@@ -36,32 +31,27 @@
   --grad-blush: linear-gradient(135deg, #FFF0F2 0%, #F6D6D8 100%);
   --grad-gold: linear-gradient(135deg, #F8DDC8 0%, #EAD9C8 100%);
 
-  /* Shadows */
   --shadow-sm: 0 4px 12px rgba(125, 48, 66, 0.05);
   --shadow-md: 0 8px 24px rgba(125, 48, 66, 0.08);
   --shadow-lg: 0 16px 40px rgba(125, 48, 66, 0.12);
   --shadow-hover: 0 20px 48px rgba(125, 48, 66, 0.16);
 
-  /* Typography */
   --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
   --font-editorial: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-script: 'Caveat', cursive, 'Brush Script MT', sans-serif;
 
-  /* Border Radius */
   --radius-sm: 10px;
   --radius-md: 18px;
   --radius-lg: 28px;
   --radius-pill: 9999px;
 
-  /* Transitions */
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --trans-fast: 0.25s var(--ease-soft);
   --trans-normal: 0.4s var(--ease-soft);
   --trans-slow: 0.7s var(--ease-soft);
 }
 
-/* ─── RESET & GLOBAL BASE ────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -111,7 +101,6 @@ a {
   color: var(--burgundy);
 }
 
-/* ─── TYPOGRAPHY UTILITIES ───────────────────────────────────────────────── */
 h1, h2, h3, h4 {
   font-family: var(--font-serif);
   font-weight: 600;
@@ -257,7 +246,7 @@ h1, h2, h3, h4 {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   list-style: none;
 }
 
@@ -400,7 +389,7 @@ h1, h2, h3, h4 {
   font-weight: 500;
 }
 
-/* ─── SUBTLE JOURNEY PROGRESS INDICATOR ──────────────────────────────────── */
+/* ─── JOURNEY PROGRESS INDICATOR ─────────────────────────────────────────── */
 .journey-indicator-pill {
   position: fixed;
   bottom: 24px;
@@ -685,7 +674,7 @@ h1, h2, h3, h4 {
   color: var(--burgundy);
 }
 
-/* ─── ABOUT RABI (MAGAZINE EDITORIAL SPREAD) ─────────────────────────────── */
+/* ─── ABOUT RABI ─────────────────────────────────────────────────────────── */
 .about-section {
   background: linear-gradient(180deg, transparent 0%, rgba(255, 240, 242, 0.4) 100%);
   position: relative;
@@ -1180,7 +1169,7 @@ h1, h2, h3, h4 {
   animation: fadeIn 0.8s ease forwards;
 }
 
-/* ─── 4. TWO SOULS DRAG-TO-MERGE INTERACTIVE CANVAS ──────────────────────── */
+/* ─── 4. TWO SOULS GALAXY & SURPRISE CATCHER GAME ────────────────────────── */
 .souls-section {
   background: radial-gradient(circle at center, #1B1218 0%, #0F090E 100%);
   color: #FFFFFF;
@@ -1192,7 +1181,7 @@ h1, h2, h3, h4 {
 .souls-canvas-wrapper {
   position: relative;
   width: min(840px, 94vw);
-  height: 380px;
+  height: 400px;
   margin: 30px auto;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.03);
@@ -1211,8 +1200,8 @@ h1, h2, h3, h4 {
 
 .soul-orb {
   position: absolute;
-  width: 58px;
-  height: 58px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
   cursor: grab;
   user-select: none;
@@ -1220,12 +1209,13 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   color: #FFFFFF;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   transform: translate(-50%, -50%);
   z-index: 10;
   transition: transform 0.1s ease;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.6);
 }
 
 .soul-orb:active {
@@ -1234,15 +1224,15 @@ h1, h2, h3, h4 {
 
 .soul-orb-1 {
   background: radial-gradient(circle, #E040FB 0%, #7D3042 100%);
-  --orb-color: rgba(224, 64, 251, 0.7);
-  --orb-glow: rgba(199, 125, 255, 0.5);
+  --orb-color: rgba(224, 64, 251, 0.8);
+  --orb-glow: rgba(199, 125, 255, 0.6);
   animation: soulOrbPulse 2.8s infinite;
 }
 
 .soul-orb-2 {
   background: radial-gradient(circle, #EF5350 0%, #B94B61 100%);
-  --orb-color: rgba(239, 83, 80, 0.7);
-  --orb-glow: rgba(255, 138, 128, 0.5);
+  --orb-color: rgba(239, 83, 80, 0.8);
+  --orb-glow: rgba(255, 138, 128, 0.6);
   animation: soulOrbPulse 2.8s infinite 1.4s;
 }
 
@@ -1258,8 +1248,91 @@ h1, h2, h3, h4 {
   pointer-events: none;
 }
 
+.falling-surprise-item {
+  position: absolute;
+  font-size: 2.2rem;
+  cursor: pointer;
+  user-select: none;
+  z-index: 20;
+  animation: surpriseFallSway var(--speed, 4s) linear forwards;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+}
+
+.souls-score-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--dusty-rose);
+  color: var(--blush);
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: 0.9rem;
+  z-index: 30;
+  display: none;
+}
+
+/* Surprise Detail Popup Card */
+.surprise-popup-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  background: rgba(35, 20, 28, 0.96);
+  backdrop-filter: blur(20px);
+  border: 2px solid var(--rose-red);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  padding: 32px 28px;
+  border-radius: var(--radius-lg);
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  z-index: 4000;
+  color: #FFFFFF;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--trans-fast);
+}
+
+.surprise-popup-card.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.surprise-popup-icon {
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+}
+
+.surprise-popup-title {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--blush);
+  margin-bottom: 12px;
+}
+
+.surprise-popup-text {
+  font-family: var(--font-editorial);
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.surprise-popup-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: 14px;
+  border: 1px solid var(--dusty-rose);
+}
+
 .souls-merged-banner {
-  max-width: 640px;
+  max-width: 680px;
   margin: 24px auto 0;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
@@ -1733,7 +1806,7 @@ h1, h2, h3, h4 {
   position: relative;
 }
 
-/* ─── 5. INTERACTIVE LOVE LETTERS & ENVELOPES (WITH ARROW NAVIGATION) ────── */
+/* ─── 5. INTERACTIVE LOVE LETTERS & ENVELOPES ────────────────────────────── */
 .envelopes-carousel-header {
   display: flex;
   align-items: center;
@@ -1891,7 +1964,7 @@ h1, h2, h3, h4 {
   margin-top: 8px;
 }
 
-/* ─── MAKE A WISH (SUBSECTION UNDER LETTER) ──────────────────────────────── */
+/* ─── MAKE A WISH ────────────────────────────────────────────────────────── */
 .wish-container-box {
   margin-top: 70px;
   text-align: center;
@@ -2088,5 +2161,11 @@ h1, h2, h3, h4 {
 
   .envelope-outer-box {
     padding: 24px 16px;
+  }
+
+  .soul-orb {
+    width: 68px;
+    height: 68px;
+    font-size: 0.78rem;
   }
 }
