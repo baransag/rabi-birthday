@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    RABI — THE BEAUTIFUL BIRTHDAY GIFT
-   js/app.js — Core Interactive Application Logic
+   js/app.js — Core Interactive Application Logic (Polished & Streamlined)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -8,57 +8,126 @@
 document.addEventListener('DOMContentLoaded', () => {
   const content = window.CONTENT || {};
 
-  /* ─── 1. AUDIO CONTROLLER (WEB AUDIO SYNTHESIS + OPTIONAL MP3) ──────────── */
-  const AudioController = {
+  /* ─── 1. AUDIO PRIORITY MANAGER ─────────────────────────────────────────── */
+  const AudioManager = {
     ctx: null,
-    bgAudio: null,
-    isPlaying: false,
+    bgMusic: null,
+    specialAudio: null,
+    isEnabled: false,
+    currentVolume: 0.35,
 
     init() {
-      const audioBtn = document.getElementById('nav-audio-btn');
-      const drawerAudioBtn = document.getElementById('drawer-audio-btn');
+      const saved = sessionStorage.getItem('rabi_audio_enabled');
+      if (saved === 'true') {
+        this.isEnabled = true;
+        this.updateBtnStates(true);
+      }
 
-      const toggle = () => this.toggle();
-      audioBtn?.addEventListener('click', toggle);
-      drawerAudioBtn?.addEventListener('click', toggle);
+      const navBtn = document.getElementById('nav-audio-btn');
+      const drawerBtn = document.getElementById('drawer-audio-btn');
+
+      const toggle = () => this.toggleGlobal();
+      navBtn?.addEventListener('click', toggle);
+      drawerBtn?.addEventListener('click', toggle);
     },
 
     initContext() {
       if (!this.ctx) {
         this.ctx = new (window.AudioContext || window.webkitAudioContext)();
       }
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
     },
 
-    toggle() {
+    toggleGlobal() {
       this.initContext();
-      if (!this.bgAudio) {
-        this.bgAudio = new Audio(content.audio?.backgroundMusic || 'assets/audio/background-music.mp3');
-        this.bgAudio.loop = true;
-        this.bgAudio.volume = 0.35;
-      }
+      this.isEnabled = !this.isEnabled;
+      sessionStorage.setItem('rabi_audio_enabled', String(this.isEnabled));
 
-      const audioBtn = document.getElementById('nav-audio-btn');
-      const drawerAudioBtn = document.getElementById('drawer-audio-btn');
-
-      if (this.isPlaying) {
-        this.bgAudio.pause();
-        this.isPlaying = false;
-        audioBtn?.classList.remove('playing');
-        drawerAudioBtn?.classList.remove('playing');
-        if (audioBtn) audioBtn.innerHTML = '<span>♫</span> Play Music';
-        if (drawerAudioBtn) drawerAudioBtn.innerHTML = '<span>♫</span> Play Music';
+      if (this.isEnabled) {
+        this.playBgMusic();
       } else {
-        this.bgAudio.play().then(() => {
-          this.isPlaying = true;
-          audioBtn?.classList.add('playing');
-          drawerAudioBtn?.classList.add('playing');
-          if (audioBtn) audioBtn.innerHTML = '<span>❚❚</span> Pause Music';
-          if (drawerAudioBtn) drawerAudioBtn.innerHTML = '<span>❚❚</span> Pause Music';
-        }).catch(() => {
-          // If mp3 is not present, synthesize a gentle chime
-          this.playChime();
-        });
+        this.pauseAll();
       }
+      this.updateBtnStates(this.isEnabled);
+    },
+
+    updateBtnStates(playing) {
+      const navBtn = document.getElementById('nav-audio-btn');
+      const drawerBtn = document.getElementById('drawer-audio-btn');
+
+      if (playing) {
+        navBtn?.classList.add('playing');
+        drawerBtn?.classList.add('playing');
+        if (navBtn) navBtn.innerHTML = '<span>❚❚</span> Pause Music';
+        if (drawerBtn) drawerBtn.innerHTML = '<span>❚❚</span> Pause Music';
+      } else {
+        navBtn?.classList.remove('playing');
+        drawerBtn?.classList.remove('playing');
+        if (navBtn) navBtn.innerHTML = '<span>♫</span> Play Music';
+        if (drawerBtn) drawerBtn.innerHTML = '<span>♫</span> Play Music';
+      }
+    },
+
+    playBgMusic() {
+      if (!this.bgMusic) {
+        this.bgMusic = new Audio(content.audio?.backgroundMusic || 'assets/audio/background-music.mp3');
+        this.bgMusic.loop = true;
+        this.bgMusic.volume = this.currentVolume;
+      }
+
+      this.bgMusic.play().catch(() => {
+        // Synthesize a soft chime if local file isn't found
+        this.playChime();
+      });
+    },
+
+    fadeBgMusic(targetVolume, durationMs = 800) {
+      if (!this.bgMusic) return;
+      const initial = this.bgMusic.volume;
+      const steps = 15;
+      const stepTime = durationMs / steps;
+      const delta = (targetVolume - initial) / steps;
+      let count = 0;
+
+      const timer = setInterval(() => {
+        count++;
+        this.bgMusic.volume = Math.max(0, Math.min(1, this.bgMusic.volume + delta));
+        if (count >= steps) {
+          clearInterval(timer);
+          this.bgMusic.volume = targetVolume;
+        }
+      }, stepTime);
+    },
+
+    playSpecialAudio(src, onComplete) {
+      this.initContext();
+      if (this.bgMusic) {
+        this.fadeBgMusic(0.05, 600);
+      }
+
+      if (this.specialAudio) {
+        this.specialAudio.pause();
+      }
+
+      this.specialAudio = new Audio(src);
+      this.specialAudio.play().then(() => {
+        this.specialAudio.onended = () => {
+          if (this.bgMusic && this.isEnabled) {
+            this.fadeBgMusic(this.currentVolume, 800);
+          }
+          if (onComplete) onComplete();
+        };
+      }).catch(() => {
+        this.playChime();
+        if (onComplete) onComplete();
+      });
+    },
+
+    pauseAll() {
+      if (this.bgMusic) this.bgMusic.pause();
+      if (this.specialAudio) this.specialAudio.pause();
     },
 
     playChime() {
@@ -85,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
       osc.type = 'triangle';
       osc.frequency.setValueAtTime(440, this.ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.1);
-      gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.1);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
@@ -94,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 2. NAVBAR & NAVIGATION ────────────────────────────────────────────── */
-  const Navbar = {
+  /* ─── 2. NAVIGATION & JOURNEY INDICATOR ─────────────────────────────────── */
+  const Navigation = {
     init() {
       const navbar = document.querySelector('.navbar');
       const hamburger = document.getElementById('hamburger-btn');
@@ -110,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
           navbar?.classList.remove('scrolled');
         }
-        this.updateActiveLink();
+        this.updateActiveLinkAndJourney();
       }, { passive: true });
 
       const openDrawer = () => {
@@ -136,9 +205,19 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
 
-    updateActiveLink() {
+    updateActiveLinkAndJourney() {
       const sections = document.querySelectorAll('section[id]');
-      const scrollY = window.scrollY + 120;
+      const scrollY = window.scrollY + 140;
+
+      const journeySteps = content.journey?.steps || [
+        { id: "hero", label: "Welcome", num: "01" },
+        { id: "about", label: "About Rabi", num: "02" },
+        { id: "memories", label: "Memories", num: "03" },
+        { id: "moments", label: "Moments", num: "04" },
+        { id: "birthday", label: "Birthday", num: "05" },
+        { id: "letter", label: "Letter", num: "06" },
+        { id: "surprise", label: "Surprise", num: "07" }
+      ];
 
       sections.forEach(sec => {
         const top = sec.offsetTop;
@@ -149,6 +228,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (scrollY >= top && scrollY < top + height) {
           document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
           link?.classList.add('active');
+
+          const step = journeySteps.find(s => s.id === id);
+          if (step) {
+            const numEl = document.getElementById('journey-num');
+            const labelEl = document.getElementById('journey-label');
+            if (numEl) numEl.textContent = `${step.num} / 07`;
+            if (labelEl) labelEl.textContent = step.label;
+          }
         }
       });
     }
@@ -159,7 +246,6 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas: null,
     ctx: null,
     petals: [],
-    animId: null,
 
     init() {
       this.canvas = document.getElementById('hero-petals-canvas');
@@ -168,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.resize();
       window.addEventListener('resize', () => this.resize(), { passive: true });
 
-      for (let i = 0; i < 22; i++) {
+      for (let i = 0; i < 20; i++) {
         this.petals.push(this.createPetal());
       }
       this.loop();
@@ -187,8 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
         y: Math.random() * (this.canvas?.height || 600) - 50,
         size: Math.random() * 8 + 6,
         color: colors[Math.floor(Math.random() * colors.length)],
-        speedY: Math.random() * 0.8 + 0.4,
-        speedX: (Math.random() - 0.5) * 0.6,
+        speedY: Math.random() * 0.7 + 0.35,
+        speedX: (Math.random() - 0.5) * 0.5,
         angle: Math.random() * Math.PI * 2,
         angleSpeed: (Math.random() - 0.5) * 0.02
       };
@@ -218,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.ctx.restore();
       });
 
-      this.animId = requestAnimationFrame(() => this.loop());
+      requestAnimationFrame(() => this.loop());
     }
   };
 
@@ -237,8 +323,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const open = () => {
         modal?.classList.add('active');
-        AudioController.initContext();
-        AudioController.playChime();
+        AudioManager.initContext();
+        AudioManager.playChime();
         document.body.style.overflow = 'hidden';
       };
 
@@ -292,8 +378,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const reveal = () => {
           card.classList.toggle('revealed');
-          AudioController.initContext();
-          AudioController.playPop();
+          AudioManager.initContext();
+          AudioManager.playPop();
         };
 
         card.addEventListener('click', reveal);
@@ -309,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 6. MEMORY GALLERY & LIGHTBOX ──────────────────────────────────────── */
+  /* ─── 6. MEMORY GALLERY, LIGHTBOX & MEMORY BLOOM ────────────────────────── */
   const MemoryGallery = {
     currentIndex: 0,
     items: [],
@@ -340,7 +426,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
 
-        // Graceful fallback for missing image
         const img = item.querySelector('.gallery-thumb');
         img.onerror = () => {
           const wrapper = item.querySelector('.gallery-thumb-wrapper');
@@ -360,6 +445,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       this.initLightbox();
+      this.initMemoryBloom();
     },
 
     initLightbox() {
@@ -426,6 +512,19 @@ document.addEventListener('DOMContentLoaded', () => {
           img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400"><rect width="100%" height="100%" fill="%23FFF0F2"/><text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="28" fill="%237D3042">🌸 ' + encodeURIComponent(item.title) + '</text><text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="16" fill="%237A686C">Image placeholder</text></svg>';
         };
       }
+    },
+
+    /* SIGNATURE WOW MOMENT: THE MEMORY BLOOM */
+    initMemoryBloom() {
+      const bloomBtn = document.getElementById('bloom-trigger-btn');
+      const bloomStage = document.getElementById('memory-bloom-stage');
+
+      bloomBtn?.addEventListener('click', () => {
+        AudioManager.initContext();
+        AudioManager.playChime();
+        bloomStage?.classList.add('bloomed');
+        bloomBtn.style.display = 'none';
+      });
     }
   };
 
@@ -457,7 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         `;
 
-        // Poster error fallback
         const posterImg = card.querySelector('.video-poster-img');
         posterImg.onerror = () => {
           posterImg.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="225" viewBox="0 0 400 225"><rect width="100%" height="100%" fill="%23DDD4F3"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="20" fill="%237D3042">📹 ' + encodeURIComponent(v.title) + '</text></svg>';
@@ -518,8 +616,8 @@ document.addEventListener('DOMContentLoaded', () => {
             messageBox.textContent = item.message;
             messageBox.style.opacity = '1';
           }, 200);
-          AudioController.initContext();
-          AudioController.playPop();
+          AudioManager.initContext();
+          AudioManager.playPop();
         });
 
         pinsContainer.appendChild(btn);
@@ -545,12 +643,12 @@ document.addEventListener('DOMContentLoaded', () => {
           if (!candle.classList.contains('blown')) {
             candle.classList.add('blown');
             this.candlesLit--;
-            AudioController.initContext();
-            AudioController.playPop();
+            AudioManager.initContext();
+            AudioManager.playPop();
 
             if (this.candlesLit <= 0) {
               banner?.classList.add('active');
-              AudioController.playChime();
+              AudioManager.playChime();
               this.launchConfetti();
             }
           }
@@ -558,8 +656,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       songBtn?.addEventListener('click', () => {
-        const song = new Audio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
-        song.play().catch(() => AudioController.playChime());
+        AudioManager.playSpecialAudio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
       });
     },
 
@@ -568,13 +665,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!container) return;
 
       const emojis = ['🌸', '✨', '💐', '💜', '🎂', '🌹'];
-      for (let i = 0; i < 30; i++) {
+      for (let i = 0; i < 28; i++) {
         const conf = document.createElement('span');
         conf.textContent = emojis[Math.floor(Math.random() * emojis.length)];
         conf.style.position = 'absolute';
         conf.style.left = `${Math.random() * 90 + 5}%`;
         conf.style.top = `${Math.random() * 60}%`;
-        conf.style.fontSize = `${Math.random() * 16 + 18}px`;
+        conf.style.fontSize = `${Math.random() * 14 + 18}px`;
         conf.style.pointerEvents = 'none';
         conf.style.animation = `confettiFall ${Math.random() * 1.5 + 1.5}s ease-out forwards`;
         conf.style.setProperty('--rot', `${Math.random() * 720}deg`);
@@ -604,7 +701,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.score = 0;
         if (scoreEl) scoreEl.textContent = `0 / ${this.target}`;
         resultBox?.classList.remove('active');
-        startBtn.textContent = 'Restart Game';
+        startBtn.textContent = 'Restart Game 🌸';
         this.startGame(area);
       });
     },
@@ -628,12 +725,12 @@ document.addEventListener('DOMContentLoaded', () => {
       el.textContent = flowers[Math.floor(Math.random() * flowers.length)];
       el.style.left = `${Math.random() * 85 + 5}%`;
       el.style.setProperty('--speed', `${Math.random() * 2 + 2.5}s`);
-      el.style.setProperty('--sway', `${(Math.random() - 0.5) * 60}px`);
+      el.style.setProperty('--sway', `${(Math.random() - 0.5) * 50}px`);
 
       el.addEventListener('click', () => {
         this.score++;
-        AudioController.initContext();
-        AudioController.playPop();
+        AudioManager.initContext();
+        AudioManager.playPop();
         const scoreEl = document.getElementById('flower-game-score');
         if (scoreEl) scoreEl.textContent = `${this.score} / ${this.target}`;
         el.remove();
@@ -643,10 +740,10 @@ document.addEventListener('DOMContentLoaded', () => {
           clearInterval(this.interval);
           const resultBox = document.getElementById('flower-game-result');
           if (resultBox) {
-            resultBox.textContent = content.games?.flowerGame?.completionMessage || 'You collected a full bouquet! 💐';
+            resultBox.textContent = content.games?.flowerGame?.completionMessage || 'Your bouquet is complete 💐✨';
             resultBox.classList.add('active');
           }
-          AudioController.playChime();
+          AudioManager.playChime();
         }
       });
 
@@ -664,11 +761,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       boxes.forEach((box, idx) => {
         box.addEventListener('click', () => {
-          AudioController.initContext();
-          AudioController.playPop();
+          AudioManager.initContext();
 
           const icon = box.querySelector('.gift-box-icon');
           if (idx === winningIndex) {
+            AudioManager.playChime();
             if (icon) icon.textContent = '🎉';
             box.style.borderColor = 'var(--burgundy)';
             box.style.background = 'var(--grad-blush)';
@@ -676,10 +773,19 @@ document.addEventListener('DOMContentLoaded', () => {
               resultBox.textContent = content.games?.giftGame?.giftMessage || 'You found it! ♡';
               resultBox.classList.add('active');
             }
-            AudioController.playChime();
           } else {
+            AudioManager.playPop();
             if (icon) icon.textContent = '✨';
-            box.style.opacity = '0.7';
+            box.style.opacity = '0.75';
+            if (resultBox && !resultBox.classList.contains('active')) {
+              resultBox.textContent = content.games?.giftGame?.wrongMessage || 'Almost… try another one ♡';
+              resultBox.classList.add('active');
+              setTimeout(() => {
+                if (resultBox.textContent.includes('Almost')) {
+                  resultBox.classList.remove('active');
+                }
+              }, 2000);
+            }
           }
         });
       });
@@ -698,8 +804,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       trigger?.addEventListener('click', () => {
-        AudioController.initContext();
-        AudioController.playChime();
+        AudioManager.initContext();
+        AudioManager.playChime();
         trigger.style.transform = 'scale(1.2) rotate(15deg)';
         setTimeout(() => {
           trigger.style.transform = 'scale(1)';
@@ -778,15 +884,15 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       replayBtn?.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        AudioController.initContext();
-        AudioController.playChime();
+        AudioManager.initContext();
+        AudioManager.playChime();
       });
     }
   };
 
   /* ─── INITIALIZE ALL MODULES ────────────────────────────────────────────── */
   ContentPopulator.populate();
-  Navbar.init();
+  Navigation.init();
   HeroPetals.init();
   GiftModal.init();
   ReasonsSection.init();
@@ -797,5 +903,5 @@ document.addEventListener('DOMContentLoaded', () => {
   FlowerGame.init();
   GiftFinderGame.init();
   MakeAWish.init();
-  AudioController.init();
+  AudioManager.init();
 });

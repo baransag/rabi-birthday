@@ -19,24 +19,21 @@
 </head>
 <body>
 
-  <!-- ─── STICKY NAVBAR ─────────────────────────────────────────────────── -->
+  <!-- ─── STICKY NAVBAR (SIMPLIFIED & ELEGANT) ──────────────────────────── -->
   <header class="navbar" role="banner">
     <div class="container nav-container">
       <a href="#hero" class="nav-logo" aria-label="Rabi Home">
         RABI <span>♡</span>
       </a>
 
-      <!-- Desktop Navigation -->
+      <!-- Desktop Navigation (7 Primary Links) -->
       <nav aria-label="Main Navigation">
         <ul class="nav-links">
           <li><a href="#hero" class="nav-link active">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#reasons" class="nav-link">Reasons</a></li>
           <li><a href="#memories" class="nav-link">Memories</a></li>
-          <li><a href="#videos" class="nav-link">Videos</a></li>
-          <li><a href="#bouquet" class="nav-link">Bouquet</a></li>
+          <li><a href="#moments" class="nav-link">Moments</a></li>
           <li><a href="#birthday" class="nav-link">Birthday</a></li>
-          <li><a href="#games" class="nav-link">Games</a></li>
           <li><a href="#letter" class="nav-link">Letter</a></li>
           <li><a href="#surprise" class="nav-link">Surprise</a></li>
         </ul>
@@ -63,13 +60,10 @@
     <ul class="drawer-links">
       <li><a href="#hero" class="drawer-link">Home ♡</a></li>
       <li><a href="#about" class="drawer-link">About Rabi</a></li>
-      <li><a href="#reasons" class="drawer-link">Reasons You're Special</a></li>
-      <li><a href="#memories" class="drawer-link">Memory Gallery</a></li>
-      <li><a href="#videos" class="drawer-link">Video Memories</a></li>
-      <li><a href="#bouquet" class="drawer-link">The Bouquet</a></li>
-      <li><a href="#birthday" class="drawer-link">Birthday Cake</a></li>
-      <li><a href="#games" class="drawer-link">Mini Games</a></li>
-      <li><a href="#letter" class="drawer-link">Letter For You</a></li>
+      <li><a href="#memories" class="drawer-link">Memories &amp; Bloom</a></li>
+      <li><a href="#moments" class="drawer-link">Moments &amp; Bouquet</a></li>
+      <li><a href="#birthday" class="drawer-link">Birthday &amp; Games</a></li>
+      <li><a href="#letter" class="drawer-link">Letter &amp; Wish</a></li>
       <li><a href="#surprise" class="drawer-link">Final Surprise</a></li>
     </ul>
     <div style="margin-top: auto;">
@@ -77,6 +71,14 @@
         <span>♫</span> Play Music
       </button>
     </div>
+  </aside>
+
+  <!-- ─── SUBTLE JOURNEY PROGRESS INDICATOR ──────────────────────────────── -->
+  <aside id="journey-indicator" class="journey-indicator-pill" aria-label="Your Birthday Journey Progress">
+    <span class="journey-icon">🌸</span>
+    <span id="journey-num" class="journey-num">01 / 07</span>
+    <span class="journey-divider">•</span>
+    <span id="journey-label" class="journey-label">Welcome</span>
   </aside>
 
   <main>
@@ -106,7 +108,6 @@
 
         <div class="hero-visual">
           <div class="hero-frame-wrapper">
-            <!-- Decorative corner blooms -->
             <div class="hero-floral-decor decor-top-right">🌸</div>
             <div class="hero-floral-decor decor-bottom-left">🌹</div>
 
@@ -149,9 +150,10 @@
       </div>
     </div>
 
-    <!-- ─── 2. ABOUT RABI SECTION ────────────────────────────────────────── -->
+    <!-- ─── 2. ABOUT RABI (+ REASONS YOU'RE SPECIAL) ──────────────────────── -->
     <section id="about" class="section-padding about-section">
       <div class="container">
+        <!-- Editorial Spread -->
         <div class="section-header">
           <span class="section-tag">A Little About Her</span>
           <h2 class="section-title">The Girl Who Brings Light Everywhere</h2>
@@ -190,16 +192,12 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ─── 3. REASONS YOU'RE SPECIAL ────────────────────────────────────── -->
-    <section id="reasons" class="section-padding">
-      <div class="container">
-        <div class="section-header">
+        <!-- Reasons Subsection -->
+        <div class="reasons-subheading-box">
           <span class="section-tag">Heartwarming Notes</span>
-          <h2 class="section-title">A Few Reasons You're Special</h2>
-          <p class="section-subtitle">Tap each card to reveal a little note written just for you.</p>
+          <h3 style="font-size: 2rem; margin-bottom: 8px;">A Few Reasons You're Special</h3>
+          <p style="color: var(--text-muted);">Tap each card to reveal a little note written just for you.</p>
         </div>
 
         <div id="reasons-grid" class="reasons-grid">
@@ -208,7 +206,7 @@
       </div>
     </section>
 
-    <!-- ─── 4. MEMORY GALLERY ────────────────────────────────────────────── -->
+    <!-- ─── 3. MEMORIES (+ MEMORY BLOOM WOW MOMENT + VIDEOS) ──────────────── -->
     <section id="memories" class="section-padding" style="background: linear-gradient(180deg, transparent 0%, rgba(246, 214, 216, 0.25) 100%);">
       <div class="container">
         <div class="section-header">
@@ -219,6 +217,49 @@
 
         <div id="gallery-grid" class="gallery-grid">
           <!-- Dynamically populated 10 images from data/content.js -->
+        </div>
+
+        <!-- SIGNATURE WOW MOMENT: THE MEMORY BLOOM -->
+        <div id="memory-bloom-stage" class="memory-bloom-stage">
+          <p class="memory-bloom-intro">
+            “And somehow… all these little moments became memories.”
+          </p>
+
+          <div class="bloom-collage-wrapper">
+            <div class="bloom-card-item">
+              <img src="assets/images/memories/memory-01.jpg" alt="Bloom Memory 1" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'180\' viewBox=\'0 0 140 180\'><rect width=\'100%\' height=\'100%\' fill=\'%23F6D6D8\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\'>🌸</text></svg>';">
+            </div>
+            <div class="bloom-card-item">
+              <img src="assets/images/memories/memory-02.jpg" alt="Bloom Memory 2" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'180\' viewBox=\'0 0 140 180\'><rect width=\'100%\' height=\'100%\' fill=\'%23EEE9FA\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\'>💜</text></svg>';">
+            </div>
+            <div class="bloom-card-item">
+              <img src="assets/images/memories/memory-03.jpg" alt="Bloom Memory 3" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'180\' viewBox=\'0 0 140 180\'><rect width=\'100%\' height=\'100%\' fill=\'%23F8DDC8\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\'>🌹</text></svg>';">
+            </div>
+            <div class="bloom-card-item">
+              <img src="assets/images/memories/memory-04.jpg" alt="Bloom Memory 4" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'180\' viewBox=\'0 0 140 180\'><rect width=\'100%\' height=\'100%\' fill=\'%23EFC3CC\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' font-size=\'28\'>💐</text></svg>';">
+            </div>
+          </div>
+
+          <button id="bloom-trigger-btn" class="btn btn-primary">
+            Bloom Our Memories 🌸
+          </button>
+
+          <p class="memory-bloom-outro">
+            “And there are still so many more memories waiting to happen. ♡”
+          </p>
+        </div>
+
+        <!-- Video Memories Subsection -->
+        <div style="margin-top: 80px;">
+          <div class="section-header">
+            <span class="section-tag">Video Album</span>
+            <h3 style="font-size: 2rem; margin-bottom: 8px;">Moments In Motion</h3>
+            <p style="color: var(--text-muted);">Short clips and celebrations that hold big smiles.</p>
+          </div>
+
+          <div id="videos-grid" class="videos-grid">
+            <!-- Dynamically populated video cards from data/content.js -->
+          </div>
         </div>
       </div>
     </section>
@@ -240,21 +281,6 @@
       </div>
     </div>
 
-    <!-- ─── 5. VIDEO MEMORIES ────────────────────────────────────────────── -->
-    <section id="videos" class="section-padding">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-tag">Video Album</span>
-          <h2 class="section-title">Moments In Motion</h2>
-          <p class="section-subtitle">Short clips and celebrations that hold big smiles.</p>
-        </div>
-
-        <div id="videos-grid" class="videos-grid">
-          <!-- Dynamically populated video cards from data/content.js -->
-        </div>
-      </div>
-    </section>
-
     <!-- Video Modal -->
     <div id="video-modal" class="video-player-modal" role="dialog" aria-modal="true" aria-label="Video Player">
       <div class="video-player-container">
@@ -263,8 +289,8 @@
       </div>
     </div>
 
-    <!-- ─── 6. THE BOUQUET ───────────────────────────────────────────────── -->
-    <section id="bouquet" class="section-padding bouquet-section">
+    <!-- ─── 4. MOMENTS (THE BOUQUET) ──────────────────────────────────────── -->
+    <section id="moments" class="section-padding bouquet-section">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Floral Arrangement</span>
@@ -304,11 +330,11 @@
       </div>
     </section>
 
-    <!-- ─── 7. BIRTHDAY CELEBRATION ──────────────────────────────────────── -->
+    <!-- ─── 5. BIRTHDAY CELEBRATION (+ MINI GAMES) ────────────────────────── -->
     <section id="birthday" class="section-padding birthday-section">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag">Make A Wish</span>
+          <span class="section-tag">Celebrate Rabi</span>
           <h2 class="section-title">Happy Birthday, Rabi 🎂</h2>
           <p class="section-subtitle">06 September • Tap the candles to make a wish and blow them out!</p>
         </div>
@@ -333,16 +359,11 @@
           <!-- Elegant Birthday Cake SVG Layout -->
           <div class="cake-wrapper">
             <svg class="cake-plate-svg" viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
-              <!-- Cake Plate -->
               <ellipse cx="140" cy="160" rx="130" ry="18" fill="#EAD9C8"/>
               <ellipse cx="140" cy="156" rx="120" ry="14" fill="#FFF"/>
-
-              <!-- Bottom Tier -->
               <rect x="50" y="90" width="180" height="60" rx="8" fill="#FFF9F5"/>
               <ellipse cx="140" cy="90" rx="90" ry="12" fill="#F6D6D8"/>
               <path d="M50 110 Q65 120 80 110 Q95 120 110 110 Q125 120 140 110 Q155 120 170 110 Q185 120 200 110 Q215 120 230 110" stroke="#B94B61" stroke-width="3" fill="none"/>
-
-              <!-- Top Tier -->
               <rect x="75" y="45" width="130" height="50" rx="6" fill="#FFFDFB"/>
               <ellipse cx="140" cy="45" rx="65" ry="10" fill="#EFC3CC"/>
               <text x="140" y="78" font-family="'Caveat', cursive" font-size="24" font-weight="700" fill="#7D3042" text-anchor="middle">Rabi ♡</text>
@@ -358,23 +379,19 @@
             </button>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ─── 8. MINI GAMES ────────────────────────────────────────────────── -->
-    <section id="games" class="section-padding">
-      <div class="container">
-        <div class="section-header">
+        <!-- Mini Games Subsection -->
+        <div class="games-subheading-box">
           <span class="section-tag">Playful Moments</span>
-          <h2 class="section-title">Sweet Mini Games</h2>
-          <p class="section-subtitle">A couple of gentle little games made just to bring a smile.</p>
+          <h3 style="font-size: 2rem; margin-bottom: 8px;">Sweet Mini Games</h3>
+          <p style="color: var(--text-muted);">A couple of gentle little games made just to bring a smile.</p>
         </div>
 
         <div class="games-grid">
           <!-- Game 1: Catch Flowers -->
           <div class="game-card">
             <span class="section-tag">Mini Game 01</span>
-            <h3 style="font-size: 1.4rem; margin-bottom: 8px;">Catch the Falling Flowers 🌸</h3>
+            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Catch the Falling Flowers 🌸</h4>
             <p style="font-size: 0.92rem; color: var(--text-muted);">
               Tap the floating blooms to weave a custom bouquet for Rabi!
             </p>
@@ -395,7 +412,7 @@
           <!-- Game 2: Find the Gift -->
           <div class="game-card">
             <span class="section-tag">Mini Game 02</span>
-            <h3 style="font-size: 1.4rem; margin-bottom: 8px;">Find Rabi's Surprise Gift 🎁</h3>
+            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Find Rabi's Surprise Gift 🎁</h4>
             <p style="font-size: 0.92rem; color: var(--text-muted);">
               One of these pastel gift boxes holds a secret birthday note. Pick one!
             </p>
@@ -425,7 +442,7 @@
       </div>
     </section>
 
-    <!-- ─── 9. THE LETTER ────────────────────────────────────────────────── -->
+    <!-- ─── 6. THE LETTER (+ MAKE A WISH) ────────────────────────────────── -->
     <section id="letter" class="section-padding" style="background: linear-gradient(180deg, transparent 0%, rgba(255, 240, 242, 0.4) 100%);">
       <div class="container">
         <div class="section-header">
@@ -446,33 +463,29 @@
           <p id="letter-closing" class="letter-closing">With all my warmest wishes and deepest care,</p>
           <div id="letter-signature" class="letter-signature">Always, for you ♡</div>
         </div>
-      </div>
-    </section>
 
-    <!-- ─── 10. MAKE A WISH (HEART-CATCHING MOMENT) ───────────────────────── -->
-    <section id="wish" class="section-padding wish-section">
-      <div class="container">
-        <div class="section-header">
+        <!-- Make a Wish Subsection -->
+        <div class="wish-container-box">
           <span class="section-tag">Quiet Magic</span>
-          <h2 class="section-title">Make A Wish ♡</h2>
-          <p class="section-subtitle">
+          <h3 style="font-size: 2rem; margin-bottom: 8px;">Make A Wish ♡</h3>
+          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
             Close your eyes, think of something your heart quietly desires, and tap the glowing star.
           </p>
-        </div>
 
-        <div id="wish-trigger" class="wish-interactive-trigger" role="button" tabindex="0" aria-label="Tap to reveal wish">
-          ✨
-        </div>
+          <div id="wish-trigger" class="wish-interactive-trigger" role="button" tabindex="0" aria-label="Tap to reveal wish">
+            ✨
+          </div>
 
-        <div id="wish-revealed-card" class="wish-revealed-card">
-          <p id="wish-revealed-text" class="wish-revealed-text">
-            “I hope this year brings you more reasons to smile, more beautiful memories, and everything your heart quietly wishes for.” ✨
-          </p>
+          <div id="wish-revealed-card" class="wish-revealed-card">
+            <p id="wish-revealed-text" class="wish-revealed-text">
+              “I hope this year brings you more reasons to smile, more beautiful memories, and everything your heart quietly wishes for.” ✨
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ─── 11. FINAL SURPRISE ───────────────────────────────────────────── -->
+    <!-- ─── 7. FINAL SURPRISE ───────────────────────────────────────────── -->
     <section id="surprise" class="section-padding surprise-section">
       <div class="container">
         <div class="section-header">

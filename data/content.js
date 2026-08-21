@@ -1,9 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    RABI — THE BEAUTIFUL BIRTHDAY GIFT
    data/content.js — Central Editable Content System
-   
-   Everything the owner wants to edit is configured here.
-   Changes here will immediately update across all sections of the website.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 const CONTENT = {
@@ -17,6 +14,19 @@ const CONTENT = {
     },
     favoriteColor: "Soft Lavender & Purple",
     favoriteFlower: "Blush Roses & Red Roses"
+  },
+
+  journey: {
+    title: "Birthday Journey",
+    steps: [
+      { id: "hero", label: "Welcome", num: "01" },
+      { id: "about", label: "About Rabi", num: "02" },
+      { id: "memories", label: "Memories", num: "03" },
+      { id: "moments", label: "Moments", num: "04" },
+      { id: "birthday", label: "Birthday", num: "05" },
+      { id: "letter", label: "Letter", num: "06" },
+      { id: "surprise", label: "Surprise", num: "07" }
+    ]
   },
 
   hero: {
@@ -156,7 +166,7 @@ Happy Birthday, Rabiya. ✨`
     {
       id: 9,
       image: "assets/images/memories/memory-09.jpg",
-      title: "Cherished Memories",
+      title: "Cherished Moments",
       caption: "One of the softest, warmest memories we've ever shared.",
       alt: "Memory photo 9 of Rabi"
     },
@@ -168,6 +178,12 @@ Happy Birthday, Rabiya. ✨`
       alt: "Memory photo 10 of Rabi"
     }
   ],
+
+  memoryBloom: {
+    intro: "And somehow… all these little moments became memories.",
+    button: "Bloom Our Memories 🌸",
+    outro: "And there are still so many more memories waiting to happen. ♡"
+  },
 
   videos: [
     {
@@ -267,13 +283,15 @@ Happy Birthday, Rabiya. ✨`
       tag: "Mini Game 01",
       title: "Catch the Falling Flowers 🌸",
       subtitle: "Collect 10 soft blooms to weave a custom birthday bouquet for Rabi!",
+      counterLabel: "Flowers collected for Rabi",
       target: 10,
-      completionMessage: "You just collected a bouquet made especially for Rabi! 💐✨ May your year be as colorful and soft as these flowers."
+      completionMessage: "Your bouquet is complete 💐✨ May your year be as colorful, soft, and fragrant as these flowers."
     },
     giftGame: {
       tag: "Mini Game 02",
       title: "Find Rabi's Surprise Gift 🎁",
       subtitle: "One of these pastel gift boxes holds a hidden birthday note. Pick one!",
+      wrongMessage: "Almost… try another one ♡",
       giftMessage: "Of course you found it! Good things have a way of finding you. ♡ You deserve all the sweetest surprises in life."
     }
   },
@@ -316,7 +334,6 @@ Happy Birthday, Rabiya. ✨`
   }
 };
 
-// Export to window for vanilla JS access
 if (typeof window !== "undefined") {
   window.CONTENT = CONTENT;
 }
