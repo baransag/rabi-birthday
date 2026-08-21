@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="A cinematic birthday experience made for Rabi — The Bouquet That Never Fades.">
+  <meta name="theme-color" content="#0a0015">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>For Rabi 💜 — 06.09</title>
+
+  <!-- Google Fonts — Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+    media="print"
+    onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  </noscript>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div id="app" role="main" aria-label="Rabi — The Bouquet That Never Fades">
+
+  <!-- ── GLOBAL OVERLAYS ─────────────────────────────────────────────────── -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+  <canvas id="transition-canvas" aria-hidden="true"></canvas>
+
+  <!-- Custom cursor (desktop) -->
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursor-trail" aria-hidden="true"></div>
+
+  <!-- ── AUDIO GATE ──────────────────────────────────────────────────────── -->
+  <div id="audio-gate" role="dialog" aria-modal="true" aria-label="Sound options" aria-describedby="audio-gate-desc">
+    <div class="audio-gate-content">
+      <div class="audio-note" aria-hidden="true">♪</div>
+      <p class="audio-gate-text" id="audio-gate-desc">Something beautiful is waiting.</p>
+      <div class="audio-gate-buttons">
+        <button id="audio-yes-btn" class="btn btn-primary" aria-label="Enter the experience with sound">
+          ♫ Enter with sound
+        </button>
+        <button id="audio-no-btn" class="btn btn-ghost" aria-label="Enter without sound">
+          Continue silently
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MUTE BUTTON ─────────────────────────────────────────────────────── -->
+  <button id="mute-btn" class="floating-btn" aria-label="Mute sound" hidden>
+    <span class="mute-icon-on" aria-hidden="true">♫</span>
+    <span class="mute-icon-off" aria-hidden="true" hidden>♪</span>
+  </button>
+
+  <!-- ── PROGRESS INDICATOR ──────────────────────────────────────────────── -->
+  <div id="progress-indicator" aria-label="Story progress" hidden>
+    <div id="progress-dots" role="list" aria-label="Scene dots"></div>
+    <div id="progress-label" aria-live="polite"></div>
+  </div>
+
+  <!-- ── REVISIT GATE ────────────────────────────────────────────────────── -->
+  <div id="revisit-gate" class="scene-overlay" hidden role="dialog" aria-modal="true" aria-label="Welcome back">
+    <div class="revisit-content">
+      <div class="revisit-rose" aria-hidden="true">🌹</div>
+      <h1 class="revisit-greeting" id="revisit-name">Welcome back, Rabi.</h1>
+      <p class="revisit-subtitle">The flowers are still here.</p>
+      <div class="revisit-buttons">
+        <button id="revisit-bouquet-btn" class="btn btn-primary" aria-label="Enter the bouquet directly">
+          Enter the bouquet
+        </button>
+        <button id="revisit-replay-btn" class="btn btn-ghost" aria-label="Replay the full journey">
+          Replay the journey
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 00 — LOADING
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-loading" class="scene scene--active" aria-label="Loading experience">
+    <div class="loading-content">
+      <div class="loading-rose" aria-hidden="true">
+        <div class="loading-rose-flower"></div>
+      </div>
+      <h1 class="loading-title">Preparing something for Rabi...</h1>
+      <div class="loading-stages">
+        <p id="loading-stage-text" class="loading-stage" aria-live="polite">Initializing...</p>
+      </div>
+      <div
+        class="loading-bar-container"
+        role="progressbar"
+        aria-valuenow="0"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        id="loading-progress-bar"
+        aria-label="Loading progress">
+        <div class="loading-bar-fill" id="loading-bar-fill"></div>
+      </div>
+      <p class="loading-percent" id="loading-percent" aria-hidden="true">0%</p>
+    </div>
+    <div class="loading-particles" aria-hidden="true" id="loading-particles"></div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 01 — THE OPENING
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-opening" class="scene" aria-label="The Opening" aria-hidden="true">
+    <div class="opening-content">
+
+      <!-- Date -->
+      <div class="opening-date" id="opening-date">
+        <span class="opening-date-text" aria-label="06 September"></span>
+      </div>
+
+      <!-- Quote -->
+      <div class="opening-quote-wrapper" id="opening-quote-wrapper" hidden>
+        <p class="opening-intro">Someone once said...</p>
+        <blockquote class="opening-quote">
+          <span class="opening-quote-text" aria-live="polite"></span>
+        </blockquote>
+      </div>
+
+      <!-- Rose grows -->
+      <div class="opening-rose-wrapper" id="opening-rose-wrapper" hidden>
+        <p class="opening-so"></p>
+        <div class="opening-rose-container" id="opening-rose" role="img" aria-label="A red rose growing from darkness">
+          <svg class="rose-grow-svg" viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <radialGradient id="og-petal" cx="45%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#ef5350"/>
+                <stop offset="55%" stop-color="#c62828"/>
+                <stop offset="100%" stop-color="#7f0000"/>
+              </radialGradient>
+              <radialGradient id="og-inner" cx="45%" cy="30%" r="60%">
+                <stop offset="0%" stop-color="#e53935"/>
+                <stop offset="100%" stop-color="#b71c1c"/>
+              </radialGradient>
+              <filter id="og-glow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="2.5" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- Stem -->
+            <path class="rose-stem"
+              d="M60,220 Q58,185 60,150"
+              stroke="#2d6a4f" stroke-width="3" fill="none" stroke-linecap="round"
+              stroke-dasharray="90" stroke-dashoffset="90"/>
+            <!-- Leaves -->
+            <path class="rose-leaf rose-leaf-left"
+              d="M60,190 Q42,175 37,160 Q52,167 60,190"
+              fill="#2d6a4f" opacity="0"/>
+            <path class="rose-leaf rose-leaf-right"
+              d="M60,175 Q77,160 81,145 Q68,153 60,175"
+              fill="#388e3c" opacity="0"/>
+            <!-- Outer petals -->
+            <g class="rose-petals-outer" opacity="0" filter="url(#og-glow)">
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(0,60,100)"   opacity="0.88"/>
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(51,60,100)"  opacity="0.88"/>
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(103,60,100)" opacity="0.88"/>
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(154,60,100)" opacity="0.88"/>
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(206,60,100)" opacity="0.88"/>
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(257,60,100)" opacity="0.88"/>
+              <ellipse cx="60" cy="100" rx="22" ry="32" fill="url(#og-petal)" transform="rotate(309,60,100)" opacity="0.88"/>
+            </g>
+            <!-- Inner petals -->
+            <g class="rose-petals-inner" opacity="0">
+              <ellipse cx="60" cy="94" rx="15" ry="21" fill="url(#og-inner)" transform="rotate(0,60,94)"   opacity="0.92"/>
+              <ellipse cx="60" cy="94" rx="15" ry="21" fill="url(#og-inner)" transform="rotate(60,60,94)"  opacity="0.92"/>
+              <ellipse cx="60" cy="94" rx="15" ry="21" fill="url(#og-inner)" transform="rotate(120,60,94)" opacity="0.92"/>
+              <ellipse cx="60" cy="94" rx="15" ry="21" fill="url(#og-inner)" transform="rotate(180,60,94)" opacity="0.92"/>
+              <ellipse cx="60" cy="94" rx="15" ry="21" fill="url(#og-inner)" transform="rotate(240,60,94)" opacity="0.92"/>
+              <ellipse cx="60" cy="94" rx="15" ry="21" fill="url(#og-inner)" transform="rotate(300,60,94)" opacity="0.92"/>
+            </g>
+            <!-- Center -->
+            <ellipse class="rose-center" cx="60" cy="90" rx="10" ry="12" fill="#b71c1c" opacity="0"/>
+            <ellipse class="rose-heart"  cx="60" cy="87" rx="6"  ry="7"  fill="#c62828" opacity="0"/>
+          </svg>
+        </div>
+
+        <!-- Reveal text -->
+        <div class="opening-reveal" id="opening-reveal" hidden>
+          <p class="opening-reveal-main" aria-live="polite"></p>
+          <p class="opening-reveal-sub">But this one never fades. 🌹</p>
+        </div>
+      </div>
+
+    </div>
+
+    <button
+      class="scene-continue"
+      id="opening-continue"
+      hidden
+      aria-label="Continue to the developer reveal">
+      <span>Continue</span>
+    </button>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 02 — DEVELOPER REVEAL
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-developer" class="scene" aria-label="Developer Reveal" aria-hidden="true">
+    <div class="dev-scene-bg" aria-hidden="true"></div>
+
+    <div class="dev-container">
+      <div class="dev-window" role="region" aria-label="Code editor — Birthday universe">
+
+        <!-- Window chrome -->
+        <div class="dev-window-chrome" aria-hidden="true">
+          <div class="dev-window-dots">
+            <span class="dot dot--close"></span>
+            <span class="dot dot--minimize"></span>
+            <span class="dot dot--expand"></span>
+          </div>
+          <span class="dev-window-title">rabi.js — birthday universe</span>
+        </div>
+
+        <!-- Code area -->
+        <div class="dev-code-area">
+          <div class="dev-line-numbers" id="dev-line-numbers" aria-hidden="true"></div>
+          <div class="dev-code-content">
+            <pre class="dev-code" id="dev-code-output" aria-label="Birthday code being written for Rabi"></pre>
+            <span class="dev-cursor" id="dev-cursor" aria-hidden="true">▊</span>
+          </div>
+        </div>
+
+        <!-- Execute -->
+        <div class="dev-execute-area" id="dev-execute-area" hidden>
+          <div class="dev-prompt" aria-hidden="true">❯</div>
+          <button class="dev-execute-btn" id="dev-execute-btn" aria-label="Execute the birthday gift code">
+            <span class="dev-execute-label">EXECUTE</span>
+            <span class="dev-execute-glow" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <!-- Result -->
+        <div class="dev-result" id="dev-result" hidden aria-live="polite">
+          <span class="dev-result-check" aria-hidden="true">✓</span>
+          <span class="dev-result-text">BUILD COMPLETE</span>
+        </div>
+
+      </div>
+      <div class="dev-grid" aria-hidden="true"></div>
+      <div class="dev-fragments" aria-hidden="true" id="dev-fragments"></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 03 — THE DIGITAL BOUQUET
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-bouquet" class="scene" aria-label="The Digital Bouquet" aria-hidden="true">
+    <div class="bouquet-bg" aria-hidden="true"></div>
+
+    <!-- Intro sequence -->
+    <div class="bouquet-intro" id="bouquet-intro">
+      <h2 class="bouquet-title" id="bouquet-title">For Rabi 💜</h2>
+      <div class="bouquet-intro-lines" id="bouquet-intro-lines" aria-live="polite"></div>
+    </div>
+
+    <!-- Bouquet stage -->
+    <div class="bouquet-stage" id="bouquet-stage" hidden aria-label="Interactive rose bouquet">
+      <div class="bouquet-flowers" id="bouquet-flowers" role="group" aria-label="Seven roses — tap one to read its message"></div>
+      <div class="bouquet-wrap" aria-hidden="true">
+        <div class="bouquet-wrap-paper"></div>
+        <div class="bouquet-wrap-ribbon"></div>
+      </div>
+      <div class="rose-message-display" id="rose-message-display" hidden aria-live="polite">
+        <p class="rose-message-text" id="rose-message-text"></p>
+        <div class="rose-message-glow" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Pick area -->
+    <div class="bouquet-pick-area" id="bouquet-pick-area" hidden>
+      <p class="bouquet-pick-hint">Each rose holds a message</p>
+      <button class="btn btn-rose" id="bouquet-pick-btn" aria-label="Begin picking roses from the bouquet" hidden>
+        PICK A ROSE 🌹
+      </button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 04 — GALAXY / TWO SOULS
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-galaxy" class="scene" aria-label="Two Souls, One Universe" aria-hidden="true">
+    <canvas id="galaxy-canvas" aria-hidden="true"></canvas>
+
+    <div class="galaxy-content">
+      <div class="souls-container" id="souls-container">
+        <div class="soul soul--left" id="soul-you">
+          <div class="soul-star" aria-hidden="true"></div>
+          <span class="soul-label">YOU</span>
+        </div>
+        <div class="soul-center-text" id="soul-center-text">
+          <p>two souls. one universe.</p>
+        </div>
+        <div class="soul soul--right" id="soul-rabi">
+          <div class="soul-star" aria-hidden="true"></div>
+          <span class="soul-label">RABI</span>
+        </div>
+      </div>
+
+      <button class="btn btn-galaxy" id="galaxy-merge-btn" hidden aria-label="Bring the two souls together">
+        <span>Bring us together</span>
+        <div class="btn-galaxy-glow" aria-hidden="true"></div>
+      </button>
+
+      <div class="galaxy-messages" id="galaxy-messages" hidden aria-live="polite">
+        <p class="galaxy-msg" id="galaxy-msg-1"></p>
+        <p class="galaxy-msg" id="galaxy-msg-2"></p>
+        <p class="galaxy-msg" id="galaxy-msg-3"></p>
+      </div>
+
+      <button class="scene-continue" id="galaxy-continue" hidden aria-label="Continue to the Memory Garden">
+        <span>Continue</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 05 — MEMORY GARDEN
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-memory" class="scene" aria-label="Memory Garden" aria-hidden="true">
+    <div class="memory-bg" aria-hidden="true">
+      <div class="memory-ground"></div>
+      <div class="memory-mist"></div>
+      <div class="memory-stars" id="memory-stars"></div>
+    </div>
+
+    <div class="memory-header">
+      <h2 class="memory-title">Every memory deserves a flower. 🌹</h2>
+    </div>
+
+    <div
+      class="memory-garden"
+      id="memory-garden"
+      role="group"
+      aria-label="Memory flowers — tap a flower to reveal a photo">
+      <!-- Generated dynamically from data/memories.js -->
+    </div>
+
+    <!-- Photo frame overlay -->
+    <div class="memory-frame-overlay" id="memory-frame-overlay" hidden>
+      <div class="memory-frame-glass" role="dialog" aria-label="Memory photo" aria-modal="true">
+        <img class="memory-frame-img" id="memory-frame-img" src="" alt="" loading="lazy">
+        <div class="memory-frame-placeholder" id="memory-frame-placeholder" hidden>
+          <span class="memory-placeholder-icon" aria-hidden="true">🌹</span>
+          <p class="memory-placeholder-text">A memory waiting to be added.</p>
+        </div>
+        <div class="memory-frame-caption" id="memory-frame-caption"></div>
+        <button class="memory-frame-close" id="memory-frame-close" aria-label="Close photo">×</button>
+        <div class="memory-frame-particles" id="memory-frame-particles" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <button class="scene-continue memory-continue" id="memory-continue" aria-label="Continue to the Dream Room">
+      <span>Continue</span>
+    </button>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 05B — SECRET GARDEN (overlay)
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <div
+    id="scene-secret"
+    class="scene-overlay"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-label="Secret Garden">
+    <div class="secret-content">
+      <div class="secret-icon" aria-hidden="true">💜</div>
+      <p class="secret-intro" id="secret-intro-text">You found something I didn't tell you about...</p>
+      <h3 class="secret-reveal" id="secret-reveal-text" hidden>RABI FOUND THE SECRET 💜</h3>
+      <p class="secret-message" id="secret-message-text" hidden></p>
+      <button class="btn btn-ghost secret-close" id="secret-close-btn" aria-label="Close secret garden" style="margin-top:24px">
+        Close
+      </button>
+    </div>
+    <div class="secret-particles" id="secret-particles" aria-hidden="true"></div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 06 — PURPLE DREAM ROOM
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-dreamroom" class="scene" aria-label="Purple Dream Room" aria-hidden="true">
+    <div class="room-bg" id="room-bg" aria-hidden="true">
+
+      <!-- Far layer — window + stars -->
+      <div class="room-layer room-layer--far" id="room-far">
+        <div class="room-window" aria-hidden="true">
+          <div class="room-window-glass"></div>
+          <div class="room-window-stars" id="room-window-stars"></div>
+          <div
+            class="room-moon"
+            id="room-moon"
+            role="button"
+            tabindex="0"
+            aria-label="The moon (tap to discover something)"></div>
+        </div>
+        <div class="room-curtain room-curtain--left" aria-hidden="true"></div>
+        <div class="room-curtain room-curtain--right" aria-hidden="true"></div>
+      </div>
+
+      <!-- Mid layer — floating roses -->
+      <div class="room-layer room-layer--mid" id="room-mid">
+        <div class="room-floating-roses" id="room-floating-roses"></div>
+      </div>
+
+      <!-- Near layer — table, bouquet, candles -->
+      <div class="room-layer room-layer--near" id="room-near">
+        <div class="room-table" aria-hidden="true">
+          <div class="room-table-surface"></div>
+          <div class="room-table-leg"></div>
+        </div>
+        <div class="room-bouquet" aria-hidden="true">
+          <div class="room-bouquet-flowers">
+            <div class="room-rose"></div>
+            <div class="room-rose"></div>
+            <div class="room-rose"></div>
+          </div>
+          <div class="room-bouquet-vase"></div>
+        </div>
+        <div class="room-candles" aria-hidden="true">
+          <div class="room-candle"><div class="candle-flame"></div></div>
+          <div class="room-candle room-candle--tall"><div class="candle-flame"></div></div>
+          <div class="room-candle"><div class="candle-flame"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating portrait photos -->
+    <div class="room-photos" id="room-photos" aria-hidden="true"></div>
+
+    <!-- Quote -->
+    <div class="room-quote-container">
+      <blockquote class="room-quote" id="room-quote"></blockquote>
+    </div>
+
+    <button class="scene-continue room-continue" id="room-continue" aria-label="Continue to The Day">
+      <span>Continue</span>
+    </button>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 07 — THE DAY
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-theday" class="scene" aria-label="The Day — 06 September" aria-hidden="true">
+    <div class="theday-bg" aria-hidden="true">
+      <div class="theday-glow"></div>
+    </div>
+
+    <div class="theday-content">
+      <div class="theday-number" id="theday-number" aria-label="06">06</div>
+      <div class="theday-month" id="theday-month" aria-label="September">SEPTEMBER</div>
+      <div class="theday-subtitle" id="theday-subtitle">THE DAY RABI WAS BORN</div>
+      <div class="theday-status" id="theday-status" aria-live="polite"></div>
+
+      <div class="theday-countdown" id="theday-countdown" hidden aria-live="polite">
+        <span class="countdown-number" id="countdown-days">0</span>
+        <span class="countdown-label" id="countdown-label">days until Rabi Day 💜</span>
+      </div>
+    </div>
+
+    <button class="scene-continue theday-continue" id="theday-continue" aria-label="Continue to Birthday celebration">
+      <span>Continue</span>
+    </button>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 08 — BIRTHDAY TABLE
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-birthday" class="scene" aria-label="Birthday Celebration" aria-hidden="true">
+    <div class="birthday-bg" aria-hidden="true">
+      <div class="birthday-ambient"></div>
+    </div>
+
+    <!-- Heading -->
+    <div class="birthday-header">
+      <h2 class="birthday-heading" id="birthday-heading">Happy Birthday, Rabiya</h2>
+      <p class="birthday-subheading">06 • 09</p>
+    </div>
+
+    <!-- Cake scene -->
+    <div class="birthday-table-scene" aria-label="Birthday table with cake and candles">
+      <div class="cake-container">
+        <div class="cake" id="birthday-cake" role="img" aria-label="Birthday cake">
+
+          <div class="cake-top">
+            <div class="cake-candles" id="cake-candles" role="group" aria-label="Candles — tap each one to blow it out">
+              <div class="cake-candle-wrapper">
+                <div class="cake-candle" data-candle="0" role="button" tabindex="0" aria-label="Candle 1 — tap to blow out">
+                  <div class="cake-flame"></div>
+                  <div class="cake-flame-glow"></div>
+                </div>
+              </div>
+              <div class="cake-candle-wrapper">
+                <div class="cake-candle cake-candle--tall" data-candle="1" role="button" tabindex="0" aria-label="Candle 2 — tap to blow out">
+                  <div class="cake-flame"></div>
+                  <div class="cake-flame-glow"></div>
+                </div>
+              </div>
+              <div class="cake-candle-wrapper">
+                <div class="cake-candle" data-candle="2" role="button" tabindex="0" aria-label="Candle 3 — tap to blow out">
+                  <div class="cake-flame"></div>
+                  <div class="cake-flame-glow"></div>
+                </div>
+              </div>
+              <div class="cake-candle-wrapper">
+                <div class="cake-candle cake-candle--short" data-candle="3" role="button" tabindex="0" aria-label="Candle 4 — tap to blow out">
+                  <div class="cake-flame"></div>
+                  <div class="cake-flame-glow"></div>
+                </div>
+              </div>
+              <div class="cake-candle-wrapper">
+                <div class="cake-candle" data-candle="4" role="button" tabindex="0" aria-label="Candle 5 — tap to blow out">
+                  <div class="cake-flame"></div>
+                  <div class="cake-flame-glow"></div>
+                </div>
+              </div>
+            </div>
+            <div class="cake-layer cake-layer--top"></div>
+          </div>
+
+          <div class="cake-layer cake-layer--mid">
+            <div class="cake-decoration">
+              <span class="cake-text">Rabi</span>
+            </div>
+          </div>
+
+          <div class="cake-layer cake-layer--bottom"></div>
+          <div class="cake-plate" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="table-flowers" aria-hidden="true">
+        <div class="table-flower table-flower--left"></div>
+        <div class="table-flower table-flower--right"></div>
+      </div>
+
+      <div class="birthday-table" aria-hidden="true"></div>
+    </div>
+
+    <p class="candle-hint" id="candle-hint" aria-live="polite">Tap the candles... ✨</p>
+
+    <div class="birthday-wish" id="birthday-wish" hidden aria-live="assertive">
+      <p class="birthday-wish-text">💜</p>
+    </div>
+
+    <button class="scene-continue birthday-continue" id="birthday-continue" hidden aria-label="Continue to the final letter">
+      <span>Read the letter</span>
+    </button>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 09 — FINAL LETTER
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-letter" class="scene" aria-label="Final Letter" aria-hidden="true">
+    <div class="letter-bg" aria-hidden="true">
+      <div class="letter-glow"></div>
+    </div>
+
+    <div class="letter-container">
+      <div class="letter-paper">
+        <span class="letter-cursor" id="letter-cursor" aria-hidden="true">|</span>
+        <div class="letter-content" aria-live="polite">
+          <p class="letter-salutation" id="letter-salutation"></p>
+          <div class="letter-body" id="letter-body"></div>
+          <p class="letter-closing" id="letter-closing"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final rose -->
+    <div class="letter-final-rose" id="letter-final-rose" hidden>
+      <div class="final-rose-svg-container" role="img" aria-label="A beautiful red rose">
+        <svg class="final-rose-svg" viewBox="0 0 120 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <radialGradient id="fr-grad" cx="45%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#ef5350"/>
+              <stop offset="55%" stop-color="#c62828"/>
+              <stop offset="100%" stop-color="#7f0000"/>
+            </radialGradient>
+            <filter id="fr-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path d="M60,220 Q58,185 60,148" stroke="#2d6a4f" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M60,188 Q42,173 37,158 Q52,165 60,188" fill="#2d6a4f"/>
+          <path d="M60,172 Q77,157 81,142 Q68,150 60,172" fill="#388e3c"/>
+          <g filter="url(#fr-glow)">
+            <ellipse cx="60" cy="96" rx="23" ry="34" fill="url(#fr-grad)" transform="rotate(0,60,96)"   opacity="0.88"/>
+            <ellipse cx="60" cy="96" rx="23" ry="34" fill="url(#fr-grad)" transform="rotate(51,60,96)"  opacity="0.88"/>
+            <ellipse cx="60" cy="96" rx="23" ry="34" fill="url(#fr-grad)" transform="rotate(103,60,96)" opacity="0.88"/>
+            <ellipse cx="60" cy="96" rx="23" ry="34" fill="url(#fr-grad)" transform="rotate(154,60,96)" opacity="0.88"/>
+            <ellipse cx="60" cy="96" rx="23" ry="34" fill="url(#fr-grad)" transform="rotate(206,60,96)" opacity="0.88"/>
+            <ellipse cx="60" cy="96" rx="23" ry="34" fill="url(#fr-grad)" transform="rotate(257,60,96)" opacity="0.88"/>
+            <ellipse cx="60" cy="90" rx="16" ry="22" fill="#e53935" transform="rotate(20,60,90)"/>
+            <ellipse cx="60" cy="90" rx="16" ry="22" fill="#e53935" transform="rotate(-20,60,90)"/>
+            <ellipse cx="60" cy="90" rx="16" ry="22" fill="#e53935" transform="rotate(80,60,90)"/>
+            <ellipse cx="60" cy="84" rx="10" ry="14" fill="#b71c1c"/>
+            <ellipse cx="60" cy="80" rx="6"  ry="8"  fill="#c62828"/>
+          </g>
+        </svg>
+      </div>
+      <h3 class="final-rose-text">🌹 RABI</h3>
+      <p class="final-rose-subtext">A bouquet that never fades.</p>
+    </div>
+
+    <!-- Final photo -->
+    <div class="letter-final-photo" id="letter-final-photo" hidden>
+      <div class="final-photo-frame">
+        <img
+          class="final-photo-img"
+          id="final-photo-img"
+          src=""
+          alt="A very special photo for Rabi"
+          loading="lazy">
+        <div class="final-photo-overlay" id="final-photo-placeholder" hidden>
+          <span aria-hidden="true">💜</span>
+        </div>
+        <div class="final-photo-caption">06 • 09 • forever memorable</div>
+        <div class="final-photo-glow" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <button class="scene-continue letter-continue" id="letter-continue" hidden aria-label="Enter the epilogue">
+      <span>The flowers are waiting...</span>
+    </button>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       SCENE 10 — EPILOGUE: THE BOUQUET THAT NEVER FADES
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <section id="scene-epilogue" class="scene" aria-label="Epilogue — The Bouquet That Never Fades" aria-hidden="true">
+    <canvas id="epilogue-canvas" aria-hidden="true"></canvas>
+
+    <div class="epilogue-content">
+      <div class="epilogue-bouquet" id="epilogue-bouquet" aria-hidden="true">
+        <!-- Generated by JS -->
+      </div>
+      <h2 class="epilogue-title">The Bouquet That Never Fades</h2>
+      <p class="epilogue-line" id="epilogue-final-line"></p>
+      <div class="epilogue-signature" aria-hidden="true">
+        <span class="epilogue-date">06 • 09</span>
+        <span class="epilogue-heart">💜</span>
+      </div>
+      <!-- Egg 3 trigger — inserted by JS -->
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════════════════════
+       EASTER EGG OVERLAYS
+  ════════════════════════════════════════════════════════════════════════════ -->
+  <div id="egg-1-overlay" class="easter-egg-overlay" hidden role="alert" aria-live="assertive">
+    <div class="egg-content">
+      <p class="egg-text" id="egg-1-text"></p>
+    </div>
+  </div>
+
+  <div id="egg-2-overlay" class="easter-egg-overlay egg-moon" hidden role="alert" aria-live="polite"
+    style="background:transparent;pointer-events:none;">
+    <p class="egg-moon-text" id="egg-2-text"></p>
+  </div>
+
+  <div id="egg-3-overlay" class="easter-egg-overlay" hidden role="alert" aria-live="assertive">
+    <div class="egg-content">
+      <p class="egg-text" id="egg-3-text"></p>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<!-- ── Data layer ────────────────────────────────────────────────────────── -->
+<script src="data/config.js"></script>
+<script src="data/memories.js"></script>
+
+<!-- ── Core JS ───────────────────────────────────────────────────────────── -->
+<script src="js/particles.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/easter-eggs.js"></script>
+<script src="js/memories.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>

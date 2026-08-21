@@ -1,0 +1,407 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   RABI — The Bouquet That Never Fades
+   responsive.css — Mobile-First Responsive Design
+   ═══════════════════════════════════════════════════════════════════════════
+   Target breakpoints: 360, 375, 390, 412px (Mobile)
+   Then: 768px (Tablet), 1024px (Desktop)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── MOBILE BASE (360px and up) ─────────────────────────────────────────── */
+
+/* Cursor: hide on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  body { cursor: auto; }
+  #cursor, #cursor-trail { display: none !important; }
+}
+
+/* Audio gate — stacked on small screens */
+.audio-gate-buttons {
+  flex-direction: column;
+  width: 100%;
+  max-width: 240px;
+}
+
+.audio-gate-buttons .btn {
+  width: 100%;
+}
+
+/* Mute button — comfortable touch target */
+#mute-btn {
+  width: 48px;
+  height: 48px;
+  top: 12px;
+  right: 12px;
+}
+
+/* Progress indicator — smaller on mobile */
+#progress-indicator {
+  bottom: 12px;
+}
+
+.progress-dot { width: 4px; height: 4px; }
+
+/* Continue buttons — safe touch area */
+.scene-continue {
+  bottom: 28px;
+  padding: 14px 32px;
+  font-size: 11px;
+  min-height: 48px;
+  min-width: 140px;
+}
+
+/* Buttons — min touch target 48px */
+.btn {
+  min-height: 48px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 00 — LOADING (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.loading-content {
+  padding: 40px 24px;
+}
+
+.loading-bar-container {
+  width: min(280px, 76vw);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 01 — OPENING (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.opening-content {
+  padding: 32px 20px;
+  gap: 28px;
+}
+
+.opening-rose-container {
+  width: min(130px, 36vw);
+  height: min(210px, 57vw);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 02 — DEVELOPER (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.dev-container {
+  width: 96vw;
+  max-height: 92dvh;
+}
+
+.dev-code-area {
+  max-height: 42vh;
+}
+
+.dev-code-content {
+  padding: 12px 16px;
+}
+
+.dev-line-numbers {
+  padding: 12px 4px 12px 8px;
+  min-width: 36px;
+  font-size: 10px;
+}
+
+.dev-execute-area {
+  padding: 10px 16px;
+}
+
+.dev-window-chrome {
+  padding: 10px 12px;
+}
+
+.dev-window-title {
+  font-size: 10px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 03 — BOUQUET (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.bouquet-stage {
+  padding-bottom: clamp(70px, 16vh, 120px);
+}
+
+.bouquet-flowers {
+  width: min(320px, 92vw);
+  height: min(300px, 48vh);
+}
+
+.bouquet-wrap-paper {
+  border-left-width: 70px;
+  border-right-width: 70px;
+  border-bottom-width: 100px;
+}
+
+.bouquet-pick-area {
+  bottom: 20px;
+}
+
+/* Rose messages — centered on mobile */
+.rose-message-display {
+  transform: translate(-50%, -50%);
+  max-width: 92vw;
+  padding: 24px 20px;
+}
+
+.rose-message-text {
+  font-size: clamp(18px, 5vw, 26px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 04 — GALAXY (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.galaxy-content {
+  gap: 28px;
+  padding: 24px 20px;
+}
+
+.souls-container {
+  gap: 32px;
+}
+
+.soul-star {
+  width: 48px;
+  height: 48px;
+}
+
+.soul-center-text {
+  font-size: 14px;
+  max-width: 140px;
+}
+
+.galaxy-messages {
+  gap: 20px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 05 — MEMORY GARDEN (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.memory-header {
+  padding: 40px 20px 24px;
+}
+
+.memory-garden {
+  gap: 20px;
+  padding: 0 16px 100px;
+}
+
+.flower-head {
+  width: 52px;
+  height: 52px;
+}
+
+.flower-stem {
+  height: 36px;
+}
+
+.memory-frame-glass {
+  width: min(340px, 92vw);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 06 — DREAM ROOM (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.room-window {
+  top: 5%;
+  width: min(300px, 85vw);
+  height: min(200px, 36vh);
+}
+
+.room-curtain { display: none; }
+
+.room-candles {
+  display: none; /* simplify on mobile */
+}
+
+.room-quote-container {
+  padding: 24px 20px;
+}
+
+.room-quote {
+  font-size: clamp(18px, 4.5vw, 26px);
+}
+
+.room-photos { display: none; } /* portraits hidden on small screens */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 07 — THE DAY (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.theday-content {
+  padding: 32px 20px;
+  gap: 16px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 08 — BIRTHDAY (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+#scene-birthday {
+  padding-top: 32px;
+}
+
+.birthday-table-scene {
+  padding: 0 20px;
+}
+
+.cake-candles {
+  gap: 6px;
+}
+
+.birthday-table {
+  width: min(320px, 90vw);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 09 — FINAL LETTER (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+#scene-letter {
+  padding: 32px 0 80px;
+}
+
+.letter-container {
+  padding: 0 20px;
+}
+
+.letter-body {
+  font-size: clamp(15px, 4vw, 20px);
+  line-height: 2;
+}
+
+.final-rose-svg-container {
+  width: min(130px, 36vw);
+  height: min(210px, 57vw);
+}
+
+.final-photo-frame {
+  width: min(320px, 90vw);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCENE 10 — EPILOGUE (mobile)
+═══════════════════════════════════════════════════════════════════════════ */
+.epilogue-content {
+  padding: 32px 20px;
+  gap: 28px;
+}
+
+.epilogue-bouquet {
+  height: min(200px, 40vh);
+}
+
+/* Secret overlay */
+.secret-content {
+  padding: 32px 20px;
+}
+
+/* ─── TABLET (768px and up) ──────────────────────────────────────────────── */
+@media (min-width: 768px) {
+  body { cursor: none; } /* Restore custom cursor */
+
+  .audio-gate-buttons {
+    flex-direction: row;
+    max-width: none;
+  }
+
+  .audio-gate-buttons .btn {
+    width: auto;
+  }
+
+  .dev-container { width: min(700px, 92vw); }
+
+  .bouquet-flowers {
+    width: min(400px, 88vw);
+    height: min(360px, 56vh);
+  }
+
+  .souls-container {
+    gap: 80px;
+  }
+
+  .soul-star { width: 64px; height: 64px; }
+
+  .room-curtain { display: block; }
+  .room-candles { display: flex; }
+  .room-photos  { display: block; }
+
+  .memory-garden {
+    gap: 28px;
+    padding: 0 32px 120px;
+  }
+}
+
+/* ─── DESKTOP (1024px and up) ───────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .dev-container {
+    width: min(800px, 88vw);
+  }
+
+  .bouquet-flowers {
+    width: 440px;
+    height: 400px;
+  }
+
+  .memory-garden {
+    gap: 36px;
+    padding: 0 48px 120px;
+    max-width: 960px;
+  }
+
+  .flower-head {
+    width: 72px;
+    height: 72px;
+  }
+
+  .souls-container {
+    gap: 100px;
+  }
+
+  .room-window {
+    width: 420px;
+    height: 300px;
+  }
+
+  .room-photos { display: block; }
+}
+
+/* ─── LARGE DESKTOP (1440px and up) ─────────────────────────────────────── */
+@media (min-width: 1440px) {
+  .memory-garden {
+    max-width: 1100px;
+  }
+}
+
+/* ─── LANDSCAPE PHONE ────────────────────────────────────────────────────── */
+@media (max-height: 500px) and (orientation: landscape) {
+  .loading-rose { display: none; }
+
+  .opening-rose-container { display: none; }
+  .opening-content { gap: 16px; }
+
+  #scene-birthday { padding-top: 12px; }
+  .birthday-header { padding-bottom: 8px; }
+
+  .cake-layer--top { height: 28px; }
+  .cake-layer--mid { height: 34px; }
+  .cake-layer--bottom { height: 30px; }
+
+  .theday-number { font-size: clamp(48px, 14vw, 80px); }
+
+  .letter-container { padding: 0 16px; }
+
+  .epilogue-bouquet { height: min(140px, 30vh); }
+}
+
+/* ─── HIGH CONTRAST / FORCED COLORS ─────────────────────────────────────── */
+@media (forced-colors: active) {
+  .btn-primary, .btn-rose, .btn-galaxy {
+    border: 2px solid ButtonText;
+  }
+
+  .scene-continue {
+    border: 1px solid ButtonText;
+  }
+}
+
+/* ─── PRINT (disable animations, show content) ───────────────────────────── */
+@media print {
+  body { background: white; color: black; }
+  .scene { opacity: 1; position: static; }
+  canvas, #cursor, #cursor-trail, #audio-gate, #mute-btn, #progress-indicator { display: none; }
+}
