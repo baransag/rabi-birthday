@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="A beautiful, personal, and luxury red rose birthday gift experience crafted especially for Rabi ♡">
+  <meta name="description" content="A beautiful, personal, and luxury birthday gift experience crafted especially for Rabi ♡">
   <meta name="theme-color" content="#FFF9F5">
 
   <title>Happy Birthday, Rabi ♡ | The Red Rose Birthday Gift</title>
@@ -31,14 +31,12 @@
         <ul class="nav-links">
           <li><a href="#hero" class="nav-link active">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
-          <li><a href="#rose-garden" class="nav-link">Rose Garden</a></li>
+          <li><a href="#rose-garden" class="nav-link">Roses 🌹</a></li>
           <li><a href="#memories" class="nav-link">Memories</a></li>
           <li><a href="#souls" class="nav-link">Two Souls</a></li>
-          <li><a href="#moments" class="nav-link">The Bouquet</a></li>
-          <li><a href="#eternal-rose" class="nav-link">Eternal Rose</a></li>
-          <li><a href="#birthday" class="nav-link">Celebration</a></li>
-          <li><a href="#letter" class="nav-link">Vintage Letter</a></li>
-          <li><a href="#surprise" class="nav-link">Surprise</a></li>
+          <li><a href="#moments" class="nav-link">Bouquet</a></li>
+          <li><a href="#birthday" class="nav-link">Birthday</a></li>
+          <li><a href="#letter" class="nav-link">Letters 💌</a></li>
         </ul>
       </nav>
 
@@ -63,13 +61,12 @@
     <ul class="drawer-links">
       <li><a href="#hero" class="drawer-link">Home 🌹</a></li>
       <li><a href="#about" class="drawer-link">About Rabi</a></li>
-      <li><a href="#rose-garden" class="drawer-link">12 Red Roses Garden 🌹</a></li>
-      <li><a href="#memories" class="drawer-link">Polaroid Memory Wall 📸</a></li>
+      <li><a href="#rose-garden" class="drawer-link">Red Roses Garden 🌹</a></li>
+      <li><a href="#memories" class="drawer-link">Memories &amp; Bloom 🌸</a></li>
       <li><a href="#souls" class="drawer-link">Two Souls Universe ✨</a></li>
-      <li><a href="#moments" class="drawer-link">The Bouquet 💐</a></li>
-      <li><a href="#eternal-rose" class="drawer-link">The Eternal Rose 🥀</a></li>
-      <li><a href="#birthday" class="drawer-link">Celebration &amp; Lanterns 🏮</a></li>
-      <li><a href="#letter" class="drawer-link">Rose Wax-Sealed Letter 📜</a></li>
+      <li><a href="#moments" class="drawer-link">Bouquet &amp; Eternal Rose 🥀</a></li>
+      <li><a href="#birthday" class="drawer-link">Birthday Celebration 🎂</a></li>
+      <li><a href="#letter" class="drawer-link">Interactive Letters 💌</a></li>
       <li><a href="#surprise" class="drawer-link">Final Surprise ♡</a></li>
     </ul>
     <div style="margin-top: auto; padding-top: 16px;">
@@ -82,7 +79,7 @@
   <!-- ─── JOURNEY PROGRESS INDICATOR ─────────────────────────────────────── -->
   <aside id="journey-indicator" class="journey-indicator-pill" aria-label="Your Birthday Journey Progress">
     <span class="journey-icon">🌹</span>
-    <span id="journey-num" class="journey-num">01 / 10</span>
+    <span id="journey-num" class="journey-num">01 / 09</span>
     <span class="journey-divider">•</span>
     <span id="journey-label" class="journey-label">Welcome</span>
   </aside>
@@ -129,7 +126,7 @@
             <div class="hero-tag-card">
               <span>🌹</span>
               <div>
-                <div>Red Roses &amp; Love</div>
+                <div>Red Roses &amp; Care</div>
                 <div style="font-size: 0.8rem; color: var(--text-muted);">From Husnain for Rabi 💜</div>
               </div>
             </div>
@@ -157,7 +154,7 @@
       </div>
     </div>
 
-    <!-- ─── 2. ABOUT RABI ────────────────────────────────────────────────── -->
+    <!-- ─── 2. ABOUT RABI (+ REASONS CARDS) ──────────────────────────────── -->
     <section id="about" class="section-padding about-section">
       <div class="container">
         <div class="section-header">
@@ -198,15 +195,26 @@
             </div>
           </div>
         </div>
+
+        <!-- Reasons Subsection -->
+        <div class="reasons-subheading-box">
+          <span class="section-tag">Heartwarming Notes</span>
+          <h3 style="font-size: 2rem; margin-bottom: 8px;">A Few Reasons You're Special</h3>
+          <p style="color: var(--text-muted);">Tap each card to reveal a little note written just for you.</p>
+        </div>
+
+        <div id="reasons-grid" class="reasons-grid">
+          <!-- Dynamically populated cards from data/content.js -->
+        </div>
       </div>
     </section>
 
-    <!-- ─── 3. THE 12 RED ROSES GARDEN SECTION ───────────────────────────── -->
+    <!-- ─── 3. THE RED ROSES APPRECIATION GARDEN ─────────────────────────── -->
     <section id="rose-garden" class="section-padding rose-garden-section">
       <div class="container">
         <div class="section-header">
           <span class="section-tag rose-tag">A Special Garden For Rabi</span>
-          <h2 class="section-title">The 12 Red Roses of Appreciation 🌹</h2>
+          <h2 class="section-title">The Red Roses of Appreciation 🌹</h2>
           <p class="section-subtitle">Tap each blooming red rose to unveil a little message written just for you.</p>
           <button id="start-rose-shower-btn" class="btn btn-rose" style="margin-top: 18px;">
             Start Red Rose Petal Shower 🌹✨
@@ -214,18 +222,18 @@
         </div>
 
         <div id="rose-garden-grid" class="rose-garden-grid">
-          <!-- Dynamically populated 12 Red Roses -->
+          <!-- Dynamically populated Red Roses -->
         </div>
       </div>
     </section>
 
-    <!-- ─── 4. FAIRY LIGHTS & POLAROID MEMORY WALL ────────────────────────── -->
+    <!-- ─── 4. MEMORIES GALLERY (+ FAIRY LIGHTS & MEMORY BLOOM) ──────────── -->
     <section id="memories" class="section-padding" style="background: linear-gradient(180deg, transparent 0%, rgba(246, 214, 216, 0.3) 100%);">
       <div class="container">
         <div class="section-header">
-          <span class="section-tag rose-tag">Polaroid Keepsakes</span>
+          <span class="section-tag rose-tag">Cherished Moments</span>
           <h2 class="section-title">Fairy Lights &amp; Memory Wall 📸🌹</h2>
-          <p class="section-subtitle">Tap any Polaroid to shake, develop &amp; view the full memory.</p>
+          <p class="section-subtitle">Little snapshots of laughter, warmth, and beautiful days.</p>
         </div>
 
         <!-- Glowing Fairy Lights String -->
@@ -240,12 +248,12 @@
           <div class="fairy-light-bulb"></div>
         </div>
 
-        <div id="polaroid-gallery-grid" class="polaroid-gallery-grid">
-          <!-- Dynamically populated Polaroid cards -->
+        <div id="gallery-grid" class="gallery-grid">
+          <!-- Dynamically populated from data/content.js -->
         </div>
 
         <!-- Signature Wow Moment: Memory Bloom -->
-        <div id="memory-bloom-stage" class="memory-bloom-stage" style="margin-top: 60px;">
+        <div id="memory-bloom-stage" class="memory-bloom-stage">
           <p class="memory-bloom-intro">
             “And somehow… all these little moments became memories.”
           </p>
@@ -340,7 +348,7 @@
       </button>
     </div>
 
-    <!-- ─── 6. MOMENTS (THE BOUQUET) ──────────────────────────────────────── -->
+    <!-- ─── 6. MOMENTS (THE BOUQUET & ETERNAL ROSE) ────────────────────────── -->
     <section id="moments" class="section-padding bouquet-section">
       <div class="container">
         <div class="section-header">
@@ -349,7 +357,7 @@
           <p class="section-subtitle">Some flowers are beautiful for a day. Some memories stay forever.</p>
         </div>
 
-        <div class="bouquet-wrapper">
+        <div class="bouquet-grid">
           <div class="bouquet-display-card">
             <img
               src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&q=80"
@@ -378,23 +386,19 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ─── 7. THE ENCHANTED ETERNAL RED ROSE (CRYSTAL CLOCHE) ────────────── -->
-    <section id="eternal-rose" class="section-padding eternal-rose-section">
-      <div class="container">
-        <div class="section-header" style="color: #FFFFFF;">
-          <span class="section-tag" style="background: rgba(239, 83, 80, 0.2); color: #FFCDD2; border-color: rgba(239, 83, 80, 0.4);">
+        <!-- The Enchanted Eternal Red Rose Crystal Cloche Card -->
+        <div class="eternal-rose-card-box">
+          <span class="section-tag" style="background: rgba(239, 83, 80, 0.2); color: #FFCDD2; border-color: rgba(239, 83, 80, 0.4); margin-bottom: 16px;">
             Enchanted Keepsake
           </span>
-          <h2 class="section-title" style="color: #FFFFFF;">Husnain’s Eternal Red Rose 🥀✨</h2>
-          <p class="section-subtitle" style="color: var(--blush);">
-            Protected inside crystal glass — tap the dome to release its magic stardust.
+          <h3 style="font-size: 1.8rem; color: #FFFFFF; margin-bottom: 8px;">
+            Husnain’s Eternal Red Rose 🥀✨
+          </h3>
+          <p style="color: var(--blush); font-size: 0.95rem; margin-bottom: 24px;">
+            Protected inside crystal glass — tap the dome to release its magic stardust!
           </p>
-        </div>
 
-        <div class="cloche-stage">
           <div id="cloche-glass-dome" class="cloche-glass-dome" role="button" tabindex="0" aria-label="Tap to unlock eternal rose">
             <div class="enchanted-rose-icon">🌹</div>
             <div class="single-falling-petal">🥀</div>
@@ -402,10 +406,10 @@
           <div class="cloche-base-stand"></div>
 
           <div id="eternal-rose-message-box" class="eternal-rose-message-box">
-            <p style="font-family: var(--font-editorial); font-size: 1.35rem; line-height: 1.8; color: #FFFFFF;">
+            <p style="font-family: var(--font-editorial); font-size: 1.3rem; line-height: 1.8; color: #FFFFFF;">
               “Real flowers fade in seven days, but this red rose will bloom forever on this website made especially for you.” ♡
             </p>
-            <p style="font-size: 1rem; color: #FFCDD2; margin-top: 10px; font-weight: 600;">
+            <p style="font-size: 0.95rem; color: #FFCDD2; margin-top: 8px; font-weight: 600;">
               — Handcrafted with love by Husnain 💜
             </p>
           </div>
@@ -413,7 +417,7 @@
       </div>
     </section>
 
-    <!-- ─── 8. BIRTHDAY CELEBRATION (+ GAMES & SKY LANTERNS) ──────────────── -->
+    <!-- ─── 7. BIRTHDAY CELEBRATION (+ GAMES & SKY LANTERNS) ──────────────── -->
     <section id="birthday" class="section-padding birthday-section">
       <div class="container">
         <div class="section-header">
@@ -569,58 +573,62 @@
       </div>
     </section>
 
-    <!-- ─── 9. VINTAGE ROSE WAX-SEALED ROYAL PARCHMENT LETTER ─────────────── -->
+    <!-- ─── 8. INTERACTIVE LOVE LETTERS & ENVELOPES (+ MAKE A WISH) ─────── -->
     <section id="letter" class="section-padding" style="background: linear-gradient(180deg, transparent 0%, rgba(255, 240, 242, 0.45) 100%);">
       <div class="container">
         <div class="section-header">
           <span class="section-tag rose-tag">From The Heart</span>
-          <h2 class="section-title">A Rose Wax-Sealed Letter for Rabi 📜🌹</h2>
-          <p class="section-subtitle">Tied with crimson silk ribbon. Tap the wax seal to break it open and unroll the letter!</p>
+          <h2 class="section-title">Interactive Love Letters &amp; Notes 💌🌹</h2>
+          <p class="section-subtitle">Tap the arrows to browse through the envelopes and slide them open to read!</p>
         </div>
 
-        <div class="vintage-parchment-stage">
-          <!-- Cover Box with Silk Ribbon & Embossed Wax Seal -->
-          <div id="parchment-cover-box" class="parchment-cover-box">
-            <div id="crimson-silk-ribbon" class="crimson-silk-ribbon"></div>
-            <div id="embossed-rose-wax-seal" class="embossed-rose-wax-seal" role="button" tabindex="0" aria-label="Break rose wax seal">
-              🌹
-            </div>
-            <div style="font-family: var(--font-serif); font-size: 1.35rem; color: var(--burgundy); margin-top: 60px;">
-              Tap the Rose Wax Seal to Open 📜
-            </div>
+        <!-- Carousel Controls -->
+        <div class="envelopes-carousel-header">
+          <button id="envelope-prev-btn" class="envelope-nav-btn" aria-label="Previous Envelope">&#10094;</button>
+          <span id="envelope-count-badge" class="envelope-count-badge">Envelope 1 of 3</span>
+          <button id="envelope-next-btn" class="envelope-nav-btn" aria-label="Next Envelope">&#10095;</button>
+        </div>
+
+        <div class="interactive-envelope-wrapper">
+          <!-- Outer Envelope Box -->
+          <div class="envelope-outer-box">
+            <div class="envelope-flap-decor">💌</div>
+            <h3 id="envelope-preview-title" style="font-family: var(--font-serif); font-size: 1.5rem; color: var(--burgundy); margin-bottom: 6px;">
+              Letter: To The Birthday Girl 💌
+            </h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">
+              Slide or tap the arrow to break the rose wax seal and read this letter:
+            </p>
+
+            <button id="envelope-slide-btn" class="envelope-slide-action-btn">
+              <span>Open Envelope</span>
+              <span class="envelope-arrow-icon">➔</span>
+            </button>
           </div>
 
-          <!-- Unrolled Royal Parchment Paper -->
-          <div id="parchment-scroll-paper" class="parchment-scroll-paper">
-            <div style="text-align: right; font-family: var(--font-serif); color: var(--crimson-rose); font-size: 1rem; margin-bottom: 20px;">
-              06 September • Written with Deep Care
+          <!-- Slide-out Letter Paper Card -->
+          <div id="letter-paper-card" class="letter-paper-card">
+            <div class="letter-wax-seal">🌹</div>
+            <div id="letter-date" class="letter-date">06 September</div>
+            <h3 id="letter-salutation" class="letter-salutation">Dear Rabi,</h3>
+
+            <div id="letter-paragraphs">
+              <!-- Dynamically populated paragraphs from data/content.js -->
             </div>
-            <h3 style="font-family: var(--font-serif); font-size: 2rem; color: var(--burgundy); margin-bottom: 22px;">
-              Dearest Rabiya (Rabi ♡),
-            </h3>
-            <p style="font-family: var(--font-editorial); font-size: 1.35rem; line-height: 1.95; color: var(--text-dark); margin-bottom: 18px;">
-              Agar duniya ke saare red roses ek jagah jama kar diye jayein, tab bhi wo tumhari ek smile ki khubsurti aur masoomiyat ka muqabla nahi kar sakte.
-            </p>
-            <p style="font-family: var(--font-editorial); font-size: 1.35rem; line-height: 1.95; color: var(--text-dark); margin-bottom: 18px;">
-              Tumhari aawaz mein ek ajeeb sa sukoon hai, aur tumhari baaton mein ek aisi narmi jo har udaas din ko roshan kar deti hai. Tum sirf ek insan nahi ho, tum ek ehsaas ho jo sab kuch behtar bana deta hai.
-            </p>
-            <p style="font-family: var(--font-editorial); font-size: 1.35rem; line-height: 1.95; color: var(--text-dark); margin-bottom: 18px;">
-              Aaj tumhari birthday par main chahta hoon ke tumhein hamesha khushiyan milein, tumhare hontoun par hamesha ye pyari muskurahat qayam rahe, aur tumhari zindagi ka har din red roses ki tarah mehakta rahe.
-            </p>
-            <p style="font-family: var(--font-editorial); font-size: 1.35rem; line-height: 1.95; color: var(--text-dark); margin-bottom: 28px;">
-              Happy Birthday, my favorite person in the entire universe. 🌹✨
-            </p>
-            <div style="font-family: var(--font-editorial); font-size: 1.25rem; color: var(--text-muted);">
-              Hamesha tumhara khair-khwah aur dost,
-            </div>
-            <div style="font-family: var(--font-script); font-size: 2.2rem; color: var(--crimson-rose); font-weight: 700; margin-top: 8px;">
-              Husnain ♡
+
+            <p id="letter-closing" class="letter-closing">With all my warmest wishes and deepest care,</p>
+            <div id="letter-signature" class="letter-signature">Always, Husnain ♡</div>
+
+            <div style="text-align: center; margin-top: 32px;">
+              <button id="letter-paper-close-btn" class="btn btn-secondary">
+                Fold Back into Envelope ✉️
+              </button>
             </div>
           </div>
         </div>
 
         <!-- Make a Wish Subsection -->
-        <div style="text-align: center; margin-top: 60px;">
+        <div class="wish-container-box">
           <span class="section-tag rose-tag">Quiet Magic</span>
           <h3 style="font-size: 2rem; margin-bottom: 8px;">Make A Wish ♡</h3>
           <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
@@ -640,7 +648,7 @@
       </div>
     </section>
 
-    <!-- ─── 10. FINAL SURPRISE ──────────────────────────────────────────── -->
+    <!-- ─── 9. FINAL SURPRISE ───────────────────────────────────────────── -->
     <section id="surprise" class="section-padding surprise-section">
       <div class="container">
         <div class="section-header">

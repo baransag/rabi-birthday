@@ -8,7 +8,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const content = window.CONTENT || {};
 
-  /* ─── 1. AUDIO PRIORITY MANAGER ─────────────────────────────────────────── */
+  /* ─── 1. AUDIO MANAGER ─────────────────────────────────────────────────── */
   const AudioManager = {
     ctx: null,
     bgMusic: null,
@@ -82,28 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     },
 
-    fadeBgMusic(targetVolume, durationMs = 800) {
-      if (!this.bgMusic) return;
-      const initial = this.bgMusic.volume;
-      const steps = 15;
-      const stepTime = durationMs / steps;
-      const delta = (targetVolume - initial) / steps;
-      let count = 0;
-
-      const timer = setInterval(() => {
-        count++;
-        this.bgMusic.volume = Math.max(0, Math.min(1, this.bgMusic.volume + delta));
-        if (count >= steps) {
-          clearInterval(timer);
-          this.bgMusic.volume = targetVolume;
-        }
-      }, stepTime);
-    },
-
     playSpecialAudio(src, onComplete) {
       this.initContext();
       if (this.bgMusic) {
-        this.fadeBgMusic(0.05, 600);
+        this.bgMusic.volume = 0.05;
       }
 
       if (this.specialAudio) {
@@ -114,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.specialAudio.play().then(() => {
         this.specialAudio.onended = () => {
           if (this.bgMusic && this.isEnabled) {
-            this.fadeBgMusic(this.currentVolume, 800);
+            this.bgMusic.volume = this.currentVolume;
           }
           if (onComplete) onComplete();
         };
@@ -189,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 3. NAVIGATION & JOURNEY INDICATOR ─────────────────────────────────── */
+  /* ─── 3. NAVIGATION & JOURNEY PROGRESS ──────────────────────────────────── */
   const Navigation = {
     init() {
       const navbar = document.querySelector('.navbar');
@@ -234,7 +216,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateActiveLinkAndJourney() {
       const sections = document.querySelectorAll('section[id]');
       const scrollY = window.scrollY + 140;
-
       const journeySteps = content.journey?.steps || [
         { id: "hero", label: "Welcome", num: "01" },
         { id: "about", label: "About Rabi", num: "02" },
@@ -242,10 +223,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: "memories", label: "Memories", num: "04" },
         { id: "souls", label: "Two Souls", num: "05" },
         { id: "moments", label: "The Bouquet", num: "06" },
-        { id: "eternal-rose", label: "Eternal Rose", num: "07" },
-        { id: "birthday", label: "Celebration", num: "08" },
-        { id: "letter", label: "Vintage Letter", num: "09" },
-        { id: "surprise", label: "Surprise", num: "10" }
+        { id: "birthday", label: "Celebration", num: "07" },
+        { id: "letter", label: "Love Letters", num: "08" },
+        { id: "surprise", label: "Surprise", num: "09" }
       ];
 
       sections.forEach(sec => {
@@ -262,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (step) {
             const numEl = document.getElementById('journey-num');
             const labelEl = document.getElementById('journey-label');
-            if (numEl) numEl.textContent = `${step.num} / 10`;
+            if (numEl) numEl.textContent = `${step.num} / 09`;
             if (labelEl) labelEl.textContent = step.label;
           }
         }
@@ -337,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 5. 12 RED ROSES GARDEN & PETAL SHOWER ─────────────────────────────── */
+  /* ─── 5. RED ROSES APPRECIATION GARDEN ──────────────────────────────────── */
   const RedRoseGarden = {
     init() {
       const grid = document.getElementById('rose-garden-grid');
@@ -374,11 +354,11 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     launchRedRosePetalShower() {
-      for (let i = 0; i < 45; i++) {
+      for (let i = 0; i < 40; i++) {
         const petal = document.createElement('span');
         petal.textContent = '🌹';
         petal.style.position = 'fixed';
-        petal.style.left = `${Math.random() * 96}%`;
+        petal.style.left = `${Math.random() * 95}%`;
         petal.style.top = `-40px`;
         petal.style.fontSize = `${Math.random() * 16 + 22}px`;
         petal.style.pointerEvents = 'none';
@@ -393,90 +373,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 6. THE ENCHANTED ETERNAL RED ROSE (CRYSTAL CLOCHE) ─────────────────── */
-  const EternalRoseCloche = {
-    init() {
-      const dome = document.getElementById('cloche-glass-dome');
-      const messageBox = document.getElementById('eternal-rose-message-box');
-
-      dome?.addEventListener('click', () => {
-        dome.classList.add('petal-fallen');
-        AudioManager.initContext();
-        AudioManager.playChime();
-
-        setTimeout(() => {
-          messageBox?.classList.add('active');
-        }, 1200);
-      });
-    }
-  };
-
-  /* ─── 7. VINTAGE ROSE WAX-SEALED ROYAL PARCHMENT ─────────────────────────── */
-  const VintageParchment = {
-    init() {
-      const seal = document.getElementById('embossed-rose-wax-seal');
-      const ribbon = document.getElementById('crimson-silk-ribbon');
-      const parchment = document.getElementById('parchment-scroll-paper');
-      const cover = document.getElementById('parchment-cover-box');
-
-      seal?.addEventListener('click', () => {
-        AudioManager.initContext();
-        AudioManager.playChime();
-        seal.style.animation = 'waxSealCrack 0.5s ease forwards';
-        ribbon.style.animation = 'ribbonSlideOff 0.6s ease forwards';
-
-        setTimeout(() => {
-          cover.style.display = 'none';
-          parchment?.classList.add('open');
-        }, 500);
-      });
-    }
-  };
-
-  /* ─── 8. POLAROID MEMORY WALL & LIGHTBOX ─────────────────────────────────── */
-  const PolaroidGallery = {
+  /* ─── 6. MEMORY GALLERY & LIGHTBOX ──────────────────────────────────────── */
+  const Gallery = {
     currentIndex: 0,
     items: [],
 
     init() {
-      const grid = document.getElementById('polaroid-gallery-grid');
+      const grid = document.getElementById('gallery-grid');
       if (!grid) return;
 
       this.items = content.memories || [];
       grid.innerHTML = '';
 
       this.items.forEach((m, idx) => {
-        const card = document.createElement('div');
-        const tiltClass = idx % 2 === 0 ? 'tilt-left' : 'tilt-right';
-        card.className = `polaroid-card ${tiltClass}`;
-
-        card.innerHTML = `
-          <div class="polaroid-tape-pin">📌</div>
-          <div class="polaroid-img-wrapper">
-            <img src="${m.image}" alt="${m.title}" class="polaroid-img" loading="lazy">
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.innerHTML = `
+          <div class="gallery-img-wrapper">
+            <img src="${m.image}" alt="${m.title}" class="gallery-img" loading="lazy">
           </div>
-          <div class="polaroid-caption-area">
-            <div class="polaroid-title">${m.title} ♡</div>
-            <div class="polaroid-date">${m.date || '06 September'} • ${m.caption}</div>
-          </div>
+          <h4 class="gallery-title">${m.title}</h4>
+          <div class="gallery-date">${m.date || '06 September'} • ${m.caption}</div>
         `;
 
-        const img = card.querySelector('.polaroid-img');
+        const img = item.querySelector('.gallery-img');
         img.onerror = () => {
           if (m.localImage) img.src = m.localImage;
         };
 
-        card.addEventListener('click', () => {
-          card.classList.add('developing');
+        item.addEventListener('click', () => {
+          this.openLightbox(idx);
           AudioManager.initContext();
           AudioManager.playPop();
-          setTimeout(() => {
-            card.classList.remove('developing');
-            this.openLightbox(idx);
-          }, 600);
         });
 
-        grid.appendChild(card);
+        grid.appendChild(item);
       });
 
       this.initLightbox();
@@ -551,46 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 9. FLOATING CRIMSON SKY LANTERNS ───────────────────────────────────── */
-  const SkyLanterns = {
-    init() {
-      const stage = document.getElementById('sky-lanterns-night-stage');
-      const toast = document.getElementById('lantern-wish-toast');
-      if (!stage) return;
-
-      const wishes = content.skyLanterns?.wishes || [
-        "🏮 May all your prayers come true in the sweetest way! ✨",
-        "🏮 Wishing you endless peace, joy, and laughter! 💖",
-        "🏮 May every path you take be filled with fresh red roses! 🌹"
-      ];
-
-      setInterval(() => {
-        const lantern = document.createElement('div');
-        lantern.className = 'floating-sky-lantern';
-        lantern.textContent = '🏮';
-        lantern.style.left = `${Math.random() * 85 + 5}%`;
-        lantern.style.bottom = `-20px`;
-        lantern.style.setProperty('--speed', `${Math.random() * 2 + 5}s`);
-        lantern.style.setProperty('--drift', `${(Math.random() - 0.5) * 60}px`);
-
-        lantern.addEventListener('click', () => {
-          AudioManager.initContext();
-          AudioManager.playChime();
-          if (toast) {
-            toast.textContent = wishes[Math.floor(Math.random() * wishes.length)];
-            toast.classList.add('active');
-            setTimeout(() => toast.classList.remove('active'), 3500);
-          }
-          lantern.remove();
-        });
-
-        stage.appendChild(lantern);
-        setTimeout(() => lantern.remove(), 7000);
-      }, 1400);
-    }
-  };
-
-  /* ─── 10. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ────────────── */
+  /* ─── 7. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER ──────────────────── */
   const TwoSoulsGame = {
     canvas: null,
     ctx: null,
@@ -634,7 +526,8 @@ document.addEventListener('DOMContentLoaded', () => {
         this.caughtCount = 0;
         clearInterval(this.surpriseInterval);
         document.getElementById('souls-merged-banner')?.classList.remove('active');
-        document.getElementById('souls-score-badge').style.display = 'none';
+        const scoreBadge = document.getElementById('souls-score-badge');
+        if (scoreBadge) scoreBadge.style.display = 'none';
         document.querySelectorAll('.falling-surprise-item').forEach(e => e.remove());
         this.resetOrbs();
         AudioManager.playChime();
@@ -655,8 +548,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
 
     resetOrbs() {
-      const w = this.canvas.width;
-      const h = this.canvas.height;
+      const w = this.canvas.width || 600;
+      const h = this.canvas.height || 380;
       this.orb1Pos = { x: w * 0.25, y: h * 0.5 };
       this.orb2Pos = { x: w * 0.75, y: h * 0.5 };
       this.updateOrbDOM();
@@ -876,7 +769,64 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 11. MINI GAMES: ADVANCED BOUQUET WEAVER & SEED-TO-ROSE ─────────────── */
+  /* ─── 8. ETERNAL ROSE IN GLASS CLOCHE ───────────────────────────────────── */
+  const EternalRoseCloche = {
+    init() {
+      const dome = document.getElementById('cloche-glass-dome');
+      const messageBox = document.getElementById('eternal-rose-message-box');
+
+      dome?.addEventListener('click', () => {
+        dome.classList.add('petal-fallen');
+        AudioManager.initContext();
+        AudioManager.playChime();
+
+        setTimeout(() => {
+          messageBox?.classList.add('active');
+        }, 1200);
+      });
+    }
+  };
+
+  /* ─── 9. FLOATING SKY LANTERNS ──────────────────────────────────────────── */
+  const SkyLanterns = {
+    init() {
+      const stage = document.getElementById('sky-lanterns-night-stage');
+      const toast = document.getElementById('lantern-wish-toast');
+      if (!stage) return;
+
+      const wishes = content.skyLanterns?.wishes || [
+        "🏮 May all your prayers come true in the sweetest way! ✨",
+        "🏮 Wishing you endless peace, joy, and laughter! 💖",
+        "🏮 May every path you take be filled with fresh red roses! 🌹"
+      ];
+
+      setInterval(() => {
+        const lantern = document.createElement('div');
+        lantern.className = 'floating-sky-lantern';
+        lantern.textContent = '🏮';
+        lantern.style.left = `${Math.random() * 85 + 5}%`;
+        lantern.style.bottom = `-20px`;
+        lantern.style.setProperty('--speed', `${Math.random() * 2 + 5}s`);
+        lantern.style.setProperty('--drift', `${(Math.random() - 0.5) * 60}px`);
+
+        lantern.addEventListener('click', () => {
+          AudioManager.initContext();
+          AudioManager.playChime();
+          if (toast) {
+            toast.textContent = wishes[Math.floor(Math.random() * wishes.length)];
+            toast.classList.add('active');
+            setTimeout(() => toast.classList.remove('active'), 3500);
+          }
+          lantern.remove();
+        });
+
+        stage.appendChild(lantern);
+        setTimeout(() => lantern.remove(), 7000);
+      }, 1500);
+    }
+  };
+
+  /* ─── 10. MINI GAMES ────────────────────────────────────────────────────── */
   const MiniGames = {
     init() {
       this.initFlowerGame();
@@ -1034,7 +984,82 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 12. POPULATE & INITIALIZE ALL MODULES ──────────────────────────────── */
+  /* ─── 11. INTERACTIVE LOVE LETTERS & ENVELOPES CAROUSEL ─────────────────── */
+  const LetterCarousel = {
+    currentEnvelopeIndex: 0,
+    envelopes: [],
+
+    init() {
+      this.envelopes = content.letter?.envelopes || [];
+      const prevBtn = document.getElementById('envelope-prev-btn');
+      const nextBtn = document.getElementById('envelope-next-btn');
+      const slideBtn = document.getElementById('envelope-slide-btn');
+      const paperCloseBtn = document.getElementById('letter-paper-close-btn');
+
+      this.renderEnvelope();
+
+      prevBtn?.addEventListener('click', () => {
+        this.currentEnvelopeIndex = (this.currentEnvelopeIndex - 1 + this.envelopes.length) % this.envelopes.length;
+        this.renderEnvelope();
+        AudioManager.initContext();
+        AudioManager.playPop();
+      });
+
+      nextBtn?.addEventListener('click', () => {
+        this.currentEnvelopeIndex = (this.currentEnvelopeIndex + 1) % this.envelopes.length;
+        this.renderEnvelope();
+        AudioManager.initContext();
+        AudioManager.playPop();
+      });
+
+      slideBtn?.addEventListener('click', () => {
+        const paper = document.getElementById('letter-paper-card');
+        paper?.classList.add('open');
+        AudioManager.initContext();
+        AudioManager.playChime();
+      });
+
+      paperCloseBtn?.addEventListener('click', () => {
+        const paper = document.getElementById('letter-paper-card');
+        paper?.classList.remove('open');
+        AudioManager.initContext();
+        AudioManager.playPop();
+      });
+    },
+
+    renderEnvelope() {
+      const current = this.envelopes[this.currentEnvelopeIndex];
+      if (!current) return;
+
+      const badge = document.getElementById('envelope-count-badge');
+      const previewTitle = document.getElementById('envelope-preview-title');
+      const dateEl = document.getElementById('letter-date');
+      const salutationEl = document.getElementById('letter-salutation');
+      const paragraphsEl = document.getElementById('letter-paragraphs');
+      const closingEl = document.getElementById('letter-closing');
+      const signatureEl = document.getElementById('letter-signature');
+
+      if (badge) badge.textContent = `Envelope ${this.currentEnvelopeIndex + 1} of ${this.envelopes.length}`;
+      if (previewTitle) previewTitle.textContent = `Letter: ${current.title} 💌`;
+      if (dateEl) dateEl.textContent = current.date || '06 September';
+      if (salutationEl) salutationEl.textContent = current.salutation || 'Dear Rabi,';
+      if (closingEl) closingEl.textContent = current.closing || 'With love,';
+      if (signatureEl) signatureEl.textContent = current.signature || 'Husnain ♡';
+
+      if (paragraphsEl) {
+        paragraphsEl.innerHTML = '';
+        current.paragraphs.forEach(p => {
+          const pEl = document.createElement('p');
+          pEl.textContent = p;
+          paragraphsEl.appendChild(pEl);
+        });
+      }
+
+      document.getElementById('letter-paper-card')?.classList.remove('open');
+    }
+  };
+
+  /* ─── 12. POPULATE CONTENT ──────────────────────────────────────────────── */
   const ContentPopulator = {
     populate() {
       // Hero
@@ -1055,6 +1080,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const aboutDesc = document.getElementById('about-description');
       const aboutQuote = document.getElementById('about-quote');
       const traitsGrid = document.getElementById('about-traits-grid');
+      const reasonsGrid = document.getElementById('reasons-grid');
       const aboutPhoto1 = document.querySelector('.about-photo-card.card-1 img');
       const aboutPhoto2 = document.querySelector('.about-photo-card.card-2 img');
 
@@ -1076,7 +1102,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // Bouquet Section
+      if (reasonsGrid && content.reasons) {
+        reasonsGrid.innerHTML = '';
+        content.reasons.forEach(r => {
+          const rc = document.createElement('div');
+          rc.className = 'reason-card';
+          rc.innerHTML = `
+            <div class="reason-tag">${r.tag}</div>
+            <h4 class="reason-title">${r.title}</h4>
+            <p class="reason-text">${r.text}</p>
+          `;
+          rc.addEventListener('click', () => {
+            AudioManager.initContext();
+            AudioManager.playPop();
+          });
+          reasonsGrid.appendChild(rc);
+        });
+      }
+
+      // Bouquet
       const mainImg = document.querySelector('.bouquet-main-img');
       const pinsContainer = document.getElementById('bouquet-flower-pins');
       const messageBox = document.getElementById('bouquet-message-text');
@@ -1121,7 +1165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         AudioManager.playChime();
       });
 
-      // Birthday Candles
+      // Candles
       let candlesLit = 3;
       document.querySelectorAll('.candle-interactive').forEach(candle => {
         candle.addEventListener('click', () => {
@@ -1142,14 +1186,14 @@ document.addEventListener('DOMContentLoaded', () => {
         AudioManager.playSpecialAudio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
       });
 
-      // Make a wish
+      // Wish star
       document.getElementById('wish-trigger')?.addEventListener('click', () => {
         AudioManager.initContext();
         AudioManager.playChime();
         document.getElementById('wish-revealed-card')?.classList.add('active');
       });
 
-      // Digital Envelope Gift Modal
+      // Gift Modal
       document.getElementById('open-gift-btn')?.addEventListener('click', () => {
         document.getElementById('gift-modal')?.classList.add('active');
         AudioManager.initContext();
@@ -1160,22 +1204,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       document.getElementById('start-exploring-btn')?.addEventListener('click', () => {
         document.getElementById('gift-modal')?.classList.remove('active');
-        document.getElementById('rose-garden')?.scrollIntoView({ behavior: 'smooth' });
+        document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
       });
     }
   };
 
-  /* ─── INITIALIZE ALL MODULES ────────────────────────────────────────────── */
+  /* ─── INITIALIZE APPLICATION ────────────────────────────────────────────── */
   ContentPopulator.populate();
   TouchHeartSparks.init();
   Navigation.init();
   HeroPetals.init();
   RedRoseGarden.init();
-  EternalRoseCloche.init();
-  VintageParchment.init();
-  PolaroidGallery.init();
-  SkyLanterns.init();
+  Gallery.init();
   TwoSoulsGame.init();
+  EternalRoseCloche.init();
   MiniGames.init();
+  SkyLanterns.init();
+  LetterCarousel.init();
   AudioManager.init();
 });
