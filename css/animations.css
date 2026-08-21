@@ -79,6 +79,17 @@
   }
 }
 
+@keyframes soulOrbPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--orb-color, rgba(185, 75, 97, 0.6)), 0 0 40px var(--orb-glow, rgba(221, 212, 243, 0.5));
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 35px var(--orb-color, rgba(185, 75, 97, 0.9)), 0 0 65px var(--orb-glow, rgba(221, 212, 243, 0.8));
+    transform: scale(1.08);
+  }
+}
+
 @keyframes candleFlicker {
   0%, 100% {
     transform: scale(1) rotate(-1deg);
@@ -113,31 +124,37 @@
   }
 }
 
-/* ─── MEMORY BLOOM COLLAGE ANIMATIONS ────────────────────────────────────── */
-@keyframes bloomCardGather {
+/* ─── ENVELOPE OPENING GAME ANIMATION ────────────────────────────────────── */
+@keyframes envelopeFlapOpen3D {
   0% {
-    transform: scale(1) translate(0, 0) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(0.92) translate(var(--bx, 0), var(--by, 0)) rotate(var(--brot, 0deg));
-    opacity: 0.85;
+    transform: rotateX(0deg);
   }
   100% {
-    transform: scale(1) translate(var(--bx, 0), var(--by, 0)) rotate(var(--brot, 0deg));
+    transform: rotateX(180deg);
+  }
+}
+
+@keyframes envelopeLetterSlideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  40% {
+    transform: translateY(-50px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-20px);
     opacity: 1;
   }
 }
 
-@keyframes bloomGlowSpread {
-  0% {
-    box-shadow: 0 0 0 rgba(223, 163, 175, 0);
+@keyframes arrowSlideGlow {
+  0%, 100% {
+    transform: translateX(0);
   }
   50% {
-    box-shadow: 0 0 40px rgba(246, 214, 216, 0.8), 0 0 80px rgba(221, 212, 243, 0.6);
-  }
-  100% {
-    box-shadow: 0 12px 36px rgba(125, 48, 66, 0.12);
+    transform: translateX(8px);
   }
 }
 
@@ -148,18 +165,9 @@
     opacity: 1;
   }
   100% {
-    transform: translateY(300px) rotate(var(--rot, 720deg));
+    transform: translateY(320px) rotate(var(--rot, 720deg));
     opacity: 0;
   }
-}
-
-/* ─── UTILITY ANIMATION CLASSES ─────────────────────────────────────────── */
-.animate-fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ─── ACCESSIBILITY: REDUCED MOTION ──────────────────────────────────────── */
