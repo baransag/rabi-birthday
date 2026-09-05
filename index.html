@@ -185,21 +185,14 @@
 
         <div class="about-editorial-grid">
           <!-- PHOTO 2: About Rabiya Portrait -->
-          <div class="about-photos-stack single-featured-photo">
-            <div class="about-photo-card featured-portrait">
-              <img
-                id="photo-2-img"
-                src="assets/images/photo2.jpg"
-                alt="Rabiya Radiant Portrait"
-                class="user-photo-img"
-                data-fallback="assets/images/photo2.png"
-              >
-              <div class="photo-fallback-card" id="photo-2-fallback">
-                <span class="photo-fallback-icon">🌸</span>
-                <span class="photo-fallback-title">Photo 2 (About)</span>
-                <span class="photo-fallback-sub">Add `photo2.jpg` in `assets/images/`</span>
-              </div>
-            </div>
+          <div class="about-featured-frame">
+            <img
+              id="photo-2-img"
+              src="assets/images/photo2.jpg"
+              alt="Rabiya Radiant Portrait"
+              class="user-photo-img about-portrait-img"
+            >
+            <div class="about-photo-badge">🌸 Rabiya ♡</div>
           </div>
 
           <div class="about-content">
@@ -783,56 +776,101 @@
       </div>
     </section>
 
-    <!-- ─── 14. THE 06 SEPTEMBER DIGITAL KEEPSAKE (SECRET INBOX DISPATCH) ─── -->
+    <!-- ─── 14. THE SECRET WISH EXCHANGE & CHOOSING GAME (WANT TO TALK) ─── -->
     <section id="inbox-keepsake" class="section-padding keepsake-section">
       <div class="container">
         <div class="keepsake-card-box">
-          <div class="keepsake-badge">💌 CELESTIAL KEEPSAKE DISPATCH</div>
+          <div class="keepsake-badge">🌸 BIRTHDAY WISH SELECTION</div>
           <h2 class="section-title" style="color: var(--burgundy); margin-bottom: 8px;">
-            Rabi’s Official 06 September Keepsake 📜✨
+            Pick A Birthday Wish For Husnain To Grant You 🎁✨
           </h2>
           <p class="keepsake-subtitle">
-            A personal digital keepsake crafted with code by <strong>Husnain 💜</strong> for the Queen of 06 September. Enter your email below to have your official Cosmic Star Certificate &amp; hidden birthday letters delivered directly to your inbox forever.
+            Before 06 September ends, pick the one wish your heart secretly wants Husnain to do for you today. Tap your favorite choice below:
           </p>
 
-          <form id="keepsake-email-form" class="keepsake-form">
-            <div class="keepsake-input-wrapper">
-              <span class="keepsake-input-icon">✉️</span>
-              <input
-                type="email"
-                id="rabi-email-input"
-                name="email"
-                placeholder="Enter your personal email address..."
-                required
-                autocomplete="email"
-                class="keepsake-input"
-              >
-              <button type="submit" id="keepsake-submit-btn" class="btn btn-primary keepsake-submit-btn">
-                <span>Deliver My Keepsake 🌸</span>
-              </button>
+          <!-- 4 Interactive Wish Choice Cards -->
+          <div class="wish-choices-grid" id="wish-choices-grid">
+            <div class="wish-choice-card" data-choice="☕ A cozy coffee catch-up & endless conversation" role="button" tabindex="0">
+              <span class="choice-icon">☕</span>
+              <h4 class="choice-title">Cozy Coffee Catch-up</h4>
+              <p class="choice-desc">A peaceful cup of coffee together to talk, smile, and catch up on everything.</p>
+              <span class="choice-select-badge">Tap to choose ♡</span>
             </div>
 
-            <div class="keepsake-whisper-wrapper">
-              <input
-                type="text"
-                id="rabi-whisper-input"
-                name="whisper"
-                placeholder="Leave a birthday whisper / note for Husnain (optional)... ♡"
-                class="keepsake-whisper-input"
-              >
+            <div class="wish-choice-card" data-choice="🎧 A late-night voice call with 100% attention" role="button" tabindex="0">
+              <span class="choice-icon">🎧</span>
+              <h4 class="choice-title">Late-Night Voice Call</h4>
+              <p class="choice-desc">A quiet, comforting phone call where Husnain listens to anything on your mind.</p>
+              <span class="choice-select-badge">Tap to choose ♡</span>
             </div>
 
-            <p class="keepsake-disclaimer">
-              🔒 Encrypted Keepsake Dispatch • Handcrafted by Husnain for Rabiya ♡
-            </p>
-          </form>
+            <div class="wish-choice-card" data-choice="🍦 An ice cream & favorite dessert treat on Husnain" role="button" tabindex="0">
+              <span class="choice-icon">🍦</span>
+              <h4 class="choice-title">Ice Cream & Dessert Treat</h4>
+              <p class="choice-desc">Your favorite dessert or ice cream, whenever you want — fully on Husnain!</p>
+              <span class="choice-select-badge">Tap to choose ♡</span>
+            </div>
 
-          <div id="keepsake-success-box" class="keepsake-success-box">
-            <div class="keepsake-success-icon">🎉 💌 💖</div>
-            <h3 class="keepsake-success-title">Keepsake Dispatched To Your Inbox!</h3>
-            <p class="keepsake-success-text">
-              A personalized birthday celebration message has been sent to your email. Check your inbox (and spam folder) in a moment! Happy Birthday, Rabiya! ♡
+            <div class="wish-choice-card" data-choice="💌 A secret handwritten letter with words never said before" role="button" tabindex="0">
+              <span class="choice-icon">💌</span>
+              <h4 class="choice-title">A Secret Letter</h4>
+              <p class="choice-desc">A personal letter revealing thoughts Husnain has never shared with anyone else.</p>
+              <span class="choice-select-badge">Tap to choose ♡</span>
+            </div>
+          </div>
+
+          <!-- The Slide-down Dispatch Box after choosing -->
+          <div id="selected-wish-delivery-area" class="selected-wish-delivery-area">
+            <div class="selected-wish-banner">
+              <span>Selected Wish:</span>
+              <strong id="display-selected-wish">☕ Cozy Coffee Catch-up</strong>
+            </div>
+
+            <p class="selected-wish-instruction">
+              Where should Husnain deliver this wish and your 06 September keepsakes? Enter your email so he can connect with you and fulfill it:
             </p>
+
+            <form id="keepsake-email-form" class="keepsake-form">
+              <input type="hidden" id="selected-wish-input" name="selected_wish" value="☕ Cozy Coffee Catch-up">
+
+              <div class="keepsake-input-wrapper">
+                <span class="keepsake-input-icon">✉️</span>
+                <input
+                  type="email"
+                  id="rabi-email-input"
+                  name="email"
+                  placeholder="Enter your personal email address..."
+                  required
+                  autocomplete="email"
+                  class="keepsake-input"
+                >
+                <button type="submit" id="keepsake-submit-btn" class="btn btn-primary keepsake-submit-btn">
+                  <span>Grant My Wish, Husnain! 💖</span>
+                </button>
+              </div>
+
+              <div class="keepsake-whisper-wrapper">
+                <input
+                  type="text"
+                  id="rabi-whisper-input"
+                  name="whisper"
+                  placeholder="A secret note / whisper back to Husnain (optional)... ♡"
+                  class="keepsake-whisper-input"
+                >
+              </div>
+
+              <p class="keepsake-disclaimer">
+                🔒 Handcrafted by Husnain for Rabiya • Instagram: <a href="https://instagram.com/huxn778" target="_blank" rel="noopener" style="color: var(--soft-peri); font-weight: 700; text-decoration: none;">@huxn778 💜</a>
+              </p>
+            </form>
+
+            <div id="keepsake-success-box" class="keepsake-success-box">
+              <div class="keepsake-success-icon">🎉 💖 💌</div>
+              <h3 class="keepsake-success-title">Wish Locked &amp; Dispatched!</h3>
+              <p class="keepsake-success-text">
+                Your chosen wish and secret keepsakes have been dispatched to your email! Husnain is also waiting for you on Instagram <a href="https://instagram.com/huxn778" target="_blank" rel="noopener" style="color: var(--burgundy); font-weight: 700;">@huxn778</a>. Happy Birthday, Rabiya! ♡
+              </p>
+            </div>
           </div>
         </div>
       </div>

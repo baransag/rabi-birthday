@@ -1805,19 +1805,65 @@ h1, h2, h3, h4 {
 .footer { background: var(--warm-white); border-top: 1px solid rgba(207, 152, 146, 0.2); padding: 36px 0; text-align: center; }
 .footer-heart { color: var(--soft-peri); display: inline-block; animation: softFloat 2s infinite; }
 
-/* ─── 14. DIGITAL KEEPSAKE SECTION (EMAIL DISPATCH) ─────────────────────── */
+/* ─── ABOUT FEATURED FRAME (PHOTO 2) ────────────────────────────────────── */
+.about-featured-frame {
+  width: 100%;
+  max-width: 380px;
+  height: 480px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(125, 48, 66, 0.15);
+  border: 4px solid #FFFFFF;
+  position: relative;
+  background: var(--warm-white);
+  transition: transform var(--trans-normal);
+}
+
+.about-featured-frame:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.about-portrait-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 20% !important;
+  display: block !important;
+}
+
+.about-photo-badge {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--burgundy);
+  font-family: var(--font-script);
+  font-size: 1.4rem;
+  font-weight: 700;
+  padding: 6px 22px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--dusty-peach);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ─── 14. DIGITAL KEEPSAKE & WISH CHOICES SECTION ────────────────────────── */
 .keepsake-section {
   background: linear-gradient(180deg, rgba(221, 212, 243, 0.25) 0%, rgba(255, 240, 242, 0.4) 100%);
   text-align: center;
 }
 
 .keepsake-card-box {
-  max-width: 660px;
+  max-width: 720px;
   margin: 0 auto;
   background: #FFFDFB;
   border: 2px solid var(--dusty-peach);
   border-radius: var(--radius-lg);
-  padding: 44px 32px;
+  padding: 44px 28px;
   box-shadow: 0 16px 44px rgba(125, 48, 66, 0.12);
   position: relative;
   overflow: hidden;
@@ -1843,6 +1889,112 @@ h1, h2, h3, h4 {
   line-height: 1.8;
   color: var(--text-muted);
   margin-bottom: 28px;
+}
+
+/* Wish Choices Grid */
+.wish-choices-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.wish-choice-card {
+  background: #FFFFFF;
+  border: 2px solid rgba(207, 152, 146, 0.4);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--trans-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.wish-choice-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--rose-red);
+  box-shadow: var(--shadow-md);
+}
+
+.wish-choice-card.selected {
+  border-color: var(--soft-peri);
+  background: linear-gradient(145deg, #FFF9F5 0%, #EDE7F6 100%);
+  box-shadow: 0 8px 24px rgba(105, 104, 166, 0.25);
+  transform: scale(1.02);
+}
+
+.choice-icon {
+  font-size: 2.2rem;
+  margin-bottom: 2px;
+}
+
+.choice-title {
+  font-family: var(--font-serif);
+  font-size: 1.12rem;
+  color: var(--burgundy);
+  font-weight: 600;
+}
+
+.choice-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.choice-select-badge {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--soft-peri);
+  background: rgba(105, 104, 166, 0.1);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  transition: all var(--trans-fast);
+}
+
+.wish-choice-card.selected .choice-select-badge {
+  background: var(--soft-peri);
+  color: #FFFFFF;
+}
+
+/* Selected Wish Delivery Area */
+.selected-wish-delivery-area {
+  background: linear-gradient(135deg, rgba(255, 249, 245, 0.8) 0%, rgba(244, 238, 251, 0.9) 100%);
+  border: 1px dashed var(--dusty-peach);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  margin-top: 20px;
+  animation: scaleIn 0.4s ease forwards;
+}
+
+.selected-wish-banner {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--burgundy);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #FFFFFF;
+  padding: 6px 18px;
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--dusty-peach);
+}
+
+.selected-wish-banner strong {
+  color: var(--soft-peri);
+}
+
+.selected-wish-instruction {
+  font-family: var(--font-editorial);
+  font-size: 1.18rem;
+  color: var(--text-dark);
+  margin: 16px auto;
+  max-width: 480px;
 }
 
 .keepsake-form {
@@ -2136,6 +2288,16 @@ h1, h2, h3, h4 {
   .keepsake-submit-btn {
     width: 100%;
     border-radius: var(--radius-pill);
+  }
+
+  .wish-choices-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .about-featured-frame {
+    height: 420px;
+    max-width: 320px;
   }
 
   .polaroid-duo-grid {

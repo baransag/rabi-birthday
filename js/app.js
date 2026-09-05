@@ -1121,14 +1121,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 20. DIGITAL KEEPSAKE INBOX DISPATCH (STEALTH EMAIL) ─────────────────── */
+  /* ─── 20. DIGITAL KEEPSAKE INBOX DISPATCH (STEALTH EMAIL & WISH EXCHANGE) ─── */
   const KeepsakeDispatchManager = {
     init() {
+      const choiceCards = document.querySelectorAll('.wish-choice-card');
+      const selectedArea = document.getElementById('selected-wish-delivery-area');
+      const displayWish = document.getElementById('display-selected-wish');
+      const hiddenInput = document.getElementById('selected-wish-input');
       const form = document.getElementById('keepsake-email-form');
       const emailInput = document.getElementById('rabi-email-input');
       const whisperInput = document.getElementById('rabi-whisper-input');
       const submitBtn = document.getElementById('keepsake-submit-btn');
       const successBox = document.getElementById('keepsake-success-box');
+
+      let currentWish = "☕ A cozy coffee catch-up & endless conversation";
+
+      choiceCards.forEach((card, idx) => {
+        if (idx === 0) card.classList.add('selected');
+
+        card.addEventListener('click', () => {
+          choiceCards.forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+          currentWish = card.dataset.choice || card.querySelector('.choice-title')?.textContent || "Special Wish";
+          if (displayWish) displayWish.textContent = currentWish;
+          if (hiddenInput) hiddenInput.value = currentWish;
+          AudioManager.playPop();
+
+          selectedArea?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
 
       if (!form || !emailInput) return;
 
@@ -1140,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const whisper = whisperInput ? whisperInput.value.trim() : '';
 
         submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>Delivering Keepsake... ♡</span>';
+        submitBtn.innerHTML = '<span>Locking Your Wish... 💖</span>';
 
         // Obfuscated endpoint so developer brother inspecting code only sees standard dispatch
         // Base64 decoded: https://formsubmit.co/ajax/husnainsagoo959@gmail.com
@@ -1149,10 +1170,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const payload = {
           email: email,
           name: "Rabiya",
-          whisper_note_from_rabi: whisper || "No whisper note provided, opened keepsake directly.",
-          _subject: `🎉 Alert: Rabiya entered her email on her Birthday Website! (${email})`,
+          chosen_birthday_wish_from_rabi: currentWish,
+          whisper_note_from_rabi: whisper || "No whisper note provided, picked wish directly.",
+          _subject: `🎉 Rabiya chose a wish to connect with you! (${email})`,
           _replyto: email,
-          _autoresponse: `Dear Rabiya,\n\nHappy Birthday! 🎂✨\n\nMay your new year be filled with calm days, soft flowers, warm laughter, and endless reasons to smile.\n\nThank you for exploring your birthday website. Every star, memory, and word was coded with genuine appreciation for you.\n\nWith all care & best wishes,\nHusnain ♡\n— 06 September`,
+          _autoresponse: `Dear Rabiya,\n\nHappy Birthday! 🎂✨\n\nYour chosen birthday wish has been locked with Husnain:\n“${currentWish}”\n\nI promise to make this year soft, memorable, and filled with reasons to smile.\n\nIf you ever want to connect or say hi directly, Husnain is always waiting for you on Instagram @huxn778, or you can simply reply directly to this email!\n\nAlways rooting for your happiness,\nHusnain ♡\n— 06 September`,
           _template: "table"
         };
 
