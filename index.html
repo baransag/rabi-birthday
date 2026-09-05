@@ -31,13 +31,16 @@
         <ul class="nav-links">
           <li><a href="#hero" class="nav-link active">Home</a></li>
           <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#particle-heart" class="nav-link">Particle Heart</a></li>
           <li><a href="#memories" class="nav-link">Memories</a></li>
+          <li><a href="#aim-heart" class="nav-link">Aim Heart</a></li>
+          <li><a href="#popup-card" class="nav-link">3D Card</a></li>
           <li><a href="#souls" class="nav-link">Two Souls</a></li>
           <li><a href="#star-map" class="nav-link">Star Map</a></li>
-          <li><a href="#moments" class="nav-link">Moments</a></li>
+          <li><a href="#moments" class="nav-link">Bouquet</a></li>
           <li><a href="#vip-coupons" class="nav-link">Coupons</a></li>
           <li><a href="#open-when" class="nav-link">Mood Notes</a></li>
-          <li><a href="#birthday" class="nav-link">Birthday</a></li>
+          <li><a href="#birthday" class="nav-link">Cake</a></li>
           <li><a href="#letter" class="nav-link">Letters</a></li>
           <li><a href="#surprise" class="nav-link">Surprise</a></li>
         </ul>
@@ -64,14 +67,16 @@
     <ul class="drawer-links">
       <li><a href="#hero" class="drawer-link">Home ♡</a></li>
       <li><a href="#about" class="drawer-link">About Rabi</a></li>
-      <li><a href="#memories" class="drawer-link">Memories &amp; Bloom 🌸</a></li>
+      <li><a href="#particle-heart" class="drawer-link">Particle Heart ✨</a></li>
+      <li><a href="#memories" class="drawer-link">Memories 🌸</a></li>
+      <li><a href="#aim-heart" class="drawer-link">Aim For Heart 🏹</a></li>
+      <li><a href="#popup-card" class="drawer-link">3D Birthday Card 🎂</a></li>
       <li><a href="#souls" class="drawer-link">Two Souls Universe ✨</a></li>
       <li><a href="#star-map" class="drawer-link">Star Map (06 Sept) 🌌</a></li>
-      <li><a href="#moments" class="drawer-link">Moments &amp; Eternal Rose 🥀</a></li>
+      <li><a href="#moments" class="drawer-link">The Bouquet &amp; Rose 🥀</a></li>
       <li><a href="#vip-coupons" class="drawer-link">VIP Golden Coupons 🎟️</a></li>
       <li><a href="#open-when" class="drawer-link">“Open When...” Notes 💌</a></li>
-      <li><a href="#bottle-capsule" class="drawer-link">Message in Bottle 🍾</a></li>
-      <li><a href="#birthday" class="drawer-link">Birthday &amp; Games 🎂</a></li>
+      <li><a href="#birthday" class="drawer-link">Birthday Cake 🎂</a></li>
       <li><a href="#letter" class="drawer-link">Interactive Letters 💌</a></li>
       <li><a href="#surprise" class="drawer-link">Final Surprise ♡</a></li>
     </ul>
@@ -85,13 +90,13 @@
   <!-- ─── JOURNEY PROGRESS INDICATOR ─────────────────────────────────────── -->
   <aside id="journey-indicator" class="journey-indicator-pill" aria-label="Your Birthday Journey Progress">
     <span class="journey-icon">🌸</span>
-    <span id="journey-num" class="journey-num">01 / 12</span>
+    <span id="journey-num" class="journey-num">01 / 14</span>
     <span class="journey-divider">•</span>
     <span id="journey-label" class="journey-label">Welcome</span>
   </aside>
 
   <main>
-    <!-- ─── 1. HERO SECTION ──────────────────────────────────────────────── -->
+    <!-- ─── 1. HERO SECTION (PHOTO 1) ──────────────────────────────────────── -->
     <section id="hero" class="hero-section">
       <canvas id="hero-petals-canvas" class="hero-petals-canvas"></canvas>
       <div class="container hero-grid">
@@ -103,7 +108,7 @@
             Happy Birthday, Rabi <span>Rabiya ♡</span>
           </h1>
           <p id="hero-subtitle" class="hero-subtitle">
-            Today is all about celebrating someone truly special. A digital gift box filled with flowers, memories, stars, and appreciation.
+            Today is all about celebrating someone truly special. A digital universe filled with glowing embers, memories, stars, and endless appreciation.
           </p>
           <div class="hero-actions">
             <button id="open-gift-btn" class="btn btn-primary">
@@ -121,12 +126,19 @@
             <div class="hero-floral-decor decor-bottom-left">🌹</div>
 
             <div class="hero-frame">
+              <!-- PHOTO 1: Hero Welcome Portrait -->
               <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80"
-                alt="Portrait of Rabi"
-                class="hero-img"
-                onerror="this.onerror=null; this.src='assets/images/hero/rabi-hero.jpg';"
+                id="photo-1-img"
+                src="assets/images/photo1.jpg"
+                alt="Portrait of Rabiya"
+                class="hero-img user-photo-img"
+                data-fallback="assets/images/photo1.png"
               >
+              <div class="photo-fallback-card" id="photo-1-fallback">
+                <span class="photo-fallback-icon">👑</span>
+                <span class="photo-fallback-title">Photo 1 (Hero)</span>
+                <span class="photo-fallback-sub">Add `photo1.jpg` in `assets/images/`</span>
+              </div>
             </div>
 
             <div class="hero-tag-card">
@@ -160,7 +172,7 @@
       </div>
     </div>
 
-    <!-- ─── 2. ABOUT RABI (+ REASONS CARDS) ──────────────────────────────── -->
+    <!-- ─── 2. ABOUT RABI (PHOTO 2) ───────────────────────────────────────── -->
     <section id="about" class="section-padding about-section">
       <div class="container">
         <div class="section-header">
@@ -170,20 +182,21 @@
         </div>
 
         <div class="about-editorial-grid">
-          <div class="about-photos-stack">
-            <div class="about-photo-card card-1">
+          <!-- PHOTO 2: About Rabiya Portrait -->
+          <div class="about-photos-stack single-featured-photo">
+            <div class="about-photo-card featured-portrait">
               <img
-                src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=600&q=80"
-                alt="Rabi about photo 1"
-                onerror="this.onerror=null; this.src='assets/images/about/about-01.jpg';"
+                id="photo-2-img"
+                src="assets/images/photo2.jpg"
+                alt="Rabiya Radiant Portrait"
+                class="user-photo-img"
+                data-fallback="assets/images/photo2.png"
               >
-            </div>
-            <div class="about-photo-card card-2">
-              <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=600&q=80"
-                alt="Rabi about photo 2"
-                onerror="this.onerror=null; this.src='assets/images/about/about-02.jpg';"
-              >
+              <div class="photo-fallback-card" id="photo-2-fallback">
+                <span class="photo-fallback-icon">🌸</span>
+                <span class="photo-fallback-title">Photo 2 (About)</span>
+                <span class="photo-fallback-sub">Add `photo2.jpg` in `assets/images/`</span>
+              </div>
             </div>
           </div>
 
@@ -215,90 +228,276 @@
       </div>
     </section>
 
-    <!-- ─── 3. MEMORIES (+ MEMORY BLOOM + VIDEOS) ────────────────────────── -->
-    <section id="memories" class="section-padding" style="background: linear-gradient(180deg, transparent 0%, rgba(246, 214, 216, 0.25) 100%);">
+    <!-- ─── 3. FEATURE 1: GLOWING PARTICLE HEART SYMPHONY ─────────────────── -->
+    <section id="particle-heart" class="section-padding particle-heart-section">
+      <div class="container">
+        <div class="section-header" style="color: #FFFFFF;">
+          <span class="section-tag" style="background: rgba(255, 183, 77, 0.2); color: #FFD54F; border-color: rgba(255, 183, 77, 0.5);">
+            Interactive Light Poetry
+          </span>
+          <h2 class="section-title" style="color: #FFFFFF;">Particle Heart Symphony ✨💖</h2>
+          <p class="section-subtitle" style="color: #FFECB3;">
+            Move your cursor or touch screen to ripple thousands of glowing ember particles forming a beating heart!
+          </p>
+        </div>
+
+        <div class="particle-heart-canvas-container">
+          <canvas id="particle-heart-canvas" class="particle-heart-canvas"></canvas>
+          <div class="particle-heart-center-glow"></div>
+          <div class="particle-heart-instructions">
+            <span>✦ Touch / Move cursor to interact with the ember heart ✦</span>
+          </div>
+        </div>
+
+        <div class="particle-heart-quote-bar">
+          <p class="particle-heart-quote">
+            “Even in code, algorithms, and cosmic quietness, every spark finds its way to your heart.”
+          </p>
+          <span class="particle-heart-author">— Handcrafted with code by Husnain 💜</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 4. MEMORIES SECTION (PHOTO 3 & PHOTO 4) ───────────────────────── -->
+    <section id="memories" class="section-padding memories-section" style="background: linear-gradient(180deg, transparent 0%, rgba(246, 214, 216, 0.3) 100%);">
       <div class="container">
         <div class="section-header">
           <span class="section-tag">Cherished Moments</span>
-          <h2 class="section-title">Memory Gallery</h2>
-          <p class="section-subtitle">Little snapshots of laughter, warmth, and beautiful days.</p>
+          <h2 class="section-title">Our Special Memories</h2>
+          <p class="section-subtitle">Tap each polaroid card to flip and reveal a secret note from Husnain ♡</p>
         </div>
 
-        <div id="gallery-grid" class="gallery-grid">
-          <!-- Dynamically populated 10 images from data/content.js -->
-        </div>
+        <!-- 2-Photo Dedicated Luxury 3D Polaroids -->
+        <div class="polaroid-duo-grid">
+          <!-- PHOTO 3: Polaroid #1 -->
+          <div class="polaroid-card-wrapper" id="polaroid-card-1" role="button" tabindex="0" aria-label="Flip Memory 1">
+            <div class="polaroid-inner">
+              <div class="polaroid-front">
+                <div class="polaroid-tape"></div>
+                <div class="polaroid-img-frame">
+                  <img
+                    id="photo-3-img"
+                    src="assets/images/photo3.jpg"
+                    alt="Memory Photo 1 of Rabi"
+                    class="user-photo-img"
+                    data-fallback="assets/images/photo3.png"
+                  >
+                  <div class="photo-fallback-card" id="photo-3-fallback">
+                    <span class="photo-fallback-icon">📸</span>
+                    <span class="photo-fallback-title">Photo 3 (Memory 1)</span>
+                    <span class="photo-fallback-sub">Add `photo3.jpg` in `assets/images/`</span>
+                  </div>
+                </div>
+                <div class="polaroid-caption">
+                  <h3 class="polaroid-title">Sweetest Conversations 🌸</h3>
+                  <p class="polaroid-desc">The start of so many beautiful conversations, shared smiles, and quiet laughs.</p>
+                  <span class="polaroid-flip-hint">Tap to flip ♡</span>
+                </div>
+              </div>
 
-        <!-- Signature Wow Moment: Memory Bloom -->
-        <div id="memory-bloom-stage" class="memory-bloom-stage">
-          <p class="memory-bloom-intro">
-            “And somehow… all these little moments became memories.”
-          </p>
-
-          <div class="bloom-collage-wrapper">
-            <div class="bloom-card-item">
-              <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=300&q=80" alt="Bloom 1" onerror="this.onerror=null; this.src='assets/images/memories/memory-01.jpg';">
-            </div>
-            <div class="bloom-card-item">
-              <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=300&q=80" alt="Bloom 2" onerror="this.onerror=null; this.src='assets/images/memories/memory-02.jpg';">
-            </div>
-            <div class="bloom-card-item">
-              <img src="https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?auto=format&fit=crop&w=300&q=80" alt="Bloom 3" onerror="this.onerror=null; this.src='assets/images/memories/memory-03.jpg';">
-            </div>
-            <div class="bloom-card-item">
-              <img src="https://images.unsplash.com/photo-1509967419530-da38b4704bc6?auto=format&fit=crop&w=300&q=80" alt="Bloom 4" onerror="this.onerror=null; this.src='assets/images/memories/memory-04.jpg';">
+              <div class="polaroid-back">
+                <div class="polaroid-back-content">
+                  <span class="polaroid-back-icon">💌</span>
+                  <h4 class="polaroid-back-title">A Cherished Note</h4>
+                  <p class="polaroid-back-text">
+                    “You make ordinary moments feel like poetry, Rabiya. Thank you for simply existing and being you.” ♡
+                  </p>
+                  <div class="polaroid-signature">— Husnain 💜</div>
+                  <span class="polaroid-flip-hint">Tap to flip back ⟲</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <button id="bloom-trigger-btn" class="btn btn-primary">
-            Bloom Our Memories 🌸
-          </button>
+          <!-- PHOTO 4: Polaroid #2 -->
+          <div class="polaroid-card-wrapper" id="polaroid-card-2" role="button" tabindex="0" aria-label="Flip Memory 2">
+            <div class="polaroid-inner">
+              <div class="polaroid-front">
+                <div class="polaroid-tape"></div>
+                <div class="polaroid-img-frame">
+                  <img
+                    id="photo-4-img"
+                    src="assets/images/photo4.jpg"
+                    alt="Memory Photo 2 of Rabi"
+                    class="user-photo-img"
+                    data-fallback="assets/images/photo4.png"
+                  >
+                  <div class="photo-fallback-card" id="photo-4-fallback">
+                    <span class="photo-fallback-icon">✨</span>
+                    <span class="photo-fallback-title">Photo 4 (Memory 2)</span>
+                    <span class="photo-fallback-sub">Add `photo4.jpg` in `assets/images/`</span>
+                  </div>
+                </div>
+                <div class="polaroid-caption">
+                  <h3 class="polaroid-title">Golden Hour Grace ✨</h3>
+                  <p class="polaroid-desc">That gentle glow and quiet charm that is so uniquely yours.</p>
+                  <span class="polaroid-flip-hint">Tap to flip ♡</span>
+                </div>
+              </div>
 
-          <p class="memory-bloom-outro">
-            “And there are still so many more memories waiting to happen. ♡”
-          </p>
-        </div>
-
-        <!-- Video Memories Subsection -->
-        <div style="margin-top: 80px;">
-          <div class="section-header">
-            <span class="section-tag">Video Album</span>
-            <h3 style="font-size: 2rem; margin-bottom: 8px;">Moments In Motion</h3>
-            <p style="color: var(--text-muted);">Short clips and celebrations that hold big smiles.</p>
-          </div>
-
-          <div id="videos-grid" class="videos-grid">
-            <!-- Dynamically populated from data/content.js -->
+              <div class="polaroid-back">
+                <div class="polaroid-back-content">
+                  <span class="polaroid-back-icon">🌹</span>
+                  <h4 class="polaroid-back-title">Endless Radiance</h4>
+                  <p class="polaroid-back-text">
+                    “Never stop shining, because your happiness is genuinely contagious and lights up my whole world.” ✨
+                  </p>
+                  <div class="polaroid-signature">— Husnain 💜</div>
+                  <span class="polaroid-flip-hint">Tap to flip back ⟲</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Lightbox Modal -->
-    <div id="gallery-lightbox" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
-      <div class="lightbox-content">
-        <button id="lightbox-close" class="lightbox-close" aria-label="Close Lightbox">&times;</button>
-        <button id="lightbox-prev" class="lightbox-nav-btn lightbox-prev" aria-label="Previous Photo">&#10094;</button>
-        <button id="lightbox-next" class="lightbox-nav-btn lightbox-next" aria-label="Next Photo">&#10095;</button>
-
-        <div class="lightbox-img-wrapper">
-          <img id="lightbox-img" src="" alt="Expanded Memory" class="lightbox-img">
+    <!-- ─── 5. FEATURE 2: 🏹 BOW & ARROW "AIM FOR THE HEART" GAME ─────────── -->
+    <section id="aim-heart" class="section-padding aim-heart-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Interactive Cupid Quest</span>
+          <h2 class="section-title">Aim For The Heart ♡</h2>
+          <p class="section-subtitle">
+            POV: “I never knew home could be a person.” Pull back the cupid bow, aim at the heart envelope, and release!
+          </p>
         </div>
-        <div class="lightbox-caption-box">
-          <h3 id="lightbox-title" class="lightbox-title">Memory</h3>
-          <p id="lightbox-caption" class="lightbox-caption"></p>
+
+        <div class="aim-game-arena">
+          <!-- Target Envelope with Heart Seal -->
+          <div class="aim-target-wrapper" id="aim-target-wrapper">
+            <div class="aim-envelope-card" id="aim-envelope-card">
+              <div class="envelope-top-flap"></div>
+              <div class="envelope-body">
+                <div class="aim-beating-heart" id="aim-beating-heart" title="Target: The Heart ♡">
+                  💖
+                </div>
+                <div class="aim-target-label">Aim For The Heart ♡</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Bow & Arrow Field -->
+          <div class="bow-arrow-control-area" id="bow-arrow-control-area">
+            <div class="cupid-bow-rig" id="cupid-bow-rig">
+              <svg class="bow-svg" viewBox="0 0 160 120">
+                <path id="bow-wood" d="M 30,10 Q 70,60 30,110" stroke="#8D6E63" stroke-width="7" fill="none" stroke-linecap="round"/>
+                <line id="bow-string-top" x1="30" y1="10" x2="60" y2="60" stroke="#FFF" stroke-width="2.5"/>
+                <line id="bow-string-bottom" x1="30" y1="110" x2="60" y2="60" stroke="#FFF" stroke-width="2.5"/>
+              </svg>
+              <div class="cupid-arrow-item" id="cupid-arrow-item">
+                <span class="arrow-feather">🪶</span>
+                <span class="arrow-shaft"></span>
+                <span class="arrow-head">💘</span>
+              </div>
+            </div>
+
+            <div class="aim-game-instructions" id="aim-instruction-text">
+              🏹 <strong>Tap &amp; Pull Arrow Down</strong>, align with the heart, and let go to shoot!
+            </div>
+            <button id="shoot-arrow-btn" class="btn btn-primary" style="margin-top: 14px;">
+              Shoot Arrow At Heart 🏹💖
+            </button>
+          </div>
+
+          <!-- Unlocked Secret Letter Reveal -->
+          <div class="aim-unlocked-reveal" id="aim-unlocked-reveal">
+            <div class="unlocked-seal-burst">🎉 💌 💖</div>
+            <h3 class="unlocked-reveal-title">Bullseye! Secret Note Unlocked ✨</h3>
+            <p class="unlocked-pov-quote">
+              “One year. One you. That’s all I ever needed.”
+            </p>
+            <div class="unlocked-reveal-body">
+              <p>Dear Rabiya,</p>
+              <p>You hit the exact center of my heart! Thank you for being my peace, my happiest notification, and the sweetest person in my universe.</p>
+              <p>Happy Birthday, my favorite person in the entire world. ♡</p>
+              <p class="unlocked-sig">— Husnain 💜</p>
+            </div>
+            <button id="aim-reset-btn" class="btn btn-secondary" style="margin-top: 18px;">
+              Aim &amp; Shoot Again 🏹
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Video Modal -->
-    <div id="video-modal" class="video-player-modal" role="dialog" aria-modal="true" aria-label="Video Player">
-      <div class="video-player-container">
-        <button id="video-modal-close" class="video-modal-close" aria-label="Close Video">&times;</button>
-        <video id="modal-video-player" controls playsinline></video>
+    <!-- ─── 6. FEATURE 3: 🎂 3D POP-UP BIRTHDAY CELEBRATION CARD ───────────── -->
+    <section id="popup-card" class="section-padding popup-card-section">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-tag">Foldable Keepsake</span>
+          <h2 class="section-title">She Smiled. I Just Wrote Some Code. 🎂</h2>
+          <p class="section-subtitle">
+            Tap the card below to unfold it into a 3D pop-up celebration with party bunting &amp; balloons!
+          </p>
+        </div>
+
+        <div class="popup-card-stage">
+          <div class="card-3d-wrapper" id="card-3d-wrapper" role="button" tabindex="0" aria-label="Open 3D Birthday Card">
+            <div class="card-3d-flipper" id="card-3d-flipper">
+              <!-- Front Cover (Closed) -->
+              <div class="card-3d-front">
+                <div class="card-cover-bunting">
+                  <span class="flag f1"></span>
+                  <span class="flag f2"></span>
+                  <span class="flag f3"></span>
+                  <span class="flag f4"></span>
+                  <span class="flag f5"></span>
+                  <span class="flag f6"></span>
+                </div>
+                <div class="card-cover-badge">💌 FOR RABIYA</div>
+                <div class="card-cover-cake-icon">🎂</div>
+                <h3 class="card-cover-title">Happy Birthday</h3>
+                <p class="card-cover-sub">Tap To Unfold 3D Card ✨</p>
+              </div>
+
+              <!-- Inside Spread (Open Pop-Up) -->
+              <div class="card-3d-inside">
+                <!-- Festive Bunting Flags Hanging -->
+                <div class="card-inside-bunting">
+                  <div class="bunting-line"></div>
+                  <div class="bunting-flags-row">
+                    <span class="bflag" style="background:#FF5252;"></span>
+                    <span class="bflag" style="background:#FFD740;"></span>
+                    <span class="bflag" style="background:#40C4FF;"></span>
+                    <span class="bflag" style="background:#E040FB;"></span>
+                    <span class="bflag" style="background:#69F0AE;"></span>
+                    <span class="bflag" style="background:#FFAB40;"></span>
+                  </div>
+                </div>
+
+                <!-- Floating Balloons Array -->
+                <div class="card-inside-balloons">
+                  <span class="balloon b-yellow">🎈</span>
+                  <span class="balloon b-pink">🎈</span>
+                  <span class="balloon b-blue">🎈</span>
+                </div>
+
+                <div class="card-inside-banner-ribbon">
+                  HAPPY BIRTHDAY RABIYA ♡
+                </div>
+
+                <div class="card-inside-content">
+                  <h4 class="inside-queen-title">To The Queen Of 06 September 👑</h4>
+                  <p class="inside-body-text">
+                    May your year be filled with warm laughter, soft flowers, sweet cakes, and every quiet wish of yours turning into reality. You deserve all the magic in this world! ✨
+                  </p>
+                  <div class="inside-signature">— Always with you, Husnain 💜</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-action-instruction">
+            <button id="toggle-card-btn" class="btn btn-primary">
+              Unfold 3D Card 🎁
+            </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
 
-    <!-- ─── 4. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ──────────── -->
+    <!-- ─── 7. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER GAME ──────────── -->
     <section id="souls" class="section-padding souls-section">
       <div class="container">
         <div class="section-header" style="color: #FFFFFF;">
@@ -316,7 +515,7 @@
           <div id="soul-orb-1" class="soul-orb soul-orb-1">HUSNAIN 💜</div>
           <div id="soul-orb-2" class="soul-orb soul-orb-2">RABI 🌹</div>
           <div class="souls-drag-hint">✦ Drag Husnain &amp; Rabi together ✦</div>
-          <div id="souls-score-badge" class="souls-score-badge">Surprises Caught: 0 / 6</div>
+          <div id="souls-score-badge" class="souls-score-badge">Surprises Caught: 0 / 4</div>
         </div>
 
         <div id="souls-merged-banner" class="souls-merged-banner">
@@ -338,14 +537,13 @@
     <div id="surprise-popup-card" class="surprise-popup-card" role="dialog" aria-modal="true">
       <div id="surprise-popup-icon" class="surprise-popup-icon">🌸</div>
       <h3 id="surprise-popup-title" class="surprise-popup-title">A Heartfelt Wish</h3>
-      <img id="surprise-popup-img" src="" alt="Surprise Memory" class="surprise-popup-img" style="display: none;">
       <p id="surprise-popup-text" class="surprise-popup-text"></p>
       <button id="surprise-popup-close" class="btn btn-primary" style="padding: 10px 24px; min-height: 40px; margin-top: 8px;">
         Got it! 💖
       </button>
     </div>
 
-    <!-- ─── NEW FEATURE 1: 🌌 RABI'S BIRTHDAY STAR MAP (06 SEPT) ───────────── -->
+    <!-- ─── 8. RABI'S BIRTHDAY STAR MAP (06 SEPT) ──────────────────────────── -->
     <section id="star-map" class="section-padding star-map-section">
       <div class="container">
         <div class="section-header" style="color: #FFFFFF;">
@@ -384,7 +582,7 @@
       </button>
     </div>
 
-    <!-- ─── 5. MOMENTS (THE BOUQUET & ETERNAL ROSE CLOCHE) ─────────────────── -->
+    <!-- ─── 9. MOMENTS (THE BOUQUET & ETERNAL ROSE CLOCHE) ─────────────────── -->
     <section id="moments" class="section-padding bouquet-section">
       <div class="container">
         <div class="section-header">
@@ -393,33 +591,15 @@
           <p class="section-subtitle">Some flowers are beautiful for a day. Some memories stay forever.</p>
         </div>
 
-        <div class="bouquet-grid">
-          <div class="bouquet-display-card">
-            <img
-              src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=900&q=80"
-              alt="Luxury Birthday Bouquet"
-              class="bouquet-main-img"
-              onerror="this.onerror=null; this.src='assets/images/bouquet/bouquet-main.jpg';"
-            >
+        <div class="bouquet-interactive-showcase">
+          <div class="bouquet-flower-pins" id="bouquet-flower-pins">
+            <!-- Dynamically populated from data/content.js -->
           </div>
 
-          <div>
-            <h3 style="font-size: 1.8rem; margin-bottom: 12px; color: var(--burgundy);">
-              A Meaning Behind Every Petal
-            </h3>
-            <p style="color: var(--text-muted); margin-bottom: 24px;">
-              Tap any flower below to reveal its hidden message for you:
+          <div class="bouquet-message-box">
+            <p id="bouquet-message-text" class="bouquet-message-text">
+              To the gentlest soul I know — may your days always bloom with calm, beauty, and kindness. 🌸
             </p>
-
-            <div id="bouquet-flower-pins" class="bouquet-flower-pins">
-              <!-- Dynamically populated from data/content.js -->
-            </div>
-
-            <div class="bouquet-message-box">
-              <p id="bouquet-message-text" class="bouquet-message-text">
-                To the gentlest soul I know — may your days always bloom with calm, beauty, and kindness. 🌸
-              </p>
-            </div>
           </div>
         </div>
 
@@ -453,7 +633,7 @@
       </div>
     </section>
 
-    <!-- ─── NEW FEATURE 2: 🎟️ HUSNAIN'S VIP BIRTHDAY COUPONS ──────────────── -->
+    <!-- ─── 10. HUSNAIN'S VIP BIRTHDAY COUPONS ─────────────────────────────── -->
     <section id="vip-coupons" class="section-padding vip-coupons-section">
       <div class="container">
         <div class="section-header">
@@ -468,7 +648,7 @@
       </div>
     </section>
 
-    <!-- ─── NEW FEATURE 3: 💌 "OPEN WHEN..." MOOD NOTES ────────────────────── -->
+    <!-- ─── 11. "OPEN WHEN..." MOOD NOTES ─────────────────────────────────── -->
     <section id="open-when" class="section-padding">
       <div class="container">
         <div class="section-header">
@@ -493,29 +673,7 @@
       </button>
     </div>
 
-    <!-- ─── NEW FEATURE 4: 🍾 MESSAGE IN A BOTTLE CAPSULE ─────────────────── -->
-    <section id="bottle-capsule" class="section-padding">
-      <div class="container">
-        <div class="bottle-capsule-stage">
-          <span class="section-tag">Ocean Secret Scroll</span>
-          <h2 class="section-title">Message In A Bottle 🍾🌊</h2>
-          <p class="section-subtitle" style="margin-bottom: 28px;">
-            A glass bottle floating across the ocean. Tap the bottle to pop the cork and unroll the scroll!
-          </p>
-
-          <div id="floating-glass-bottle" class="floating-glass-bottle" role="button" aria-label="Tap bottle to open scroll">
-            🍾
-          </div>
-
-          <div id="bottle-scroll-unrolled" class="bottle-scroll-unrolled">
-            <div style="font-size: 2.2rem; text-align: center; margin-bottom: 12px;">📜✨</div>
-            <div id="bottle-scroll-text" class="bottle-scroll-text"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ─── 6. BIRTHDAY CELEBRATION (+ MINI GAMES) ────────────────────────── -->
+    <!-- ─── 12. BIRTHDAY CELEBRATION (CAKE & WISHES) ───────────────────────── -->
     <section id="birthday" class="section-padding birthday-section">
       <div class="container">
         <div class="section-header">
@@ -564,105 +722,10 @@
             </button>
           </div>
         </div>
-
-        <!-- Mini Games Subsection -->
-        <div class="games-subheading-box">
-          <span class="section-tag">Playful Moments</span>
-          <h3 style="font-size: 2rem; margin-bottom: 8px;">Sweet Interactive Games</h3>
-          <p style="color: var(--text-muted);">Games crafted to assemble bouquets and bloom magic roses for Rabi.</p>
-        </div>
-
-        <div class="games-grid">
-          <!-- Game 1: Catch Flowers & Dynamic Bouquet Assembly -->
-          <div class="game-card">
-            <span class="section-tag">Mini Game 01</span>
-            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Weave Rabi's Bouquet 🌸</h4>
-            <p style="font-size: 0.92rem; color: var(--text-muted);">
-              Tap the blooms as they fall — watch them assemble into a gorgeous vase below!
-            </p>
-
-            <div class="flower-game-canvas-wrapper" id="flower-game-canvas">
-              <div id="flower-game-score" class="game-score-badge">0 / 10</div>
-
-              <!-- Real-time Animated Bouquet Basket / Vase -->
-              <div class="dynamic-bouquet-vase" id="dynamic-bouquet-vase">
-                <div class="dynamic-bouquet-flowers-stack" id="dynamic-bouquet-flowers-stack">
-                  <!-- Caught blooms appear here in real time! -->
-                </div>
-                <div class="basket-ribbon">🎀</div>
-              </div>
-            </div>
-
-            <div id="flower-game-result" class="game-result-box"></div>
-            <button id="start-flower-game-btn" class="btn btn-primary" style="margin-top: 14px;">
-              Start Bouquet Weaving 🌸
-            </button>
-          </div>
-
-          <!-- Game 2: Seed-to-Blooming Magic Rose -->
-          <div class="game-card">
-            <span class="section-tag">Mini Game 02</span>
-            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">Bloom the Secret Rose 🌹</h4>
-            <p style="font-size: 0.92rem; color: var(--text-muted);">
-              One of these boxes plants a magical seed that sprouts and blooms into an eternal rose!
-            </p>
-
-            <div class="gift-finder-boxes">
-              <div class="gift-box-item" role="button" tabindex="0" aria-label="Gift Box 1">
-                <span class="gift-box-icon">🎁</span>
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--burgundy);">Box 1</span>
-              </div>
-              <div class="gift-box-item" role="button" tabindex="0" aria-label="Gift Box 2">
-                <span class="gift-box-icon">🎁</span>
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--burgundy);">Box 2</span>
-              </div>
-              <div class="gift-box-item" role="button" tabindex="0" aria-label="Gift Box 3">
-                <span class="gift-box-icon">🎁</span>
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--burgundy);">Box 3</span>
-              </div>
-              <div class="gift-box-item" role="button" tabindex="0" aria-label="Gift Box 4">
-                <span class="gift-box-icon">🎁</span>
-                <span style="font-size: 0.85rem; font-weight: 600; color: var(--burgundy);">Box 4</span>
-              </div>
-            </div>
-
-            <!-- Seed to Blooming Magic Rose Stage -->
-            <div id="rose-blooming-stage" class="rose-blooming-stage">
-              <div class="blooming-rose-head">🌹</div>
-              <div class="growing-stem">
-                <span class="stem-leaf-left">🍃</span>
-                <span class="stem-leaf-right">🌿</span>
-              </div>
-              <div class="seed-element">🌱</div>
-              <p id="blooming-rose-quote" class="blooming-rose-quote">
-                “Just like this rose, your presence bloomed in my life and made everything softer, brighter, and beautiful. ♡”<br>
-                <strong style="color: var(--crimson-rose); font-size: 0.95em;">— Husnain 💜</strong>
-              </p>
-            </div>
-
-            <div id="gift-finder-result" class="game-result-box"></div>
-          </div>
-
-          <!-- Game 3: The 'No' Button Has Trust Issues -->
-          <div class="game-card">
-            <span class="section-tag">Mini Game 03</span>
-            <h4 style="font-size: 1.35rem; margin-bottom: 8px;">A Very Important Question 🙈</h4>
-            <p style="font-size: 0.92rem; color: var(--text-muted);">
-              Will you promise to smile, stay this radiant, and be happy every single day? ♡
-            </p>
-
-            <div class="trust-no-game-stage">
-              <button id="trust-yes-btn" class="trust-yes-btn">Yes, I Promise! 💖</button>
-              <button id="trust-no-btn" class="trust-no-btn">No 😜</button>
-            </div>
-
-            <div id="trust-game-result" class="game-result-box"></div>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- ─── 7. THE INTERACTIVE LOVE LETTERS & ENVELOPES (+ MAKE A WISH) ────── -->
+    <!-- ─── 13. INTERACTIVE LOVE LETTERS & ENVELOPES ───────────────────────── -->
     <section id="letter" class="section-padding" style="background: linear-gradient(180deg, transparent 0%, rgba(255, 240, 242, 0.4) 100%);">
       <div class="container">
         <div class="section-header">
@@ -715,29 +778,10 @@
             </div>
           </div>
         </div>
-
-        <!-- Make a Wish Subsection -->
-        <div class="wish-container-box">
-          <span class="section-tag">Quiet Magic</span>
-          <h3 style="font-size: 2rem; margin-bottom: 8px;">Make A Wish ♡</h3>
-          <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto;">
-            Close your eyes, think of something your heart quietly desires, and tap the glowing star.
-          </p>
-
-          <div id="wish-trigger" class="wish-interactive-trigger" role="button" tabindex="0" aria-label="Tap to reveal wish">
-            ✨
-          </div>
-
-          <div id="wish-revealed-card" class="wish-revealed-card">
-            <p id="wish-revealed-text" class="wish-revealed-text">
-              “I hope this year brings you more reasons to smile, more beautiful memories, and everything your heart quietly wishes for.” ✨
-            </p>
-          </div>
-        </div>
       </div>
     </section>
 
-    <!-- ─── 8. FINAL SURPRISE ───────────────────────────────────────────── -->
+    <!-- ─── 14. FINAL SURPRISE (PHOTO 5) ───────────────────────────────────── -->
     <section id="surprise" class="section-padding surprise-section">
       <div class="container">
         <div class="section-header">
@@ -747,11 +791,19 @@
         </div>
 
         <div class="final-photo-frame">
+          <!-- PHOTO 5: Grand Finale Surprise -->
           <img
-            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=800&q=80"
-            alt="Final Special Memory of Rabi"
-            onerror="this.onerror=null; this.src='assets/images/special/final-photo.jpg';"
+            id="photo-5-img"
+            src="assets/images/photo5.jpg"
+            alt="Final Special Memory of Rabiya"
+            class="user-photo-img"
+            data-fallback="assets/images/photo5.png"
           >
+          <div class="photo-fallback-card" id="photo-5-fallback">
+            <span class="photo-fallback-icon">💖</span>
+            <span class="photo-fallback-title">Photo 5 (Final Surprise)</span>
+            <span class="photo-fallback-sub">Add `photo5.jpg` in `assets/images/`</span>
+          </div>
         </div>
 
         <p id="final-quote-text" class="final-quote-text">

@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════════════════════
    RABI — THE BEAUTIFUL BIRTHDAY GIFT
-   js/app.js — Core Interactive Application Logic
+   js/app.js — Core Interactive Application Logic (5-Photo Dedicated Edition)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 'use strict';
@@ -144,12 +144,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 2. INTERACTIVE TOUCH / CLICK HEART SPARKS ─────────────────────────── */
+  /* ─── 2. USER 5-PHOTOS AUTO-LOADER & FALLBACK MANAGER ───────────────────── */
+  const UserPhotosManager = {
+    init() {
+      for (let i = 1; i <= 5; i++) {
+        const imgEl = document.getElementById(`photo-${i}-img`);
+        const fallbackEl = document.getElementById(`photo-${i}-fallback`);
+        if (!imgEl) continue;
+
+        // Try primary image path
+        const testImg = new Image();
+        testImg.src = imgEl.src;
+
+        testImg.onload = () => {
+          imgEl.classList.remove('hidden-loading');
+          if (fallbackEl) fallbackEl.classList.remove('visible');
+        };
+
+        testImg.onerror = () => {
+          // Try fallback png
+          const fallbackSrc = imgEl.dataset.fallback;
+          if (fallbackSrc) {
+            const pngTest = new Image();
+            pngTest.src = fallbackSrc;
+            pngTest.onload = () => {
+              imgEl.src = fallbackSrc;
+              imgEl.classList.remove('hidden-loading');
+              if (fallbackEl) fallbackEl.classList.remove('visible');
+            };
+            pngTest.onerror = () => {
+              // Both failed -> show beautiful placeholder card
+              imgEl.classList.add('hidden-loading');
+              if (fallbackEl) fallbackEl.classList.add('visible');
+            };
+          } else {
+            imgEl.classList.add('hidden-loading');
+            if (fallbackEl) fallbackEl.classList.add('visible');
+          }
+        };
+      }
+    }
+  };
+
+  /* ─── 3. TOUCH / CLICK SPARKS ───────────────────────────────────────────── */
   const TouchHeartSparks = {
     init() {
       const symbols = ['💖', '🌸', '✨', '💜', '🌹', '💐', '⭐'];
       const spawn = (e) => {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'VIDEO') return;
+        if (e.target.closest('button') || e.target.closest('canvas') || e.target.closest('#cupid-bow-rig')) return;
 
         const x = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : null);
         const y = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : null);
@@ -171,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 3. NAVIGATION & JOURNEY PROGRESS ──────────────────────────────────── */
+  /* ─── 4. NAVIGATION & JOURNEY PROGRESS ──────────────────────────────────── */
   const Navigation = {
     init() {
       const navbar = document.querySelector('.navbar');
@@ -219,16 +261,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const journeySteps = content.journey?.steps || [
         { id: "hero", label: "Welcome", num: "01" },
         { id: "about", label: "About Rabi", num: "02" },
-        { id: "memories", label: "Memories", num: "03" },
-        { id: "souls", label: "Two Souls", num: "04" },
-        { id: "star-map", label: "Star Map", num: "05" },
-        { id: "moments", label: "The Bouquet", num: "06" },
-        { id: "vip-coupons", label: "VIP Coupons", num: "07" },
-        { id: "open-when", label: "Mood Notes", num: "08" },
-        { id: "bottle-capsule", label: "Bottle Capsule", num: "09" },
-        { id: "birthday", label: "Birthday", num: "10" },
-        { id: "letter", label: "Love Letters", num: "11" },
-        { id: "surprise", label: "Surprise", num: "12" }
+        { id: "particle-heart", label: "Particle Heart", num: "03" },
+        { id: "memories", label: "Memories", num: "04" },
+        { id: "aim-heart", label: "Aim For Heart", num: "05" },
+        { id: "popup-card", label: "3D Birthday Card", num: "06" },
+        { id: "souls", label: "Two Souls", num: "07" },
+        { id: "star-map", label: "Star Map", num: "08" },
+        { id: "moments", label: "The Bouquet", num: "09" },
+        { id: "vip-coupons", label: "VIP Coupons", num: "10" },
+        { id: "open-when", label: "Mood Notes", num: "11" },
+        { id: "birthday", label: "Birthday Cake", num: "12" },
+        { id: "letter", label: "Love Letters", num: "13" },
+        { id: "surprise", label: "Surprise", num: "14" }
       ];
 
       sections.forEach(sec => {
@@ -253,1100 +297,797 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  /* ─── 4. HERO PETALS CANVAS ─────────────────────────────────────────────── */
+  /* ─── 5. HERO PETALS CANVAS ─────────────────────────────────────────────── */
   const HeroPetals = {
-    canvas: null,
-    ctx: null,
-    petals: [],
-
     init() {
-      this.canvas = document.getElementById('hero-petals-canvas');
-      if (!this.canvas) return;
-      this.ctx = this.canvas.getContext('2d');
-      this.resize();
-      window.addEventListener('resize', () => this.resize(), { passive: true });
+      const canvas = document.getElementById('hero-petals-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = (canvas.width = canvas.offsetWidth);
+      let h = (canvas.height = canvas.offsetHeight);
 
-      for (let i = 0; i < 22; i++) {
-        this.petals.push(this.createPetal());
-      }
-      this.loop();
-    },
-
-    resize() {
-      if (!this.canvas) return;
-      this.canvas.width = this.canvas.offsetWidth;
-      this.canvas.height = this.canvas.offsetHeight;
-    },
-
-    createPetal() {
-      const colors = ['rgba(207, 152, 146, 0.75)', 'rgba(105, 104, 166, 0.65)', 'rgba(246, 214, 216, 0.75)', 'rgba(221, 212, 243, 0.65)'];
-      return {
-        x: Math.random() * (this.canvas?.width || window.innerWidth),
-        y: Math.random() * (this.canvas?.height || 600) - 50,
-        size: Math.random() * 8 + 6,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        speedY: Math.random() * 0.7 + 0.35,
-        speedX: (Math.random() - 0.5) * 0.5,
-        angle: Math.random() * Math.PI * 2,
-        angleSpeed: (Math.random() - 0.5) * 0.02
-      };
-    },
-
-    loop() {
-      if (!this.ctx || !this.canvas) return;
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      this.petals.forEach(p => {
-        p.y += p.speedY;
-        p.x += Math.sin(p.angle) * 0.5 + p.speedX;
-        p.angle += p.angleSpeed;
-
-        if (p.y > this.canvas.height + 20) {
-          p.y = -20;
-          p.x = Math.random() * this.canvas.width;
-        }
-
-        this.ctx.save();
-        this.ctx.translate(p.x, p.y);
-        this.ctx.rotate(p.angle);
-        this.ctx.beginPath();
-        this.ctx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
-        this.ctx.fillStyle = p.color;
-        this.ctx.fill();
-        this.ctx.restore();
+      window.addEventListener('resize', () => {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
       });
 
-      requestAnimationFrame(() => this.loop());
+      const petals = Array.from({ length: 28 }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        size: Math.random() * 8 + 6,
+        speedY: Math.random() * 0.8 + 0.4,
+        speedX: Math.random() * 0.6 - 0.3,
+        rot: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+        color: ['rgba(246, 214, 216, 0.7)', 'rgba(223, 163, 175, 0.6)', 'rgba(239, 195, 204, 0.7)', 'rgba(255, 255, 255, 0.6)'][Math.floor(Math.random() * 4)]
+      }));
+
+      const animate = () => {
+        ctx.clearRect(0, 0, w, h);
+        petals.forEach(p => {
+          p.y += p.speedY;
+          p.x += p.speedX;
+          p.rot += p.rotSpeed;
+
+          if (p.y > h + 20) { p.y = -20; p.x = Math.random() * w; }
+          if (p.x > w + 20) p.x = -20;
+          if (p.x < -20) p.x = w + 20;
+
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          ctx.restore();
+        });
+        requestAnimationFrame(animate);
+      };
+      animate();
     }
   };
 
-  /* ─── NEW FEATURE 1: 🌌 RABI'S BIRTHDAY STAR MAP ────────────────────────── */
-  const StarMap = {
-    canvas: null,
-    ctx: null,
-    stars: [],
-
+  /* ─── 6. FEATURE 1: GLOWING PARTICLE HEART ENGINE (SCREENSHOT 1) ────────── */
+  const ParticleHeartEngine = {
     init() {
-      this.canvas = document.getElementById('star-map-canvas');
-      const interactiveStar = document.getElementById('rabi-birthday-star');
-      const modal = document.getElementById('star-certificate-modal');
-      const closeBtn = document.getElementById('star-certificate-close');
+      const canvas = document.getElementById('particle-heart-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let w = (canvas.width = canvas.offsetWidth);
+      let h = (canvas.height = canvas.offsetHeight);
 
-      if (!this.canvas) return;
-      this.ctx = this.canvas.getContext('2d');
-      this.resize();
-      window.addEventListener('resize', () => this.resize(), { passive: true });
+      window.addEventListener('resize', () => {
+        if (!canvas) return;
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+        initParticles();
+      });
 
-      for (let i = 0; i < 90; i++) {
-        this.stars.push({
-          x: Math.random() * (this.canvas.width || 700),
-          y: Math.random() * (this.canvas.height || 380),
-          size: Math.random() * 2 + 0.6,
-          alpha: Math.random() * 0.8 + 0.2,
-          speed: (Math.random() - 0.5) * 0.015
+      let mouse = { x: -1000, y: -1000, active: false };
+
+      const setMousePos = (clientX, clientY) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = clientX - rect.left;
+        mouse.y = clientY - rect.top;
+        mouse.active = true;
+      };
+
+      canvas.addEventListener('mousemove', (e) => setMousePos(e.clientX, e.clientY));
+      canvas.addEventListener('mouseleave', () => { mouse.active = false; });
+      canvas.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) {
+          setMousePos(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+      canvas.addEventListener('touchend', () => { mouse.active = false; });
+
+      // Heart parametric curve equation
+      const heartPoint = (t, scale) => {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        return { x: x * scale, y: y * scale };
+      };
+
+      const PARTICLE_COUNT = 650;
+      let particles = [];
+
+      const initParticles = () => {
+        particles = [];
+        const scale = Math.min(w, h) / 38;
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          const t = Math.random() * Math.PI * 2;
+          const target = heartPoint(t, scale);
+          const jitter = (Math.random() - 0.5) * 16;
+          particles.push({
+            origX: w / 2 + target.x + jitter,
+            origY: h / 2 + target.y + jitter,
+            x: w / 2 + (Math.random() - 0.5) * w * 0.9,
+            y: h / 2 + (Math.random() - 0.5) * h * 0.9,
+            vx: (Math.random() - 0.5) * 1.5,
+            vy: (Math.random() - 0.5) * 1.5,
+            size: Math.random() * 2.5 + 1.2,
+            alpha: Math.random() * 0.7 + 0.3,
+            color: [
+              '#FFD54F', // Warm golden
+              '#FF7043', // Amber coral
+              '#FF1744', // Crimson heart glow
+              '#E040FB', // Purple aura
+              '#FFF9C4'  // Sparkle white
+            ][Math.floor(Math.random() * 5)],
+            orbitAngle: Math.random() * Math.PI * 2,
+            orbitSpeed: (Math.random() - 0.5) * 0.03
+          });
+        }
+      };
+
+      initParticles();
+
+      let tick = 0;
+      const render = () => {
+        ctx.fillStyle = 'rgba(13, 6, 20, 0.22)';
+        ctx.fillRect(0, 0, w, h);
+
+        tick += 0.03;
+        const beatScale = 1 + 0.07 * Math.sin(tick * 3.5) * Math.sin(tick * 3.5);
+
+        particles.forEach(p => {
+          // Pulsing heart position
+          const dxCenter = p.origX - w / 2;
+          const dyCenter = p.origY - h / 2;
+          const targetX = w / 2 + dxCenter * beatScale;
+          const targetY = h / 2 + dyCenter * beatScale;
+
+          // Spring towards target
+          const ax = (targetX - p.x) * 0.035;
+          const ay = (targetY - p.y) * 0.035;
+          p.vx += ax;
+          p.vy += ay;
+          p.vx *= 0.93;
+          p.vy *= 0.93;
+
+          // Mouse / touch interaction: repel & swirl
+          if (mouse.active) {
+            const mdx = p.x - mouse.x;
+            const mdy = p.y - mouse.y;
+            const dist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (dist < 120 && dist > 0) {
+              const force = (120 - dist) / 120;
+              p.vx += (mdx / dist) * force * 4;
+              p.vy += (mdy / dist) * force * 4;
+            }
+          }
+
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Drawing glowing ember
+          ctx.save();
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.shadowBlur = 12;
+          ctx.shadowColor = p.color;
+          ctx.globalAlpha = p.alpha;
+          ctx.fill();
+          ctx.restore();
         });
+
+        requestAnimationFrame(render);
+      };
+
+      render();
+    }
+  };
+
+  /* ─── 7. FEATURE 2: 🏹 BOW & ARROW "AIM FOR THE HEART" (SCREENSHOT 2) ───── */
+  const BowAndArrowGame = {
+    init() {
+      const arrowItem = document.getElementById('cupid-arrow-item');
+      const shootBtn = document.getElementById('shoot-arrow-btn');
+      const targetEnvelope = document.getElementById('aim-envelope-card');
+      const beatingHeart = document.getElementById('aim-beating-heart');
+      const unlockedReveal = document.getElementById('aim-unlocked-reveal');
+      const resetBtn = document.getElementById('aim-reset-btn');
+      const instructionText = document.getElementById('aim-instruction-text');
+
+      if (!arrowItem || !targetEnvelope) return;
+
+      let isDragging = false;
+      let startY = 0;
+      let pullDistance = 0;
+      const MAX_PULL = 60;
+      let hasShot = false;
+
+      const onStart = (clientY) => {
+        if (hasShot) return;
+        isDragging = true;
+        startY = clientY;
+        arrowItem.style.cursor = 'grabbing';
+      };
+
+      const onMove = (clientY) => {
+        if (!isDragging || hasShot) return;
+        const delta = clientY - startY;
+        pullDistance = Math.max(0, Math.min(MAX_PULL, delta));
+        arrowItem.style.transform = `translate(-50%, calc(-50% + ${pullDistance}px)) scale(${1 - pullDistance * 0.003})`;
+      };
+
+      const onEnd = () => {
+        if (!isDragging || hasShot) return;
+        isDragging = false;
+        arrowItem.style.cursor = 'grab';
+        if (pullDistance > 25) {
+          fireArrow();
+        } else {
+          // Snap back
+          arrowItem.style.transform = 'translate(-50%, -50%)';
+        }
+      };
+
+      arrowItem.addEventListener('mousedown', (e) => onStart(e.clientY));
+      window.addEventListener('mousemove', (e) => onMove(e.clientY));
+      window.addEventListener('mouseup', onEnd);
+
+      arrowItem.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) onStart(e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches && e.touches[0]) onMove(e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', onEnd);
+
+      shootBtn?.addEventListener('click', () => {
+        if (!hasShot) fireArrow();
+      });
+
+      const fireArrow = () => {
+        hasShot = true;
+        arrowItem.classList.add('flying');
+        AudioManager.playPop();
+
+        setTimeout(() => {
+          // Arrow strikes envelope beating heart!
+          targetEnvelope.classList.add('hit');
+          AudioManager.playChime();
+          createConfettiBurst(targetEnvelope);
+
+          setTimeout(() => {
+            unlockedReveal?.classList.add('revealed');
+            unlockedReveal?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (instructionText) {
+              instructionText.innerHTML = '✨ <strong>Bullseye!</strong> The secret note for Rabiya has opened below! ♡';
+            }
+          }, 600);
+        }, 650);
+      };
+
+      resetBtn?.addEventListener('click', () => {
+        hasShot = false;
+        arrowItem.classList.remove('flying');
+        arrowItem.style.transform = 'translate(-50%, -50%)';
+        targetEnvelope.classList.remove('hit');
+        unlockedReveal?.classList.remove('revealed');
+        if (instructionText) {
+          instructionText.innerHTML = '🏹 <strong>Tap &amp; Pull Arrow Down</strong>, align with the heart, and let go to shoot!';
+        }
+      });
+
+      beatingHeart?.addEventListener('click', () => {
+        if (!hasShot) fireArrow();
+      });
+    }
+  };
+
+  /* ─── 8. FEATURE 3: 🎂 3D POP-UP CELEBRATION CARD (SCREENSHOT 3) ────────── */
+  const PopUpCard3D = {
+    init() {
+      const cardWrapper = document.getElementById('card-3d-wrapper');
+      const toggleBtn = document.getElementById('toggle-card-btn');
+      if (!cardWrapper) return;
+
+      let isOpen = false;
+
+      const toggleCard = () => {
+        isOpen = !isOpen;
+        if (isOpen) {
+          cardWrapper.classList.add('open');
+          if (toggleBtn) toggleBtn.textContent = 'Close Card 💌';
+          AudioManager.playPop();
+          AudioManager.playChime();
+          createConfettiBurst(cardWrapper);
+        } else {
+          cardWrapper.classList.remove('open');
+          if (toggleBtn) toggleBtn.textContent = 'Unfold 3D Card 🎁';
+        }
+      };
+
+      cardWrapper.addEventListener('click', toggleCard);
+      toggleBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleCard();
+      });
+    }
+  };
+
+  /* ─── 9. DEDICATED 2-PHOTO 3D POLAROIDS (MEMORIES) ───────────────────────── */
+  const PolaroidFlipCards = {
+    init() {
+      const cards = document.querySelectorAll('.polaroid-card-wrapper');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          card.classList.toggle('flipped');
+          AudioManager.playPop();
+        });
+      });
+    }
+  };
+
+  /* ─── 10. ABOUT TRAITS & REASONS GENERATOR ───────────────────────────────── */
+  const AboutSection = {
+    init() {
+      const traitsGrid = document.getElementById('about-traits-grid');
+      const traits = content.about?.traits || [];
+      if (traitsGrid && traits.length) {
+        traitsGrid.innerHTML = traits.map(t => `
+          <div class="trait-card">
+            <div class="trait-label">${t.label}</div>
+            <div class="trait-value">${t.value}</div>
+          </div>
+        `).join('');
       }
 
-      interactiveStar?.addEventListener('click', () => {
-        modal?.classList.add('active');
-        AudioManager.initContext();
+      const reasonsGrid = document.getElementById('reasons-grid');
+      const reasons = content.reasons || [];
+      if (reasonsGrid && reasons.length) {
+        reasonsGrid.innerHTML = reasons.map(r => `
+          <div class="reason-card" role="button" tabindex="0">
+            <span class="reason-tag">${r.tag}</span>
+            <h4 class="reason-title">${r.title}</h4>
+            <div class="reason-front">${r.front}</div>
+            <p class="reason-text">${r.text}</p>
+          </div>
+        `).join('');
+
+        reasonsGrid.querySelectorAll('.reason-card').forEach(c => {
+          c.addEventListener('click', () => {
+            c.classList.toggle('revealed');
+            AudioManager.playPop();
+          });
+        });
+      }
+    }
+  };
+
+  /* ─── 11. TWO SOULS MERGE & COSMIC CATCHER ───────────────────────────────── */
+  const TwoSoulsGame = {
+    init() {
+      const canvas = document.getElementById('souls-canvas');
+      const orb1 = document.getElementById('soul-orb-1');
+      const orb2 = document.getElementById('soul-orb-2');
+      const banner = document.getElementById('souls-merged-banner');
+      const scoreBadge = document.getElementById('souls-score-badge');
+      const popup = document.getElementById('surprise-popup-card');
+      const popupClose = document.getElementById('surprise-popup-close');
+      const popupTitle = document.getElementById('surprise-popup-title');
+      const popupText = document.getElementById('surprise-popup-text');
+      const popupIcon = document.getElementById('surprise-popup-icon');
+      const resetBtn = document.getElementById('souls-reset-btn');
+
+      if (!canvas || !orb1 || !orb2) return;
+      const ctx = canvas.getContext('2d');
+      let w = (canvas.width = canvas.offsetWidth);
+      let h = (canvas.height = canvas.offsetHeight);
+
+      window.addEventListener('resize', () => {
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
+      });
+
+      let isMerged = false;
+      let score = 0;
+      const targetScore = content.souls?.targetSurprises || 4;
+      const surprises = content.souls?.surprises || [];
+      let fallingItems = [];
+
+      // Simple click to merge or drag
+      const triggerMerge = () => {
+        if (isMerged) return;
+        isMerged = true;
+        orb1.style.left = '45%';
+        orb2.style.left = '55%';
+        orb1.style.top = '50%';
+        orb2.style.top = '50%';
+        banner?.classList.add('revealed');
         AudioManager.playChime();
+        createConfettiBurst(canvas);
+        startFallingSurprises();
+      };
+
+      orb1.addEventListener('click', triggerMerge);
+      orb2.addEventListener('click', triggerMerge);
+      resetBtn?.addEventListener('click', () => {
+        isMerged = false;
+        score = 0;
+        if (scoreBadge) scoreBadge.textContent = `Surprises Caught: 0 / ${targetScore}`;
+        banner?.classList.remove('revealed');
+        orb1.style.left = '25%';
+        orb2.style.left = '75%';
+        fallingItems = [];
+      });
+
+      const startFallingSurprises = () => {
+        const icons = ['🌹', '💖', '⭐', '🎂', '✨', '💐'];
+        for (let i = 0; i < 5; i++) {
+          fallingItems.push({
+            x: Math.random() * (w - 60) + 30,
+            y: -20 - Math.random() * 200,
+            speed: Math.random() * 1.5 + 1.2,
+            icon: icons[Math.floor(Math.random() * icons.length)],
+            surprise: surprises[Math.floor(Math.random() * surprises.length)]
+          });
+        }
+      };
+
+      const animateSouls = () => {
+        ctx.clearRect(0, 0, w, h);
+        if (isMerged && fallingItems.length > 0) {
+          fallingItems.forEach((item, idx) => {
+            item.y += item.speed;
+            if (item.y > h + 30) {
+              item.y = -20;
+              item.x = Math.random() * (w - 60) + 30;
+            }
+
+            ctx.font = '26px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText(item.icon, item.x, item.y);
+          });
+        }
+        requestAnimationFrame(animateSouls);
+      };
+      animateSouls();
+
+      // Catch click on canvas
+      canvas.addEventListener('click', (e) => {
+        if (!isMerged) return;
+        const rect = canvas.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const clickY = e.clientY - rect.top;
+
+        fallingItems.forEach((item, idx) => {
+          const dist = Math.hypot(item.x - clickX, item.y - clickY);
+          if (dist < 35) {
+            AudioManager.playPop();
+            score++;
+            if (scoreBadge) scoreBadge.textContent = `Surprises Caught: ${score} / ${targetScore}`;
+            showSurprisePopup(item.surprise);
+            item.y = -100;
+          }
+        });
+      });
+
+      const showSurprisePopup = (surp) => {
+        if (!popup || !surp) return;
+        if (popupIcon) popupIcon.textContent = surp.icon || '💖';
+        if (popupTitle) popupTitle.textContent = surp.title || 'Special Note';
+        if (popupText) popupText.textContent = surp.text || '';
+        popup.classList.add('active');
+      };
+
+      popupClose?.addEventListener('click', () => {
+        popup?.classList.remove('active');
+      });
+    }
+  };
+
+  /* ─── 12. STAR MAP & CERTIFICATE (06 SEPT) ──────────────────────────────── */
+  const StarMap = {
+    init() {
+      const starBtn = document.getElementById('rabi-birthday-star');
+      const modal = document.getElementById('star-certificate-modal');
+      const closeBtn = document.getElementById('star-certificate-close');
+      const canvas = document.getElementById('star-map-canvas');
+
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const w = (canvas.width = canvas.offsetWidth);
+        const h = (canvas.height = canvas.offsetHeight);
+
+        // Draw twinkling stars
+        for (let i = 0; i < 90; i++) {
+          const sx = Math.random() * w;
+          const sy = Math.random() * h;
+          const r = Math.random() * 1.5 + 0.5;
+          ctx.beginPath();
+          ctx.arc(sx, sy, r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 255, 255, ' + (Math.random() * 0.7 + 0.2) + ')';
+          ctx.fill();
+        }
+      }
+
+      starBtn?.addEventListener('click', () => {
+        modal?.classList.add('active');
+        AudioManager.playChime();
+        createConfettiBurst(starBtn);
       });
 
       closeBtn?.addEventListener('click', () => {
         modal?.classList.remove('active');
-        AudioManager.playPop();
       });
-
-      this.render();
-    },
-
-    resize() {
-      if (!this.canvas) return;
-      this.canvas.width = this.canvas.offsetWidth;
-      this.canvas.height = this.canvas.offsetHeight;
-    },
-
-    render() {
-      if (!this.ctx || !this.canvas) return;
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      this.stars.forEach(s => {
-        s.alpha += s.speed;
-        if (s.alpha > 0.95 || s.alpha < 0.2) s.speed = -s.speed;
-
-        this.ctx.beginPath();
-        this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        this.ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-        this.ctx.fill();
-      });
-
-      // Draw subtle constellation line to Rabi's Star
-      const cx = this.canvas.width * 0.54;
-      const cy = this.canvas.height * 0.42;
-
-      this.ctx.beginPath();
-      this.ctx.moveTo(cx - 100, cy - 60);
-      this.ctx.lineTo(cx, cy);
-      this.ctx.lineTo(cx + 90, cy - 40);
-      this.ctx.lineTo(cx + 120, cy + 70);
-      this.ctx.strokeStyle = 'rgba(207, 152, 146, 0.45)';
-      this.ctx.lineWidth = 1.5;
-      this.ctx.setLineDash([4, 4]);
-      this.ctx.stroke();
-      this.ctx.setLineDash([]);
-
-      requestAnimationFrame(() => this.render());
     }
   };
 
-  /* ─── NEW FEATURE 2: 🎟️ VIP COUPONS ─────────────────────────────────────── */
-  const VIPCoupons = {
+  /* ─── 13. BOUQUET FLOWER MESSAGES & ETERNAL ROSE ────────────────────────── */
+  const BouquetAndRose = {
+    init() {
+      const pinsContainer = document.getElementById('bouquet-flower-pins');
+      const messageText = document.getElementById('bouquet-message-text');
+      const messages = content.bouquet?.flowerMessages || [];
+
+      if (pinsContainer && messages.length) {
+        pinsContainer.innerHTML = messages.map((m, idx) => `
+          <button class="flower-pin ${idx === 0 ? 'active' : ''}" data-idx="${idx}">
+            ${m.flower}
+          </button>
+        `).join('');
+
+        pinsContainer.querySelectorAll('.flower-pin').forEach(btn => {
+          btn.addEventListener('click', () => {
+            pinsContainer.querySelectorAll('.flower-pin').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const idx = btn.dataset.idx;
+            if (messageText) messageText.textContent = messages[idx].message;
+            AudioManager.playPop();
+          });
+        });
+      }
+
+      const dome = document.getElementById('cloche-glass-dome');
+      const roseMsg = document.getElementById('eternal-rose-message-box');
+      dome?.addEventListener('click', () => {
+        roseMsg?.classList.toggle('revealed');
+        AudioManager.playChime();
+        createConfettiBurst(dome);
+      });
+    }
+  };
+
+  /* ─── 14. VIP COUPONS ───────────────────────────────────────────────────── */
+  const VipCoupons = {
     init() {
       const grid = document.getElementById('vip-coupons-grid');
-      if (!grid || !content.vipCoupons?.coupons) return;
+      const coupons = content.vipCoupons?.coupons || [];
+      if (!grid || !coupons.length) return;
 
-      grid.innerHTML = '';
-      content.vipCoupons.coupons.forEach(c => {
-        const card = document.createElement('div');
-        card.className = 'vip-coupon-card';
-        card.innerHTML = `
-          <div class="vip-coupon-icon">${c.icon}</div>
-          <h4 class="vip-coupon-title">${c.title}</h4>
-          <p class="vip-coupon-desc">${c.desc}</p>
-          <button class="coupon-redeem-btn">${c.badge || 'REDEEM COUPON 🎟️'}</button>
-          <div class="coupon-claimed-stamp">CLAIMED BY RABIYA ♡</div>
-        `;
+      grid.innerHTML = coupons.map(c => `
+        <div class="coupon-ticket" role="button" tabindex="0">
+          <div class="coupon-icon">${c.icon}</div>
+          <h4 class="coupon-title">${c.title}</h4>
+          <p class="coupon-desc">${c.desc}</p>
+          <span class="coupon-badge">${c.badge}</span>
+          <div class="coupon-stamp-seal">REDEEMED ♡</div>
+        </div>
+      `).join('');
 
-        const btn = card.querySelector('.coupon-redeem-btn');
-        btn.addEventListener('click', () => {
-          card.classList.add('claimed');
-          AudioManager.initContext();
-          AudioManager.playChime();
+      grid.querySelectorAll('.coupon-ticket').forEach(card => {
+        card.addEventListener('click', () => {
+          card.classList.toggle('redeemed');
+          AudioManager.playPop();
         });
-
-        grid.appendChild(card);
       });
     }
   };
 
-  /* ─── NEW FEATURE 3: 💌 OPEN WHEN MOOD NOTES ────────────────────────────── */
+  /* ─── 15. "OPEN WHEN..." MOOD NOTES ─────────────────────────────────────── */
   const OpenWhenNotes = {
     init() {
       const grid = document.getElementById('open-when-grid');
+      const notes = content.openWhen?.notes || [];
       const modal = document.getElementById('mood-note-modal');
-      const titleEl = document.getElementById('mood-note-title');
-      const textEl = document.getElementById('mood-note-text');
-      const closeBtn = document.getElementById('mood-note-close');
+      const modalTitle = document.getElementById('mood-note-title');
+      const modalText = document.getElementById('mood-note-text');
+      const modalClose = document.getElementById('mood-note-close');
 
-      if (!grid || !content.openWhen?.notes) return;
+      if (!grid || !notes.length) return;
 
-      grid.innerHTML = '';
-      content.openWhen.notes.forEach(n => {
-        const card = document.createElement('div');
-        card.className = 'mood-envelope-card';
-        card.innerHTML = `
-          <div class="mood-envelope-icon">${n.icon}</div>
-          <h4 class="mood-envelope-title">${n.mood}</h4>
-        `;
+      grid.innerHTML = notes.map((n, idx) => `
+        <div class="mood-envelope-card" data-idx="${idx}" role="button" tabindex="0">
+          <div class="mood-env-icon">${n.icon}</div>
+          <h4 class="mood-env-label">${n.mood}</h4>
+          <span class="mood-tap-hint">Tap to open 💌</span>
+        </div>
+      `).join('');
 
+      grid.querySelectorAll('.mood-envelope-card').forEach(card => {
         card.addEventListener('click', () => {
-          if (titleEl) titleEl.textContent = n.title;
-          if (textEl) textEl.textContent = n.text;
+          const idx = card.dataset.idx;
+          const note = notes[idx];
+          if (modalTitle) modalTitle.textContent = note.title;
+          if (modalText) modalText.textContent = note.text;
           modal?.classList.add('active');
-          AudioManager.initContext();
           AudioManager.playChime();
         });
-
-        grid.appendChild(card);
       });
 
-      closeBtn?.addEventListener('click', () => {
+      modalClose?.addEventListener('click', () => {
         modal?.classList.remove('active');
-        AudioManager.playPop();
       });
     }
   };
 
-  /* ─── NEW FEATURE 4: 🍾 MESSAGE IN A BOTTLE CAPSULE ─────────────────────── */
-  const MessageInBottle = {
+  /* ─── 16. BIRTHDAY CAKE & CANDLE BLOWOUT ────────────────────────────────── */
+  const BirthdayCake = {
     init() {
-      const bottle = document.getElementById('floating-glass-bottle');
-      const scrollCard = document.getElementById('bottle-scroll-unrolled');
-      const scrollText = document.getElementById('bottle-scroll-text');
+      const candles = document.querySelectorAll('.candle-interactive');
+      const banner = document.getElementById('cake-blowout-banner');
+      const songBtn = document.getElementById('play-birthday-song-btn');
+      let blownCount = 0;
 
-      if (scrollText && content.messageInBottle?.scrollText) {
-        scrollText.textContent = content.messageInBottle.scrollText;
-      }
-
-      bottle?.addEventListener('click', () => {
-        scrollCard?.classList.toggle('open');
-        AudioManager.initContext();
-        AudioManager.playChime();
-      });
-    }
-  };
-
-  /* ─── 5. MEMORY GALLERY & LIGHTBOX ──────────────────────────────────────── */
-  const Gallery = {
-    currentIndex: 0,
-    items: [],
-
-    init() {
-      const grid = document.getElementById('gallery-grid');
-      if (!grid) return;
-
-      this.items = content.memories || [];
-      grid.innerHTML = '';
-
-      this.items.forEach((m, idx) => {
-        const item = document.createElement('div');
-        item.className = 'gallery-item';
-        item.innerHTML = `
-          <div class="gallery-img-wrapper">
-            <img src="${m.image}" alt="${m.title}" class="gallery-img" loading="lazy">
-          </div>
-          <h4 class="gallery-title">${m.title}</h4>
-          <div class="gallery-date">${m.date || '06 September'} • ${m.caption}</div>
-        `;
-
-        const img = item.querySelector('.gallery-img');
-        img.onerror = () => {
-          if (m.localImage) img.src = m.localImage;
-        };
-
-        item.addEventListener('click', () => {
-          this.openLightbox(idx);
-          AudioManager.initContext();
+      candles.forEach(candle => {
+        candle.addEventListener('click', () => {
+          if (candle.classList.contains('blown')) return;
+          candle.classList.add('blown');
           AudioManager.playPop();
-        });
-
-        grid.appendChild(item);
-      });
-
-      this.initLightbox();
-      this.initMemoryBloom();
-      this.initVideos();
-    },
-
-    initLightbox() {
-      const modal = document.getElementById('gallery-lightbox');
-      const closeBtn = document.getElementById('lightbox-close');
-      const prevBtn = document.getElementById('lightbox-prev');
-      const nextBtn = document.getElementById('lightbox-next');
-
-      closeBtn?.addEventListener('click', () => this.closeLightbox());
-      prevBtn?.addEventListener('click', () => this.prev());
-      nextBtn?.addEventListener('click', () => this.next());
-
-      modal?.addEventListener('click', (e) => {
-        if (e.target === modal) this.closeLightbox();
-      });
-    },
-
-    openLightbox(idx) {
-      this.currentIndex = idx;
-      this.renderLightbox();
-      const modal = document.getElementById('gallery-lightbox');
-      modal?.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    },
-
-    closeLightbox() {
-      const modal = document.getElementById('gallery-lightbox');
-      modal?.classList.remove('active');
-      document.body.style.overflow = '';
-    },
-
-    prev() {
-      this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
-      this.renderLightbox();
-    },
-
-    next() {
-      this.currentIndex = (this.currentIndex + 1) % this.items.length;
-      this.renderLightbox();
-    },
-
-    renderLightbox() {
-      const item = this.items[this.currentIndex];
-      if (!item) return;
-
-      const img = document.getElementById('lightbox-img');
-      const title = document.getElementById('lightbox-title');
-      const caption = document.getElementById('lightbox-caption');
-
-      if (title) title.textContent = `${item.title} (${this.currentIndex + 1} / ${this.items.length})`;
-      if (caption) caption.textContent = item.caption;
-      if (img) {
-        img.src = item.image;
-        img.alt = item.title;
-      }
-    },
-
-    initMemoryBloom() {
-      const bloomBtn = document.getElementById('bloom-trigger-btn');
-      const bloomStage = document.getElementById('memory-bloom-stage');
-
-      bloomBtn?.addEventListener('click', () => {
-        AudioManager.initContext();
-        AudioManager.playChime();
-        bloomStage?.classList.add('bloomed');
-        bloomBtn.style.display = 'none';
-      });
-    },
-
-    initVideos() {
-      const vGrid = document.getElementById('videos-grid');
-      const vModal = document.getElementById('video-modal');
-      const vPlayer = document.getElementById('modal-video-player');
-      const vClose = document.getElementById('video-modal-close');
-
-      if (!vGrid || !content.videos) return;
-      vGrid.innerHTML = '';
-
-      content.videos.forEach(v => {
-        const card = document.createElement('div');
-        card.className = 'video-card';
-        card.innerHTML = `
-          <div class="video-poster-wrapper">
-            <img src="${v.poster}" alt="${v.title}" class="video-poster-img" loading="lazy">
-            <div class="video-play-badge">▶</div>
-          </div>
-          <div class="video-info-box">
-            <h4 class="video-title">${v.title}</h4>
-            <div class="video-caption">${v.caption}</div>
-          </div>
-        `;
-
-        card.addEventListener('click', () => {
-          if (vPlayer && vModal) {
-            vPlayer.src = v.video;
-            vModal.classList.add('active');
-            vPlayer.play().catch(() => {});
-            AudioManager.initContext();
-          }
-        });
-
-        vGrid.appendChild(card);
-      });
-
-      const closeVideo = () => {
-        if (vPlayer && vModal) {
-          vPlayer.pause();
-          vPlayer.src = '';
-          vModal.classList.remove('active');
-        }
-      };
-
-      vClose?.addEventListener('click', closeVideo);
-      vModal?.addEventListener('click', (e) => {
-        if (e.target === vModal) closeVideo();
-      });
-    }
-  };
-
-  /* ─── 6. TWO SOULS GALAXY SUPERNOVA & SURPRISE CATCHER ──────────────────── */
-  const TwoSoulsGame = {
-    canvas: null,
-    ctx: null,
-    orb1: null,
-    orb2: null,
-    isDragging: null,
-    merged: false,
-    stars: [],
-    supernovaParticles: [],
-    surpriseInterval: null,
-    caughtCount: 0,
-    targetSurprises: 6,
-
-    init() {
-      this.canvas = document.getElementById('souls-canvas');
-      this.orb1 = document.getElementById('soul-orb-1');
-      this.orb2 = document.getElementById('soul-orb-2');
-      const mergeResetBtn = document.getElementById('souls-reset-btn');
-      const popupCloseBtn = document.getElementById('surprise-popup-close');
-
-      if (!this.canvas || !this.orb1 || !this.orb2) return;
-      this.ctx = this.canvas.getContext('2d');
-      this.resize();
-      window.addEventListener('resize', () => this.resize(), { passive: true });
-
-      for (let i = 0; i < 60; i++) {
-        this.stars.push({
-          x: Math.random() * this.canvas.width,
-          y: Math.random() * this.canvas.height,
-          size: Math.random() * 1.8 + 0.6,
-          alpha: Math.random() * 0.8 + 0.2
-        });
-      }
-
-      this.resetOrbs();
-      this.setupDraggable(this.orb1, 1);
-      this.setupDraggable(this.orb2, 2);
-
-      mergeResetBtn?.addEventListener('click', () => {
-        this.merged = false;
-        this.caughtCount = 0;
-        clearInterval(this.surpriseInterval);
-        document.getElementById('souls-merged-banner')?.classList.remove('active');
-        const scoreBadge = document.getElementById('souls-score-badge');
-        if (scoreBadge) scoreBadge.style.display = 'none';
-        document.querySelectorAll('.falling-surprise-item').forEach(e => e.remove());
-        this.resetOrbs();
-        AudioManager.playChime();
-      });
-
-      popupCloseBtn?.addEventListener('click', () => {
-        document.getElementById('surprise-popup-card')?.classList.remove('active');
-        AudioManager.playPop();
-      });
-
-      this.render();
-    },
-
-    resize() {
-      if (!this.canvas) return;
-      this.canvas.width = this.canvas.offsetWidth;
-      this.canvas.height = this.canvas.offsetHeight;
-    },
-
-    resetOrbs() {
-      const w = this.canvas.width || 600;
-      const h = this.canvas.height || 380;
-      this.orb1Pos = { x: w * 0.25, y: h * 0.5 };
-      this.orb2Pos = { x: w * 0.75, y: h * 0.5 };
-      this.updateOrbDOM();
-    },
-
-    updateOrbDOM() {
-      if (this.orb1) {
-        this.orb1.style.left = `${this.orb1Pos.x}px`;
-        this.orb1.style.top = `${this.orb1Pos.y}px`;
-      }
-      if (this.orb2) {
-        this.orb2.style.left = `${this.orb2Pos.x}px`;
-        this.orb2.style.top = `${this.orb2Pos.y}px`;
-      }
-    },
-
-    setupDraggable(orb, id) {
-      const startDrag = (e) => {
-        if (this.merged) return;
-        this.isDragging = id;
-        AudioManager.initContext();
-        e.preventDefault();
-      };
-
-      const moveDrag = (e) => {
-        if (!this.isDragging) return;
-        const rect = this.canvas.getBoundingClientRect();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-
-        const x = Math.max(40, Math.min(this.canvas.width - 40, clientX - rect.left));
-        const y = Math.max(40, Math.min(this.canvas.height - 40, clientY - rect.top));
-
-        if (this.isDragging === 1) this.orb1Pos = { x, y };
-        if (this.isDragging === 2) this.orb2Pos = { x, y };
-
-        this.updateOrbDOM();
-        this.checkMerge();
-      };
-
-      const stopDrag = () => {
-        this.isDragging = null;
-      };
-
-      orb.addEventListener('mousedown', startDrag);
-      orb.addEventListener('touchstart', startDrag, { passive: false });
-
-      window.addEventListener('mousemove', moveDrag);
-      window.addEventListener('touchmove', moveDrag, { passive: false });
-
-      window.addEventListener('mouseup', stopDrag);
-      window.addEventListener('touchend', stopDrag);
-    },
-
-    checkMerge() {
-      if (this.merged) return;
-      const dx = this.orb1Pos.x - this.orb2Pos.x;
-      const dy = this.orb1Pos.y - this.orb2Pos.y;
-      const dist = Math.hypot(dx, dy);
-
-      if (dist < 65) {
-        this.triggerMerge();
-      }
-    },
-
-    triggerMerge() {
-      this.merged = true;
-      const midX = (this.orb1Pos.x + this.orb2Pos.x) / 2;
-      const midY = (this.orb1Pos.y + this.orb2Pos.y) / 2;
-
-      this.orb1Pos = { x: midX, y: midY };
-      this.orb2Pos = { x: midX, y: midY };
-      this.updateOrbDOM();
-
-      this.createSupernova(midX, midY);
-
-      document.getElementById('souls-merged-banner')?.classList.add('active');
-      AudioManager.playChime();
-
-      setTimeout(() => this.startSurprisesGame(), 600);
-    },
-
-    createSupernova(cx, cy) {
-      const colors = ['#CF9892', '#6968A6', '#E040FB', '#FFD54F', '#FFF9F5'];
-      for (let i = 0; i < 80; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 6 + 2;
-        this.supernovaParticles.push({
-          x: cx,
-          y: cy,
-          vx: Math.cos(angle) * speed,
-          vy: Math.sin(angle) * speed,
-          size: Math.random() * 4 + 2,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: 1,
-          decay: Math.random() * 0.02 + 0.015
-        });
-      }
-    },
-
-    startSurprisesGame() {
-      const wrapper = document.querySelector('.souls-canvas-wrapper');
-      const scoreBadge = document.getElementById('souls-score-badge');
-      if (!wrapper || !scoreBadge) return;
-
-      this.caughtCount = 0;
-      this.targetSurprises = content.souls?.targetSurprises || 6;
-      scoreBadge.style.display = 'block';
-      scoreBadge.textContent = `Surprises Caught: 0 / ${this.targetSurprises}`;
-
-      clearInterval(this.surpriseInterval);
-      const surprisesList = content.souls?.surprises || [];
-
-      this.surpriseInterval = setInterval(() => {
-        if (!this.merged || this.caughtCount >= this.targetSurprises) return;
-
-        const surprise = surprisesList[Math.floor(Math.random() * surprisesList.length)];
-        const item = document.createElement('div');
-        item.className = 'falling-surprise-item';
-        item.textContent = surprise.icon || '🌸';
-        item.style.left = `${Math.random() * 80 + 10}%`;
-        item.style.top = '-20px';
-        item.style.setProperty('--speed', `${Math.random() * 1.5 + 3.5}s`);
-
-        item.addEventListener('click', () => {
-          this.caughtCount++;
-          scoreBadge.textContent = `Surprises Caught: ${this.caughtCount} / ${this.targetSurprises}`;
-          AudioManager.playChime();
-          this.showSurprisePopup(surprise);
-          item.remove();
-
-          if (this.caughtCount >= this.targetSurprises) {
-            clearInterval(this.surpriseInterval);
-            const titleEl = document.querySelector('.souls-merged-title');
-            const textEl = document.querySelector('.souls-merged-text');
-            if (titleEl) titleEl.textContent = content.souls?.completionTitle || 'Galaxy Surprises Collected! 💐✨';
-            if (textEl) textEl.textContent = content.souls?.completionMessage || 'You caught all of Husnain\'s surprises! 💜🌹';
-          }
-        });
-
-        wrapper.appendChild(item);
-        setTimeout(() => item.remove(), 4200);
-      }, 900);
-    },
-
-    showSurprisePopup(surprise) {
-      const card = document.getElementById('surprise-popup-card');
-      const icon = document.getElementById('surprise-popup-icon');
-      const title = document.getElementById('surprise-popup-title');
-      const text = document.getElementById('surprise-popup-text');
-      const img = document.getElementById('surprise-popup-img');
-
-      if (icon) icon.textContent = surprise.icon || '🌸';
-      if (title) title.textContent = surprise.title || 'Special Surprise';
-      if (text) text.textContent = surprise.text || '';
-
-      if (img) {
-        if (surprise.img) {
-          img.src = surprise.img;
-          img.style.display = 'block';
-        } else {
-          img.style.display = 'none';
-        }
-      }
-
-      card?.classList.add('active');
-    },
-
-    render() {
-      if (!this.ctx || !this.canvas) return;
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-      this.stars.forEach(s => {
-        this.ctx.beginPath();
-        this.ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        this.ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
-        this.ctx.fill();
-      });
-
-      if (!this.merged && this.orb1Pos && this.orb2Pos) {
-        this.ctx.beginPath();
-        this.ctx.moveTo(this.orb1Pos.x, this.orb1Pos.y);
-        this.ctx.lineTo(this.orb2Pos.x, this.orb2Pos.y);
-        const grad = this.ctx.createLinearGradient(this.orb1Pos.x, this.orb1Pos.y, this.orb2Pos.x, this.orb2Pos.y);
-        grad.addColorStop(0, 'rgba(207, 152, 146, 0.7)');
-        grad.addColorStop(1, 'rgba(105, 104, 166, 0.7)');
-        this.ctx.strokeStyle = grad;
-        this.ctx.lineWidth = 2.5;
-        this.ctx.setLineDash([5, 6]);
-        this.ctx.stroke();
-        this.ctx.setLineDash([]);
-      }
-
-      for (let i = this.supernovaParticles.length - 1; i >= 0; i--) {
-        const p = this.supernovaParticles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.alpha -= p.decay;
-
-        if (p.alpha <= 0) {
-          this.supernovaParticles.splice(i, 1);
-          continue;
-        }
-
-        this.ctx.save();
-        this.ctx.globalAlpha = p.alpha;
-        this.ctx.beginPath();
-        this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        this.ctx.fillStyle = p.color;
-        this.ctx.shadowColor = p.color;
-        this.ctx.shadowBlur = 10;
-        this.ctx.fill();
-        this.ctx.restore();
-      }
-
-      requestAnimationFrame(() => this.render());
-    }
-  };
-
-  /* ─── 7. ETERNAL ROSE IN CRYSTAL CLOCHE ─────────────────────────────────── */
-  const EternalRoseCloche = {
-    init() {
-      const dome = document.getElementById('cloche-glass-dome');
-      const messageBox = document.getElementById('eternal-rose-message-box');
-
-      dome?.addEventListener('click', () => {
-        dome.classList.add('petal-fallen');
-        AudioManager.initContext();
-        AudioManager.playChime();
-
-        setTimeout(() => {
-          messageBox?.classList.add('active');
-        }, 1200);
-      });
-    }
-  };
-
-  /* ─── 8. MINI GAMES ────────────────────────────────────────────────────── */
-  const MiniGames = {
-    init() {
-      this.initFlowerGame();
-      this.initGiftFinderGame();
-      this.initTrustNoGame();
-    },
-
-    initFlowerGame() {
-      const area = document.getElementById('flower-game-canvas');
-      const startBtn = document.getElementById('start-flower-game-btn');
-      const scoreEl = document.getElementById('flower-game-score');
-      const resultBox = document.getElementById('flower-game-result');
-      const vaseStack = document.getElementById('dynamic-bouquet-flowers-stack');
-
-      let score = 0;
-      const target = content.games?.flowerGame?.target || 10;
-      let interval = null;
-
-      startBtn?.addEventListener('click', () => {
-        score = 0;
-        if (scoreEl) scoreEl.textContent = `0 / ${target}`;
-        resultBox?.classList.remove('active');
-        if (vaseStack) vaseStack.innerHTML = '';
-        startBtn.textContent = 'Restart Game 🌸';
-        clearInterval(interval);
-        area?.querySelectorAll('.falling-flower-item').forEach(e => e.remove());
-
-        const flowerPool = ['🌹', '🌸', '🌷', '🌹', '💐', '💜', '🌺', '🌹', '🥀', '🌿'];
-
-        interval = setInterval(() => {
-          if (score >= target) return;
-          const flowerEmoji = flowerPool[score % flowerPool.length];
-          const el = document.createElement('div');
-          el.className = 'falling-flower-item';
-          el.textContent = flowerEmoji;
-          el.style.left = `${Math.random() * 80 + 10}%`;
-          el.style.setProperty('--speed', `${Math.random() * 1.5 + 3.2}s`);
-          el.style.setProperty('--sway', `${(Math.random() - 0.5) * 50}px`);
-
-          el.addEventListener('click', () => {
-            score++;
-            AudioManager.initContext();
-            AudioManager.playPop();
-            if (scoreEl) scoreEl.textContent = `${score} / ${target}`;
-
-            if (vaseStack) {
-              const collected = document.createElement('span');
-              collected.className = 'basket-collected-flower';
-              collected.textContent = flowerEmoji;
-              collected.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg)`;
-              vaseStack.appendChild(collected);
-            }
-
-            el.remove();
-
-            if (score >= target) {
-              clearInterval(interval);
-              if (resultBox) {
-                resultBox.innerHTML = `
-                  <strong>💐 Gorgeous Bouquet Assembled! ✨</strong><br>
-                  Rabi &amp; Husnain's handcrafted 10-flower bouquet is complete! May your year bloom with endless joy and love. 🌸💜
-                `;
-                resultBox.classList.add('active');
-              }
+          blownCount++;
+
+          if (blownCount >= candles.length) {
+            setTimeout(() => {
+              banner?.classList.add('revealed');
               AudioManager.playChime();
-            }
-          });
-
-          area?.appendChild(el);
-          setTimeout(() => el.remove(), 4800);
-        }, 750);
-      });
-    },
-
-    initGiftFinderGame() {
-      const boxes = document.querySelectorAll('.gift-box-item');
-      const resultBox = document.getElementById('gift-finder-result');
-      const roseStage = document.getElementById('rose-blooming-stage');
-      const roseQuote = document.getElementById('blooming-rose-quote');
-      const winningIndex = Math.floor(Math.random() * boxes.length);
-
-      boxes.forEach((box, idx) => {
-        box.addEventListener('click', () => {
-          AudioManager.initContext();
-
-          const icon = box.querySelector('.gift-box-icon');
-          if (idx === winningIndex) {
-            AudioManager.playChime();
-            if (icon) icon.textContent = '🎉';
-            box.style.borderColor = 'var(--burgundy)';
-            box.style.background = 'var(--grad-blush)';
-
-            if (roseStage) {
-              roseStage.classList.add('active');
-              setTimeout(() => {
-                if (roseQuote) roseQuote.classList.add('revealed');
-              }, 2200);
-            }
-
-            if (resultBox) {
-              resultBox.textContent = content.games?.giftGame?.giftMessage || 'Of course you found it! Good things have a way of finding you. ♡';
-              resultBox.classList.add('active');
-            }
-          } else {
-            AudioManager.playPop();
-            if (icon) icon.textContent = '✨';
-            box.style.opacity = '0.75';
-            if (resultBox && !resultBox.classList.contains('active')) {
-              resultBox.textContent = content.games?.giftGame?.wrongMessage || 'Almost… try another one ♡';
-              resultBox.classList.add('active');
-              setTimeout(() => {
-                if (resultBox.textContent.includes('Almost')) {
-                  resultBox.classList.remove('active');
-                }
-              }, 2000);
-            }
+              createConfettiBurst(candle);
+            }, 400);
           }
         });
       });
-    },
 
-    initTrustNoGame() {
-      const noBtn = document.getElementById('trust-no-btn');
-      const yesBtn = document.getElementById('trust-yes-btn');
-      const resultBox = document.getElementById('trust-game-result');
-      const dodges = content.games?.trustNoButton?.dodges || [
-        "Nope, not allowed! 😂",
-        "The 'No' button has trust issues! 🙈",
-        "Try clicking Yes instead! 💖"
-      ];
-      let dodgeCount = 0;
-
-      const dodge = (e) => {
-        e.preventDefault();
-        dodgeCount++;
-        const randX = (Math.random() - 0.5) * 220;
-        const randY = (Math.random() - 0.5) * 120;
-        noBtn.style.transform = `translate(${randX}px, ${randY}px)`;
-        noBtn.textContent = dodges[dodgeCount % dodges.length];
-        AudioManager.initContext();
-        AudioManager.playPop();
-      };
-
-      noBtn?.addEventListener('mouseenter', dodge);
-      noBtn?.addEventListener('touchstart', dodge, { passive: false });
-
-      yesBtn?.addEventListener('click', () => {
-        AudioManager.initContext();
-        AudioManager.playChime();
-        if (resultBox) {
-          resultBox.textContent = content.games?.trustNoButton?.yesResponse || 'Yay! Promise sealed forever! 🎉💜';
-          resultBox.classList.add('active');
-        }
+      songBtn?.addEventListener('click', () => {
+        AudioManager.playSpecialAudio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
       });
     }
   };
 
-  /* ─── 9. INTERACTIVE LOVE LETTERS & ENVELOPES CAROUSEL ──────────────────── */
-  const LetterCarousel = {
-    currentEnvelopeIndex: 0,
-    envelopes: [],
-
+  /* ─── 17. LOVE LETTERS CAROUSEL ─────────────────────────────────────────── */
+  const LoveLetters = {
     init() {
-      this.envelopes = content.letter?.envelopes || [];
+      const envelopes = content.letter?.envelopes || [];
+      let cur = 0;
+
       const prevBtn = document.getElementById('envelope-prev-btn');
       const nextBtn = document.getElementById('envelope-next-btn');
+      const countBadge = document.getElementById('envelope-count-badge');
+      const previewTitle = document.getElementById('envelope-preview-title');
       const slideBtn = document.getElementById('envelope-slide-btn');
-      const paperCloseBtn = document.getElementById('letter-paper-close-btn');
+      const paperCard = document.getElementById('letter-paper-card');
+      const paperClose = document.getElementById('letter-paper-close-btn');
+      const dateEl = document.getElementById('letter-date');
+      const salutationEl = document.getElementById('letter-salutation');
+      const paraContainer = document.getElementById('letter-paragraphs');
+      const sigEl = document.getElementById('letter-signature');
 
-      this.renderEnvelope();
+      const renderEnvelope = () => {
+        const env = envelopes[cur];
+        if (!env) return;
+        if (countBadge) countBadge.textContent = `Envelope ${cur + 1} of ${envelopes.length}`;
+        if (previewTitle) previewTitle.textContent = `Letter: ${env.title} 💌`;
+        if (dateEl) dateEl.textContent = env.date;
+        if (salutationEl) salutationEl.textContent = env.salutation;
+        if (paraContainer) {
+          paraContainer.innerHTML = env.paragraphs.map(p => `<p>${p}</p>`).join('');
+        }
+        if (sigEl) sigEl.textContent = env.signature;
+        paperCard?.classList.remove('open');
+      };
 
       prevBtn?.addEventListener('click', () => {
-        this.currentEnvelopeIndex = (this.currentEnvelopeIndex - 1 + this.envelopes.length) % this.envelopes.length;
-        this.renderEnvelope();
-        AudioManager.initContext();
+        cur = (cur - 1 + envelopes.length) % envelopes.length;
+        renderEnvelope();
         AudioManager.playPop();
       });
 
       nextBtn?.addEventListener('click', () => {
-        this.currentEnvelopeIndex = (this.currentEnvelopeIndex + 1) % this.envelopes.length;
-        this.renderEnvelope();
-        AudioManager.initContext();
+        cur = (cur + 1) % envelopes.length;
+        renderEnvelope();
         AudioManager.playPop();
       });
 
       slideBtn?.addEventListener('click', () => {
-        const paper = document.getElementById('letter-paper-card');
-        paper?.classList.add('open');
-        AudioManager.initContext();
+        paperCard?.classList.add('open');
         AudioManager.playChime();
       });
 
-      paperCloseBtn?.addEventListener('click', () => {
-        const paper = document.getElementById('letter-paper-card');
-        paper?.classList.remove('open');
-        AudioManager.initContext();
-        AudioManager.playPop();
+      paperClose?.addEventListener('click', () => {
+        paperCard?.classList.remove('open');
       });
-    },
 
-    renderEnvelope() {
-      const current = this.envelopes[this.currentEnvelopeIndex];
-      if (!current) return;
-
-      const badge = document.getElementById('envelope-count-badge');
-      const previewTitle = document.getElementById('envelope-preview-title');
-      const dateEl = document.getElementById('letter-date');
-      const salutationEl = document.getElementById('letter-salutation');
-      const paragraphsEl = document.getElementById('letter-paragraphs');
-      const closingEl = document.getElementById('letter-closing');
-      const signatureEl = document.getElementById('letter-signature');
-
-      if (badge) badge.textContent = `Envelope ${this.currentEnvelopeIndex + 1} of ${this.envelopes.length}`;
-      if (previewTitle) previewTitle.textContent = `Letter: ${current.title} 💌`;
-      if (dateEl) dateEl.textContent = current.date || '06 September';
-      if (salutationEl) salutationEl.textContent = current.salutation || 'Dear Rabi,';
-      if (closingEl) closingEl.textContent = current.closing || 'With love,';
-      if (signatureEl) signatureEl.textContent = current.signature || 'Husnain ♡';
-
-      if (paragraphsEl) {
-        paragraphsEl.innerHTML = '';
-        current.paragraphs.forEach(p => {
-          const pEl = document.createElement('p');
-          pEl.textContent = p;
-          paragraphsEl.appendChild(pEl);
-        });
-      }
-
-      document.getElementById('letter-paper-card')?.classList.remove('open');
+      renderEnvelope();
     }
   };
 
-  /* ─── 10. POPULATE CONTENT ──────────────────────────────────────────────── */
-  const ContentPopulator = {
-    populate() {
-      // Hero
-      const heroTitle = document.getElementById('hero-title');
-      const heroSub = document.getElementById('hero-subtitle');
-      const heroImg = document.querySelector('.hero-img');
-      if (heroTitle && content.hero?.title) {
-        heroTitle.innerHTML = `${content.hero.title.replace('♡', '')} <span>${content.person?.name || 'Rabi'} ♡</span>`;
-      }
-      if (heroSub && content.hero?.subtitle) {
-        heroSub.textContent = content.hero.subtitle;
-      }
-      if (heroImg && content.hero?.image) {
-        heroImg.src = content.hero.image;
-      }
-
-      // About
-      const aboutDesc = document.getElementById('about-description');
-      const aboutQuote = document.getElementById('about-quote');
-      const traitsGrid = document.getElementById('about-traits-grid');
-      const reasonsGrid = document.getElementById('reasons-grid');
-      const aboutPhoto1 = document.querySelector('.about-photo-card.card-1 img');
-      const aboutPhoto2 = document.querySelector('.about-photo-card.card-2 img');
-
-      if (aboutDesc && content.about?.description) aboutDesc.textContent = content.about.description;
-      if (aboutQuote && content.about?.quote) aboutQuote.textContent = content.about.quote;
-      if (aboutPhoto1 && content.about?.photo1) aboutPhoto1.src = content.about.photo1;
-      if (aboutPhoto2 && content.about?.photo2) aboutPhoto2.src = content.about.photo2;
-
-      if (traitsGrid && content.about?.traits) {
-        traitsGrid.innerHTML = '';
-        content.about.traits.forEach(t => {
-          const tc = document.createElement('div');
-          tc.className = 'trait-card';
-          tc.innerHTML = `
-            <div class="trait-label">${t.label}</div>
-            <div class="trait-value">${t.value}</div>
-          `;
-          traitsGrid.appendChild(tc);
-        });
-      }
-
-      if (reasonsGrid && content.reasons) {
-        reasonsGrid.innerHTML = '';
-        content.reasons.forEach(r => {
-          const rc = document.createElement('div');
-          rc.className = 'reason-card';
-          rc.innerHTML = `
-            <div class="reason-tag">${r.tag}</div>
-            <h4 class="reason-title">${r.title}</h4>
-            <p class="reason-text">${r.text}</p>
-          `;
-          rc.addEventListener('click', () => {
-            AudioManager.initContext();
-            AudioManager.playPop();
-          });
-          reasonsGrid.appendChild(rc);
-        });
-      }
-
-      // Bouquet
-      const mainImg = document.querySelector('.bouquet-main-img');
-      const pinsContainer = document.getElementById('bouquet-flower-pins');
-      const messageBox = document.getElementById('bouquet-message-text');
-
-      if (mainImg && content.bouquet?.mainImage) mainImg.src = content.bouquet.mainImage;
-      if (pinsContainer && messageBox) {
-        const messages = content.bouquet?.flowerMessages || [];
-        pinsContainer.innerHTML = '';
-        messages.forEach((item, i) => {
-          const btn = document.createElement('button');
-          btn.className = `flower-pin-btn ${i === 0 ? 'active' : ''}`;
-          btn.innerHTML = `
-            <span class="flower-pin-icon">🌸</span>
-            <span class="flower-pin-name">${item.flower}</span>
-          `;
-          btn.addEventListener('click', () => {
-            document.querySelectorAll('.flower-pin-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            messageBox.style.opacity = '0';
-            setTimeout(() => {
-              messageBox.textContent = item.message;
-              messageBox.style.opacity = '1';
-            }, 200);
-            AudioManager.initContext();
-            AudioManager.playPop();
-          });
-          pinsContainer.appendChild(btn);
-        });
-        if (messages.length > 0) messageBox.textContent = messages[0].message;
-      }
-
-      // Final Surprise
-      const surpriseQuote = document.getElementById('final-quote-text');
-      const finalPhoto = document.querySelector('.final-photo-frame img');
+  /* ─── 18. FINAL SURPRISE & REPLAY ───────────────────────────────────────── */
+  const FinalSurprise = {
+    init() {
       const replayBtn = document.getElementById('replay-btn');
-
-      if (finalPhoto && content.surprise?.finalPhoto) finalPhoto.src = content.surprise.finalPhoto;
-      if (surpriseQuote && content.surprise?.finalLine) surpriseQuote.textContent = `“${content.surprise.finalLine}”`;
       replayBtn?.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        AudioManager.initContext();
+        createConfettiBurst(replayBtn);
+      });
+
+      const openGiftBtn = document.getElementById('open-gift-btn');
+      const giftModal = document.getElementById('gift-modal');
+      const giftModalClose = document.getElementById('gift-modal-close');
+      const startExplore = document.getElementById('start-exploring-btn');
+
+      openGiftBtn?.addEventListener('click', () => {
+        giftModal?.classList.add('active');
         AudioManager.playChime();
+        createConfettiBurst(openGiftBtn);
       });
 
-      // Candles
-      let candlesLit = 3;
-      document.querySelectorAll('.candle-interactive').forEach(candle => {
-        candle.addEventListener('click', () => {
-          if (!candle.classList.contains('blown')) {
-            candle.classList.add('blown');
-            candlesLit--;
-            AudioManager.initContext();
-            AudioManager.playPop();
-            if (candlesLit <= 0) {
-              document.getElementById('cake-blowout-banner')?.classList.add('active');
-              AudioManager.playChime();
-            }
-          }
-        });
+      giftModalClose?.addEventListener('click', () => {
+        giftModal?.classList.remove('active');
       });
 
-      document.getElementById('play-birthday-song-btn')?.addEventListener('click', () => {
-        AudioManager.playSpecialAudio(content.audio?.birthdaySong || 'assets/audio/birthday-song.mp3');
-      });
-
-      // Wish star
-      document.getElementById('wish-trigger')?.addEventListener('click', () => {
-        AudioManager.initContext();
-        AudioManager.playChime();
-        document.getElementById('wish-revealed-card')?.classList.add('active');
-      });
-
-      // Gift Modal
-      document.getElementById('open-gift-btn')?.addEventListener('click', () => {
-        document.getElementById('gift-modal')?.classList.add('active');
-        AudioManager.initContext();
-        AudioManager.playChime();
-      });
-      document.getElementById('gift-modal-close')?.addEventListener('click', () => {
-        document.getElementById('gift-modal')?.classList.remove('active');
-      });
-      document.getElementById('start-exploring-btn')?.addEventListener('click', () => {
-        document.getElementById('gift-modal')?.classList.remove('active');
+      startExplore?.addEventListener('click', () => {
+        giftModal?.classList.remove('active');
         document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
       });
     }
   };
 
-  /* ─── INITIALIZE APPLICATION ────────────────────────────────────────────── */
-  ContentPopulator.populate();
+  /* ─── HELPER: CELEBRATION CONFETTI BURST ────────────────────────────────── */
+  function createConfettiBurst(targetEl) {
+    const symbols = ['🌸', '✨', '💖', '💜', '🌹', '🎉', '⭐'];
+    const rect = targetEl ? targetEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    for (let i = 0; i < 24; i++) {
+      const p = document.createElement('span');
+      p.className = 'confetti-burst-particle';
+      p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      p.style.position = 'fixed';
+      p.style.left = `${centerX}px`;
+      p.style.top = `${centerY}px`;
+      p.style.fontSize = `${Math.random() * 1.2 + 0.9}rem`;
+      p.style.pointerEvents = 'none';
+      p.style.zIndex = '9999';
+
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = Math.random() * 160 + 60;
+      const vx = Math.cos(angle) * velocity;
+      const vy = Math.sin(angle) * velocity - 50;
+
+      p.animate([
+        { transform: 'translate(0, 0) scale(1) rotate(0deg)', opacity: 1 },
+        { transform: `translate(${vx}px, ${vy + 120}px) scale(0.6) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+      ], {
+        duration: 1000 + Math.random() * 500,
+        easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+      });
+
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1600);
+    }
+  }
+
+  /* ─── INITIALIZE ALL MODULES ────────────────────────────────────────────── */
+  AudioManager.init();
+  UserPhotosManager.init();
   TouchHeartSparks.init();
   Navigation.init();
   HeroPetals.init();
-  StarMap.init();
-  Gallery.init();
+  ParticleHeartEngine.init();
+  BowAndArrowGame.init();
+  PopUpCard3D.init();
+  PolaroidFlipCards.init();
+  AboutSection.init();
   TwoSoulsGame.init();
-  EternalRoseCloche.init();
-  VIPCoupons.init();
+  StarMap.init();
+  BouquetAndRose.init();
+  VipCoupons.init();
   OpenWhenNotes.init();
-  MessageInBottle.init();
-  MiniGames.init();
-  LetterCarousel.init();
-  AudioManager.init();
+  BirthdayCake.init();
+  LoveLetters.init();
+  FinalSurprise.init();
 });

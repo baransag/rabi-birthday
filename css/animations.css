@@ -306,6 +306,73 @@
   50% { transform: translateX(8px); }
 }
 
+/* ─── NEW KEYFRAMES FOR VIRAL FEATURES ───────────────────────────────────── */
+@keyframes heartBeatPulse {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.22); }
+  28% { transform: scale(1.05); }
+  42% { transform: scale(1.32); }
+  70% { transform: scale(1); }
+}
+
+@keyframes bowReleaseSnap {
+  0% { transform: scaleX(0.7) translateY(12px); }
+  50% { transform: scaleX(1.15) translateY(-4px); }
+  100% { transform: scaleX(1) translateY(0); }
+}
+
+@keyframes arrowFlyToHeart {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  30% {
+    transform: translate(2px, -80px) scale(0.95) rotate(-2deg);
+    opacity: 1;
+  }
+  70% {
+    transform: translate(-2px, -200px) scale(0.85) rotate(1deg);
+    opacity: 1;
+  }
+  98% {
+    transform: translate(0, -290px) scale(0.7) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, -295px) scale(1.4);
+    opacity: 0;
+  }
+}
+
+@keyframes heartImpactShake {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  20% { transform: scale(1.45) rotate(-15deg); filter: drop-shadow(0 0 35px #FF1744); }
+  40% { transform: scale(1.3) rotate(15deg); }
+  60% { transform: scale(1.2) rotate(-8deg); }
+  80% { transform: scale(1.1) rotate(4deg); }
+}
+
+@keyframes balloonFloating {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-16px) rotate(5deg); }
+}
+
+@keyframes buntingWave {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(4deg) translateY(-2px); }
+}
+
+@keyframes cardUnfoldSpread {
+  0% {
+    transform: rotateX(70deg) scale(0.85);
+    opacity: 0;
+  }
+  100% {
+    transform: rotateX(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
