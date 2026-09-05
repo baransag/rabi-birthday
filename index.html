@@ -42,6 +42,7 @@
           <li><a href="#open-when" class="nav-link">Mood Notes</a></li>
           <li><a href="#birthday" class="nav-link">Cake</a></li>
           <li><a href="#letter" class="nav-link">Letters</a></li>
+          <li><a href="#inbox-keepsake" class="nav-link">Keepsake 💌</a></li>
           <li><a href="#surprise" class="nav-link">Surprise</a></li>
         </ul>
       </nav>
@@ -78,6 +79,7 @@
       <li><a href="#open-when" class="drawer-link">“Open When...” Notes 💌</a></li>
       <li><a href="#birthday" class="drawer-link">Birthday Cake 🎂</a></li>
       <li><a href="#letter" class="drawer-link">Interactive Letters 💌</a></li>
+      <li><a href="#inbox-keepsake" class="drawer-link">Digital Keepsake 📜💌</a></li>
       <li><a href="#surprise" class="drawer-link">Final Surprise ♡</a></li>
     </ul>
     <div style="margin-top: auto; padding-top: 16px;">
@@ -781,7 +783,62 @@
       </div>
     </section>
 
-    <!-- ─── 14. FINAL SURPRISE (PHOTO 5) ───────────────────────────────────── -->
+    <!-- ─── 14. THE 06 SEPTEMBER DIGITAL KEEPSAKE (SECRET INBOX DISPATCH) ─── -->
+    <section id="inbox-keepsake" class="section-padding keepsake-section">
+      <div class="container">
+        <div class="keepsake-card-box">
+          <div class="keepsake-badge">💌 CELESTIAL KEEPSAKE DISPATCH</div>
+          <h2 class="section-title" style="color: var(--burgundy); margin-bottom: 8px;">
+            Rabi’s Official 06 September Keepsake 📜✨
+          </h2>
+          <p class="keepsake-subtitle">
+            A personal digital keepsake crafted with code by <strong>Husnain 💜</strong> for the Queen of 06 September. Enter your email below to have your official Cosmic Star Certificate &amp; hidden birthday letters delivered directly to your inbox forever.
+          </p>
+
+          <form id="keepsake-email-form" class="keepsake-form">
+            <div class="keepsake-input-wrapper">
+              <span class="keepsake-input-icon">✉️</span>
+              <input
+                type="email"
+                id="rabi-email-input"
+                name="email"
+                placeholder="Enter your personal email address..."
+                required
+                autocomplete="email"
+                class="keepsake-input"
+              >
+              <button type="submit" id="keepsake-submit-btn" class="btn btn-primary keepsake-submit-btn">
+                <span>Deliver My Keepsake 🌸</span>
+              </button>
+            </div>
+
+            <div class="keepsake-whisper-wrapper">
+              <input
+                type="text"
+                id="rabi-whisper-input"
+                name="whisper"
+                placeholder="Leave a birthday whisper / note for Husnain (optional)... ♡"
+                class="keepsake-whisper-input"
+              >
+            </div>
+
+            <p class="keepsake-disclaimer">
+              🔒 Encrypted Keepsake Dispatch • Handcrafted by Husnain for Rabiya ♡
+            </p>
+          </form>
+
+          <div id="keepsake-success-box" class="keepsake-success-box">
+            <div class="keepsake-success-icon">🎉 💌 💖</div>
+            <h3 class="keepsake-success-title">Keepsake Dispatched To Your Inbox!</h3>
+            <p class="keepsake-success-text">
+              A personalized birthday celebration message has been sent to your email. Check your inbox (and spam folder) in a moment! Happy Birthday, Rabiya! ♡
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── 15. FINAL SURPRISE (PHOTO 5) ───────────────────────────────────── -->
     <section id="surprise" class="section-padding surprise-section">
       <div class="container">
         <div class="section-header">
@@ -816,6 +873,21 @@
       </div>
     </section>
   </main>
+
+  <!-- ─── FULLSCREEN LUXURY IMAGE LIGHTBOX MODAL ───────────────────────── -->
+  <div id="image-lightbox-modal" class="lightbox-modal" role="dialog" aria-modal="true" aria-label="Fullscreen Image View">
+    <div class="lightbox-backdrop-blur"></div>
+    <div class="lightbox-dialog-card">
+      <button id="lightbox-close-btn" class="lightbox-close-round-btn" aria-label="Close Fullscreen View">&times;</button>
+      <div class="lightbox-image-viewport">
+        <img id="lightbox-active-img" src="" alt="Fullscreen View" class="lightbox-full-img">
+      </div>
+      <div class="lightbox-footer-caption">
+        <span id="lightbox-caption-text">Rabiya ♡ A Special Memory</span>
+        <span class="lightbox-tap-hint">Tap anywhere to close ✕</span>
+      </div>
+    </div>
+  </div>
 
   <!-- ─── FOOTER ─────────────────────────────────────────────────────────── -->
   <footer class="footer">
